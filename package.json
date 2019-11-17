@@ -1,0 +1,19 @@
+{
+  "name": "sunrunr",
+  "version": "1.0.0",
+  "description": "ece513project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smalbadger/SunRunr.git"
+  },
+  "author": "zahra, sam, sara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smalbadger/SunRunr/issues"
+  },
+  "homepage": "https://github.com/smalbadger/SunRunr#readme"
+}
