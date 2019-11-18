@@ -24,7 +24,9 @@ float thresUV = 10.0;
 
 vector<Activity> recorded = vector<Activity>();
 
-
+Activity curr;
+int trys = 0;
+int tSpeed = 0;
 unsigned long lastSync = millis();
 bool executeStateMachines = false;
 
@@ -38,6 +40,7 @@ void setup() {
 
     Serial.begin(9600); //define the baud rate
     pinMode(button, INPUT_PULLDOWN);
+
     
     // Initialize the gps and turn it on    
     locationTracker.begin();
@@ -58,14 +61,10 @@ void loop() {
         while(digitalRead(button) == 1){ //wait till end of button press
             delay(1000);
         }
+        curr = Activity();
         state = S_record;
         duration = millis();
         stateMachine();
-    }
-    else if(WiFi.ready() & recorded.size() > 0){//send data
-        //publishing stuff
-        
-        recorded.clear();
     }
     else if(millis() - lastSync > ONE_DAY_MILLIS ){
         Serial.println("over a day");
@@ -74,19 +73,24 @@ void loop() {
         lastSync = millis();
     }
     else{
-        Serial.println(state);
         locationTracker.updateGPS();
         stateMachine();
         delay(1000);
+    }
+    
+    if(WiFi.ready() & recorded.size() > 0){//send data
+        //publishing stuff
+        Serial.println("wifi ready and recorded.size > 0: current length of recorded:");
+        Serial.println(recorded.size());
+        //recorded.clear();
     }
     
     
 }
 
 void stateMachine(){
-    Activity curr;
-    int trys = 0;
-    int tSpeed = 0;
+https://build.particle.io/build/5dd0998564486e00228d8a7e#flash
+
     switch(state){
         case S_stop:
         Serial.println("Stop");
@@ -113,12 +117,13 @@ void stateMachine(){
             
             if(trys > 3){
                 GPS gps = GPS(-1.0, -1.0, -1.0, UVTracker.readUV());
-                Serial.println("fix not found after 3 trys");
+                Serial.println("fix not found after 3 trys currentgps data");
+                String data = String::format("Fixed GPS: lon: -1, lat: -1, speed: -1, uv: %f", UVTracker.readUV());
+                Serial.println(data);
                 curr.add(gps);
                 trys = 0;
-                tSpeed = 0;
             }
-            else if(tSpeed >= 30){
+            if(tSpeed >= 30){
                 state = S_pause;
                 trys = 0;
                 tSpeed = 0;
@@ -128,8 +133,9 @@ void stateMachine(){
                 while(digitalRead(button) == 1){ // wait till end of button press
                     delay(1000);
                 }
-                Serial.println("stop activity button press");
+                Serial.println("stop activity button press duration was:");
                 curr.setDuration(millis() - duration);
+                Serial.println(millis() - duration);
                 duration = 0;
                 recorded.push_back(curr); // add it to be sent to cloud
                 state = S_stop;
@@ -149,6 +155,18 @@ void stateMachine(){
             Serial.println("paused speed stopped");
             if(locationTracker.getSpeed() > 0.5){
                 state = S_record;
+            }
+            
+            if(digitalRead(button) == 1){//activity stopped
+                while(digitalRead(button) == 1){ // wait till end of button press
+                    delay(1000);
+                }
+                Serial.println("stop activity button press");
+                curr.setDuration(millis() - duration);
+                duration = 0;
+                recorded.push_back(curr); // add it to be sent to cloud
+                state = S_stop;
+                return;
             }
             
             break;

@@ -1,7 +1,7 @@
 let express = require('express');
 let router = express.Router();
 
-let User = require("../models/users");
+let User = require("../models/user");
 let Device = require("../models/device");
 let fs = require('fs');
 let bcrypt = require("bcryptjs");
