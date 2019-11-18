@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/smalbadger/SunRunr/issues"
   },
-  "homepage": "https://github.com/smalbadger/SunRunr#readme"
+  "homepage": "https://github.com/smalbadger/SunRunr#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
