@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 
 
 var photonRouter = require('./routes/photon');
-var usersRouter = require('./routes/user');
+var usersRouter = require('./routes/users');
 var devicesRouter = require('./routes/devices');
 
 var app = express();
@@ -31,7 +31,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/', indexRouter);
-app.use('/user', usersRouter);
+app.use('/users', usersRouter);
 app.use('/devices', devicesRouter);
 app.use('/photon', photonRouter);
 
