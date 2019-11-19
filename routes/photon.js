@@ -14,7 +14,7 @@ router.post('/hit', function(req, res, next) {
         status : "",
         message : ""
     };
-       console.log("Start);
+       console.log("Start");
     // Ensure the POST data include properties id and email
     if( !req.body.hasOwnProperty("deviceId") ) {
         responseJson.status = "ERROR";
