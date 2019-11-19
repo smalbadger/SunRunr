@@ -196,9 +196,9 @@ router.put('/replace', function(req, res, next) {
 //removing the device
 router.delete("/remove/:deviceId", function(req, res) {
     //Ensure the request includes the deviceId parameter
-    // if( !req.params.hasOwnProperty("deviceId")) {
-    //     return res.status(400).json("Missing deviceId.");
-    // }
+     if( !req.params.hasOwnProperty("deviceId")) {
+         return res.status(400).json("Missing deviceId.");
+    }
 
     let email = "";
 
@@ -221,9 +221,8 @@ router.delete("/remove/:deviceId", function(req, res) {
     }
 
     Device.remove({ deviceId: req.params.deviceId }, function(err, device)  {
-
         if (err) {
-            res.status(400).send(err);
+            return res.status(400).send(err);
         } else if (device) {
             return res.status(204).send("Device ID " + req.params.deviceId + " was removed.");
         } else {

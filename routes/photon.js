@@ -83,13 +83,13 @@ router.post('/hit', function(req, res, next) {
                 var newActivity = new Activity ({
                     userEmail: device.userEmail,
                     deviceid: req.body.deviceId,
-                    GPS: req.body.GPS,
-                    date: req.body.date,
-                    duration: req.body.duration
-                    /*calories: 0,
+                    GPS: req.GPS,
+                    date: req.date,
+                    duration: req.duration,
+                    calories: 0,
                     temperature: 0,
                     humidity: 0
-                    */
+                    
                 });
 
                 // Save device. If successful, return success. If not, return error message.
