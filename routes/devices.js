@@ -194,44 +194,48 @@ router.put('/replace', function(req, res, next) {
 
 
 //removing the device
-router.delete('/remove', function(req, res, next) {
-    let responseJson = {
-        removed: false,
-        message : "",
-        apikey : "none",
-        deviceId: "none"
-    };
-    let deviceExists = false;
-
-    console.log(req.body)
-
+router.delete("/remove/:id", function(req, res) {
     // Ensure the request includes the deviceId parameter
-    if( !req.body.hasOwnProperty("deviceId")) {
-        responseJson.message = "Missing deviceId.";
-        return res.status(400).json(responseJson);
-    }
+    // if( !req.body.hasOwnProperty("deviceId")) {
+    //     responseJson.message = "Missing deviceId.";
+    //     return res.status(400).json(responseJson);
+    // }
 
-    let email = "";
+    //let email = "";
 
     // If authToken provided, use email in authToken
-    if (req.headers["x-auth"]) {
-        try {
-            let decodedToken = jwt.decode(req.headers["x-auth"], secret);
-            email = decodedToken.email;
+    // if (req.headers["x-auth"]) {
+    //     try {
+    //         let decodedToken = jwt.decode(req.headers["x-auth"], secret);
+    //         email = decodedToken.email;
+    //     }
+    //     catch (ex) {
+    //         responseJson.message = "Invalid authorization token.";
+    //         return res.status(400).json(responseJson);
+    //     }
+    // }
+    // else {
+    //     // Ensure the request includes the email parameter
+    //     if( !req.body.hasOwnProperty("email")) {
+    //         responseJson.message = "Invalid authorization token or missing email address.";
+    //         return res.status(400).json(responseJson);
+    //     }
+    //     email = req.body.email;
+    // }
+
+    Device.findByIdAndRemove(req.params.id, function(err, song) {
+        if (err) {
+             responseJson.message = "Device ID " + req.body.deviceId + " was not invalid.";
+            res.status(400).send(err);
+        } else if (song) {
+            responseJson.message = "Device ID " + req.body.deviceId + " was removed.";
+            return res.status(204);
+        } else {
+            responseJson.message = "Device ID " + req.body.deviceId + " was not found.";
+            res.sendStatus(404);
         }
-        catch (ex) {
-            responseJson.message = "Invalid authorization token.";
-            return res.status(400).json(responseJson);
-        }
-    }
-    else {
-        // Ensure the request includes the email parameter
-        if( !req.body.hasOwnProperty("email")) {
-            responseJson.message = "Invalid authorization token or missing email address.";
-            return res.status(400).json(responseJson);
-        }
-        email = req.body.email;
-    }
+    });
+});
 
     // See if device is already registered
     // Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
@@ -256,7 +260,7 @@ router.delete('/remove', function(req, res, next) {
     //         return res.status(400).json(responseJson);
     //     }
     // });
-});
+
 
 
 router.post('/ping', function(req, res, next) {
