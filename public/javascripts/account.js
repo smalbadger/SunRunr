@@ -132,7 +132,7 @@ function removeDevice(deviceId){
        url: '/devices/remove',
        type: 'DELETE',
        headers: {},
-       data: { 'deviceId': deviceId, 'email': $("#email").val()},
+       data: { 'deviceId': deviceId, 'email': $("#email").html()},
        responseType: 'json',
        success: function (data, textStatus, jqXHR) {
            console.log("Device removed from account:" + deviceId);

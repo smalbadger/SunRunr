@@ -205,6 +205,8 @@ router.delete('/remove', function(req, res, next) {
     };
     let deviceExists = false;
 
+    console.log(req.body)
+
     // Ensure the request includes the deviceId parameter
     if( !req.body.hasOwnProperty("deviceId")) {
         responseJson.message = "Missing deviceId.";
