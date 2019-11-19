@@ -9,6 +9,10 @@ function sendReqForAccountInfo() {
     .fail(accountInfoError);
 }
 
+function cleanDeviceId(deviceId){
+  return deviceId.replace(/[^\w\d\s]/, "").replace("/\s/", "_")
+}
+
 function addDeviceListing(deviceId, apiKey){
   $("#addDeviceForm").before(
     "<li class='collection-item' id='deviceListing-" + deviceId + "'>" +
@@ -71,7 +75,7 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
 
   // Add the devices to the list before the list item for the add device button (link)
   for (var device of data.devices) {
-    addDeviceListing(device.deviceId, device.apikey);
+    addDeviceListing(cleanDeviceId(device.deviceId), device.apikey);
   }
 }
 
@@ -90,6 +94,7 @@ function accountInfoError(jqXHR, textStatus, errorThrown) {
 
 // Registers the specified device with the server.
 function registerDevice() {
+  $("#deviceId").val(cleanDeviceId($("#deviceId").val()))
   $.ajax({
     url: '/devices/register',
     type: 'POST',
