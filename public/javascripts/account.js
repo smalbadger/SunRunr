@@ -45,7 +45,7 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
     });
 
     $("#remove-"+device.deviceId).click(function(event) {
-      onRemoveDeviceClicked(event, device.deviceId);
+      removeDevice(device.deviceId);
     });
   }
 }
