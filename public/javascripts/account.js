@@ -117,12 +117,14 @@ function replaceDevice(oldId){
      oldText = oldListing.children().remove().end().text().split(" ")
      oldText[1] = newId
      newText = oldText.join(" ")
+     console.log("New Text:" + newText)
 
      oldListing.empty()
      oldListing.text(newText)
      oldListing.append($("deviceListing-"+oldId).children())
-
+     console.log(oldListing.text())
      $("deviceListing-"+oldId).replaceWith(oldListing)
+
      $("#deviceListing-"+oldId).attr("id", "#deviceListing-"+newId)
      $("#ping-"+oldId).attr("id", "#ping-"+newId)
      $("#replace-"+oldId).attr("id", "#replace-"+newId)
