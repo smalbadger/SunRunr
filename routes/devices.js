@@ -227,7 +227,7 @@ router.post('/ping', function(req, res, next) {
     let deviceExists = false;
 
     // Ensure the request includes the deviceId parameter
-    if( !req.params.hasOwnProperty("deviceId")) {
+    if( !req.body.hasOwnProperty("deviceId")) {
         responseJson.message = "Missing deviceId.";
         return res.status(400).json(responseJson);
     }
@@ -241,17 +241,17 @@ router.post('/ping', function(req, res, next) {
         return res.status(400).json(responseJson);
     }
 
-    request({
-       method: "POST",
-       uri: "https://api.particle.io/v1/devices/" + req.params.deviceId + "/pingDevice",
-       form: {
-           access_token : particleAccessToken,
-           args: "" + (Math.floor(Math.random() * 11) + 1)
-        }
-    });
+    // request({
+    //    method: "POST",
+    //    uri: "https://api.particle.io/v1/devices/" + req.body.deviceId + "/pingDevice",
+    //    form: {
+    //        access_token : particleAccessToken,
+    //        args: "" + (Math.floor(Math.random() * 11) + 1)
+    //     }
+    // });
 
     responseJson.success = true;
-    responseJson.message = "Device ID " + req.params.deviceId + " pinged.";
+    responseJson.message = "Device ID " + req.body.deviceId + " pinged.";
     return res.status(200).json(responseJson);
 });
 
