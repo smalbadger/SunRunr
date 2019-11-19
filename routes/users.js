@@ -51,13 +51,23 @@ router.post('/register', function(req, res, next) {
                 passwordHash: hash
             });
 
-            user.insertOne(newUser,function(err, user) {
-                if (err) {
-                    res.status(400).json({success : false, message : err.errmsg});
-                }
-                else {
-                    res.status(201).json({success : true, message : user.fullName + "has been created"});
-                }
+            User.findOne({email: req.body.email}, function(err, user) {
+              if (err) { // couldnt connect to the database
+                  res.status(401).json({success : false, message : "Can't connect to DB."});
+              }
+              else if(!user) { // couldnt authenticate the user
+                User.insertOne(newUser,function(err, user) {
+                    if (err) {
+                        res.status(400).json({success : false, message : err.errmsg});
+                    }
+                    else {
+                        res.status(201).json({success : true, message : user.fullName + "has been created"});
+                    }
+                });
+              }
+              else {
+                  res.status(401).json({success : false, message : "Email is already in use."});
+              }
             });
         }
     });
