@@ -70,14 +70,13 @@ router.post('/hit', function(req, res, next) {
     console.log("After Checking");
     var GPS = [];
     for(var i = 0; i < req.body.lon.length; i++){
-        var object= {
+        GPS.push({
             lon: Float.parseFloat(req.body.lon[i]),
             lat: Float.parseFloat(req.body.lat[i]),
             speed: Float.parseFloat(req.body.speed[i]),
             uv: Float.parseFloat(req.body.uv[i])
-        };
-        console.log(object);
-        GPS.push(object);
+        });
+
     }
     console.log(GPS);
     
