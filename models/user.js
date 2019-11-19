@@ -5,7 +5,7 @@ var userSchema = new db.Schema({
     fullName:     { type: String, required: true },
     passwordHash: { type: String, required: true },
     lastAccess:   { type: Date, default: Date.now },
-    userDevices:  { type:[String], default:[]},
+    userDevices:  { type:[String], default:[], sparse:true},
     verified: { type: String, default: "disabled" }
 });
 
