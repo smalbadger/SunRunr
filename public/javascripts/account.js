@@ -47,7 +47,7 @@ function addDeviceListing(deviceId, apiKey){
 function removeDeviceListing(deviceId){
   $("#replaceDeviceForm-"+deviceId).slideUp()
   $("#deviceListing-"+deviceId).slideUp()
-  window.setTimeout(()->{
+  window.setTimeout(function(){
     $("#replaceDeviceForm-"+deviceId).remove();
     $("#deviceListing-"+deviceId).remove();
   }, 200);
