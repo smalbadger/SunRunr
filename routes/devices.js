@@ -125,8 +125,7 @@ router.put('/replace', function(req, res, next) {
         replaced: false,
         message : "",
         apikey : "none",
-        oldDeviceId : "none",
-        newDeviceId : "none"
+        deviceId: "none"
     };
     let deviceExists = false;
 
@@ -200,8 +199,7 @@ router.delete('/remove', function(req, res, next) {
         remove: false,
         message : "",
         apikey : "none",
-        oldDeviceId : "none",
-        newDeviceId : "none"
+        deviceId: "none"
     };
     let deviceExists = false;
 
