@@ -117,14 +117,13 @@ function removeDevice(deviceId){
        headers: { 'x-auth':  window.localStorage.getItem("authToken") },
        data: {},
        contentType: 'application/json',
-       responseType: 'json',
+       responseType: 'text',
        success: function (data, textStatus, jqXHR) {
            console.log("Device removed from account:" + deviceId);
-           //removeDeviceListing(deviceId);
+           removeDeviceListing(deviceId);
        },
        error: function(jqXHR, textStatus, errorThrown) {
-           var response = JSON.parse(jqXHR.responseText);
-           $("#error").html("Error: " + response.message);
+           $("#error").html("Error: " + jqXHR.responseText);
            $("#error").show();
        }
    });
