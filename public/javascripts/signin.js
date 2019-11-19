@@ -16,7 +16,7 @@ function sendSigninRequest() {
 function signinSuccess(data, textSatus, jqXHR) {
   // TODO
   window.localStorage.setItem('authToken', data.authToken);
-  window.location = "account.html";
+  window.location = "dashboard.html";
 }
 
 function signinError(jqXHR, textStatus, errorThrown) {
@@ -34,7 +34,7 @@ function signinError(jqXHR, textStatus, errorThrown) {
 $(function() {
   // TODO
   if( window.localStorage.getItem('authToken')) {
-    window.location.replace('account.html');
+    window.location.replace('dashboard.html');
   }
   else {
     $('#signin').click(sendSigninRequest);

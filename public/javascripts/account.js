@@ -11,13 +11,19 @@ function sendReqForAccountInfo() {
 
 function addDeviceListing(deviceId, apiKey){
   $("#addDeviceForm").before(
-    "<li style='width:100vw' class='collection-item' id='deviceListing-" + deviceId + "'><div style='display:inline-block; width:70%'>ID: " +
-      deviceId + "</br>APIKEY: " + apiKey +
-      "</div><div style='display:inline-block'>" +
+    "<li class='collection-item' id='deviceListing-" + deviceId + "'>" +
+      "<div class='row'>" +
+        "<div class='col s9 m9 l9'"
+          "<div style='display:inline-block; width:70%'>" +
+            "ID: " + deviceId +
+            "</br>APIKEY: " + apiKey +
+          "</div>" +
+        "</div>" +
+      "<div class='col s3 m3 l3'>" +
       " <button id='ping-" + deviceId + "' class='waves-effect waves-light btn'><i class='material-icons medium'>call_missed</i></button> " +
       " <button id='replace-" + deviceId + "' class='waves-effect orange darken-2 btn'><i class='material-icons medium'>autorenew</i></button> " +
       " <button id='remove-" + deviceId + "' class='waves-effect red darken-3 btn'><i class='material-icons medium'>highlight_off</i></button> " +
-      "</span>" +
+      "</div>" +
     "</div>" +
     "<li class='collection-item' id='replaceDeviceForm-" + deviceId + "'>" +
       "<label for='deviceId-" + deviceId + "'>New Device ID:</label>" +
