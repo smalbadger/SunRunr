@@ -28,12 +28,30 @@ router.post('/hit', function(req, res, next) {
         return res.status(201).send(JSON.stringify(responseJson));
     }
 
-    if( !req.body.hasOwnProperty("lon") ) {
+    if( !req.body.hasOwnProperty("GPS") ) {
         responseJson.status = "ERROR";
-        responseJson.message = "Request missing longitude parameter.";
+        responseJson.message = "Request missing GPS parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
-    
+
+    if( !req.body.hasOwnProperty("date") ) {
+        responseJson.status = "ERROR";
+        responseJson.message = "Request missing date parameter.";
+        return res.status(201).send(JSON.stringify(responseJson));
+    }
+
+    if( !req.body.hasOwnProperty("duration") ) {
+        responseJson.status = "ERROR";
+        responseJson.message = "Request missing GPS parameter.";
+        return res.status(201).send(JSON.stringify(responseJson));
+    }
+
+    /*if( req.body.GPS.isEmpty() ) {
+        responseJson.status = "ERROR";
+        responseJson.message = "Request missing GPS is empty parameter.";
+        return res.status(201).send(JSON.stringify(responseJson));
+    }
+
     if( !req.body.hasOwnProperty("lat") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing latitude parameter.";
@@ -50,7 +68,7 @@ router.post('/hit', function(req, res, next) {
         responseJson.message = "Request missing uv parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
-
+    */
     // Find the device and verify the apikey
     Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
         if (device !== null) {
@@ -65,10 +83,12 @@ router.post('/hit', function(req, res, next) {
                 var newActivity = new Activity ({
                     userEmail: device.userEmail,
                     deviceid: req.body.deviceId,
-                    lon: req.body.lon,
-                    lat: req.body.lat,
+                    //GPS: req.body.GPS,
+                    date: req.body.date,
+                    duration: req.body.duration
+                    /*lat: req.body.lat,
                     speed: req.body.speed,
-                    uv: req.body.uv
+                    uv: req.body.uv*/
                 });
 
                 // Save device. If successful, return success. If not, return error message.
