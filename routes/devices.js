@@ -154,8 +154,7 @@ router.put('/replace', function(req, res, next) {
     // See if device is already registered
     Device.findOne({ deviceId: req.body.newDeviceId }, function(err, device) {
         if (device !== null) {
-            responseJson.message = "Device ID " + req.body.deviceId + " already registered.";
-            return res.status(400).json(responseJson);
+            return res.status(400).json("Device ID " + req.body.deviceId + " already registered.");
         }
     });
 
