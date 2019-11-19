@@ -22,7 +22,7 @@ int led = D7;
 
 float thresUV = 10.0;
 
-vector<Activity> recorded = vector<Activity>();
+vector<String> recorded = vector<String>();
 
 Activity curr;
 int trys = 0;
@@ -64,7 +64,7 @@ void loop() {
         curr = Activity();
         state = S_record;
         duration = millis();
-        stateMachine();
+        stateMachine(&curr);
     }
     else if(millis() - lastSync > ONE_DAY_MILLIS ){
         Serial.println("over a day");
@@ -74,7 +74,7 @@ void loop() {
     }
     else{
         locationTracker.updateGPS();
-        stateMachine();
+        stateMachine(&curr);
         delay(1000);
     }
     
@@ -82,14 +82,19 @@ void loop() {
         //publishing stuff
         Serial.println("wifi ready and recorded.size > 0: current length of recorded:");
         Serial.println(recorded.size());
+        
+        for(int i = 0; i < recorded.size(); i++){
+            Serial.println(recorded.at(i));
+            
+        }
+        
         //recorded.clear();
     }
     
     
 }
 
-void stateMachine(){
-https://build.particle.io/build/5dd0998564486e00228d8a7e#flash
+void stateMachine(Activity* curr){
 
     switch(state){
         case S_stop:
@@ -97,11 +102,12 @@ https://build.particle.io/build/5dd0998564486e00228d8a7e#flash
             break;
         case S_record:
             Serial.println("Record");
+            Serial.println(curr->getDate());
             if(locationTracker.gpsFix()){
                 GPS gps = GPS(locationTracker.readLonDeg(), locationTracker.readLatDeg(), locationTracker.getSpeed(), UVTracker.readUV());
                 String data = String::format("Fixed GPS: lon: %f, lat: %f, speed: %f, uv: %f", locationTracker.readLonDeg(), locationTracker.readLatDeg(), locationTracker.getSpeed(), UVTracker.readUV());
                 Serial.println(data );
-                curr.add(gps);
+                curr->add(gps);
                 trys = 0;
                 if(locationTracker.getSpeed() < 0.5){ //or "0"
                     tSpeed++;
@@ -120,7 +126,7 @@ https://build.particle.io/build/5dd0998564486e00228d8a7e#flash
                 Serial.println("fix not found after 3 trys currentgps data");
                 String data = String::format("Fixed GPS: lon: -1, lat: -1, speed: -1, uv: %f", UVTracker.readUV());
                 Serial.println(data);
-                curr.add(gps);
+                curr->add(gps);
                 trys = 0;
             }
             if(tSpeed >= 30){
@@ -134,10 +140,10 @@ https://build.particle.io/build/5dd0998564486e00228d8a7e#flash
                     delay(1000);
                 }
                 Serial.println("stop activity button press duration was:");
-                curr.setDuration(millis() - duration);
+                curr->setDuration(millis() - duration);
                 Serial.println(millis() - duration);
                 duration = 0;
-                recorded.push_back(curr); // add it to be sent to cloud
+                recorded.push_back(curr->createJson()); // add it to be sent to cloud
                 state = S_stop;
                 return;
             }
@@ -162,9 +168,9 @@ https://build.particle.io/build/5dd0998564486e00228d8a7e#flash
                     delay(1000);
                 }
                 Serial.println("stop activity button press");
-                curr.setDuration(millis() - duration);
+                curr->setDuration(millis() - duration);
                 duration = 0;
-                recorded.push_back(curr); // add it to be sent to cloud
+                recorded.push_back(curr->createJson()); // add it to be sent to cloud
                 state = S_stop;
                 return;
             }
