@@ -165,6 +165,7 @@ function pingDevice(deviceId) {
         type: 'POST',
         headers: { 'x-auth': window.localStorage.getItem("authToken") },
         data: { 'deviceId': deviceId },
+        contentType: 'application/json',
         responseType: 'json',
         success: function (data, textStatus, jqXHR) {
             console.log("Pinged.");
