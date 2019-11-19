@@ -69,10 +69,10 @@ router.post('/hit', function(req, res, next) {
     }
     console.log("After Checking");
     var GPS = [];
-    var lon = req.body.lon.parseJson();
-    var lat = req.body.lat.parseJson();
-    var speed = req.body.speed.parseJson();
-    var uv = req.body.uv.parseJson();
+    var lon = JSON.parse(req.body.lon);
+    var lat = JSON.parse(req.body.lat);
+    var speed = JSON.parse(req.body.speed);
+    var uv = JSON.parse(req.body.uv);
     for(var i = 0; i < lon.length; i++){
         GPS.push({
             lon: lon[i],

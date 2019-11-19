@@ -9,7 +9,7 @@ var activitySchema = new db.Schema({
     calories: Number,
     temperature: Number,
     humidity: Number,
-    GPS: [{"lon":  Number, "lat":   Number, "GPS_speed": Number, "uv": Number}]
+    GPS: [{"lon":  Number, "lat":   Number, "speed": Number, "uv": Number}]
 });
 
 // Creates a Activities (plural) collection in the db using the activity schema
