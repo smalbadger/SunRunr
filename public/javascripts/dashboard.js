@@ -66,7 +66,7 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
           headers: { 'x-auth': window.localStorage.getItem("authToken") },
           dataType: 'json'
          })
-         .done(accountInfoSuccess);
+         .done(accountInfoSuccess)
     
          .fail(function(jqXHR, textStatus, errorThrown) {
            let response = JSON.parse(jqXHR.responseText);
