@@ -46,12 +46,12 @@ router.post('/hit', function(req, res, next) {
         return res.status(201).send(JSON.stringify(responseJson));
     }
 
-    /*if( req.body.GPS.isEmpty() ) {
+    if( req.body.GPS.isEmpty() ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing GPS is empty parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
-
+    /*
     if( !req.body.hasOwnProperty("lat") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing latitude parameter.";
@@ -83,15 +83,13 @@ router.post('/hit', function(req, res, next) {
                 var newActivity = new Activity ({
                     userEmail: device.userEmail,
                     deviceid: req.body.deviceId,
-                    GPS: "",//req.body.GPS,
+                    GPS: req.body.GPS,
                     date: req.body.date,
-                    duration: req.body.duration,
-                    calories: 0,
+                    duration: req.body.duration
+                    /*calories: 0,
                     temperature: 0,
                     humidity: 0
-                    /*lat: req.body.lat,
-                    speed: req.body.speed,
-                    uv: req.body.uv*/
+                    */
                 });
 
                 // Save device. If successful, return success. If not, return error message.
