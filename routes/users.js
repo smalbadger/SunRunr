@@ -65,15 +65,16 @@ router.post('/register', function(req, res, next) {
                     fullName: req.body.fullName,
                     passwordHash: hash
                 });
+                newUser.save();
 
-                User.insert(newUser,function(err, user) {
-                    if (err) {
-                        return res.status(400).json({success : false, message : err.errmsg});
-                    }
-                    else {
-                        return res.status(201).json({success : true, message : req.body.fullName + "has been created"});
-                    }
-                });
+                // User.insert(newUser, function(err, user) {
+                //     if (err) {
+                //         return res.status(400).json({success : false, message : err.errmsg});
+                //     }
+                //     else {
+                //         return res.status(201).json({success : true, message : req.body.fullName + "has been created"});
+                //     }
+                // });
               }
               else {
                   return res.status(401).json({success : false, message : "Email is already in use."});
