@@ -14,7 +14,7 @@ router.post('/hit', function(req, res, next) {
         status : "",
         message : ""
     };
-
+       console.log("Start);
     // Ensure the POST data include properties id and email
     if( !req.body.hasOwnProperty("deviceId") ) {
         responseJson.status = "ERROR";
@@ -67,13 +67,14 @@ router.post('/hit', function(req, res, next) {
         responseJson.message = "Request missing uv parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
+    console.log("After Checking");
     var GPS = [];
     for(var i = 0; i < req.lon.length; i++){
         var object= {
-            lon: req.lon[i],
-            lat: req.lat[i],
-            speed: req.speed[i],
-            uv: req.uv[i]
+            lon: req.body.lon[i],
+            lat: req.body.lat[i],
+            speed: req.body.speed[i],
+            uv: req.body.uv[i]
         };
         console.log(object);
         GPS.push(object);
