@@ -233,29 +233,29 @@ router.delete('/remove', function(req, res, next) {
         email = req.body.email;
     }
 
-     // See if device is already registered
-    Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
-        if (device !== null) { 
-                Device.remove({ deviceId: req.body.deviceId }, function(err, device) {
-                if (err) {
-                    responseJson.message = err;
-                    // This following is equivalent to: res.status(400).send(JSON.stringify(responseJson));
-                    return res.status(400).json(responseJson);
-                }
-                else {
-                    responseJson.removed = true;
-                    responseJson.apikey = deviceApikey;
-                    responseJson.deviceId = req.body.deviceId;
-                    responseJson.message = "Device ID " + req.body.deviceId + " was removed.";
-                    return res.status(201).json(responseJson);
-                }
-            });
-        }
-        else { //device not found
-            responseJson.message = "Device ID " + req.body.deviceId + "is not already registered.";
-            return res.status(400).json(responseJson);
-        }
-    });
+    // See if device is already registered
+    // Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
+    //     if (device !== null) { 
+    //             Device.remove({ deviceId: req.body.deviceId }, function(err, device) {
+    //             if (err) {
+    //                 responseJson.message = err;
+    //                 // This following is equivalent to: res.status(400).send(JSON.stringify(responseJson));
+    //                 return res.status(400).json(responseJson);
+    //             }
+    //             else {
+    //                 responseJson.removed = true;
+    //                 responseJson.apikey = deviceApikey;
+    //                 responseJson.deviceId = req.body.deviceId;
+    //                 responseJson.message = "Device ID " + req.body.deviceId + " was removed.";
+    //                 return res.status(201).json(responseJson);
+    //             }
+    //         });
+    //     }
+    //     else { //device not found
+    //         responseJson.message = "Device ID " + req.body.deviceId + "is not already registered.";
+    //         return res.status(400).json(responseJson);
+    //     }
+    // });
 });
 
 
