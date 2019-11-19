@@ -2,7 +2,7 @@
 #define ACTIVITY_H
 
 #include <vector>
-
+#include <string>
 #include "application.h"
 
 
@@ -34,6 +34,7 @@ public:
     Activity();
     Activity(std::vector<GPS> loc, unsigned long dur);
     std::vector<GPS> getGPS();
+    String getDate();
     void add(GPS gps);
     void setDuration(unsigned long dur);
     String createJson();
