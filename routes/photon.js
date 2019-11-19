@@ -70,7 +70,7 @@ router.post('/hit', function(req, res, next) {
                 var newActivity = new Activity ({
                     userEmail: device.userEmail,
                     deviceid: req.body.deviceId,
-                    GPS: req.body.GPS,
+                    //GPS: req.body.GPS,
                     date: req.body.date,
                     duration: req.body.duration
                     /*lat: req.body.lat,
