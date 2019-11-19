@@ -1,4 +1,26 @@
+function sendReqForAccountInfo() {
+  $.ajax({
+    url: '/users/account',
+    type: 'GET',
+    headers: { 'x-auth': window.localStorage.getItem("authToken") },
+    dataType: 'json'
+  })
+    .done(getActivities)
+    .fail(accountInfoError);
+}
 
+function accountInfoError(jqXHR, textStatus, errorThrown) {
+  // If authentication error, delete the authToken
+  // redirect user to sign-in page (which is userLogin.html)
+  if( jqXHR.status === 401 ) {
+    window.localStorage.removeItem("authToken");
+    window.location.replace("userLogin.html");
+  }
+  else {
+    $("#error").html("Error: " + status.message);
+    $("#error").show();
+  }
+}
 
 
 function addGPSTogether(GPS){
@@ -54,3 +76,15 @@ function addAllListing(Activities){
          });
 
 }
+
+$(function() {
+  // If there's no authToken stored, redirect user to
+  // the sign-in page (which is userLogin.html)
+  if (!window.localStorage.getItem("authToken")) {
+    window.location.replace("userLogin.html");
+  }
+  else {
+    sendReqForAccountInfo();
+  }
+
+});
