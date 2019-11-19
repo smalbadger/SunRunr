@@ -63,7 +63,7 @@ router.post('/hit', function(req, res, next) {
         return res.status(201).send(JSON.stringify(responseJson));
     }
     var GPS = [];
-    for(int i = 0; i < req.lon.length; i++){
+    for(var i = 0; i < req.lon.length; i++){
         var object= {
             lon: req.lon[i],
             lat: req.lat[i],
