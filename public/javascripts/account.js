@@ -47,8 +47,10 @@ function addDeviceListing(deviceId, apiKey){
 function removeDeviceListing(deviceId){
   $("#replaceDeviceForm-"+deviceId).slideUp()
   $("#deviceListing-"+deviceId).slideUp()
-  $("#replaceDeviceForm-"+deviceId).remove()
-  $("#deviceListing-"+deviceId).remove()
+  window.setTimeout(()->{
+    $("#replaceDeviceForm-"+deviceId).remove();
+    $("#deviceListing-"+deviceId).remove();
+  }, 200);
 }
 
 function accountInfoSuccess(data, textSatus, jqXHR) {
