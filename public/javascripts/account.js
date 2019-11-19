@@ -50,7 +50,7 @@ function removeDeviceListing(deviceId){
   window.setTimeout(function(){
     $("#replaceDeviceForm-"+deviceId).remove();
     $("#deviceListing-"+deviceId).remove();
-  }, 200);
+  }, 2000);
 }
 
 function accountInfoSuccess(data, textSatus, jqXHR) {
@@ -120,7 +120,7 @@ function removeDevice(deviceId){
        responseType: 'json',
        success: function (data, textStatus, jqXHR) {
            console.log("Device removed from account:" + deviceId);
-           removeDeviceListing(deviceId);
+           //removeDeviceListing(deviceId);
        },
        error: function(jqXHR, textStatus, errorThrown) {
            var response = JSON.parse(jqXHR.responseText);
