@@ -260,6 +260,41 @@ router.delete('/remove', function(req, res, next) {
 });
 
 
+router.post('/ping', function(req, res, next) {
+    let responseJson = {
+        success: false,
+        message : "",
+    };
+    let deviceExists = false;
+    
+    // Ensure the request includes the deviceId parameter
+    if( !req.body.hasOwnProperty("deviceId")) {
+        responseJson.message = "Missing deviceId.";
+        return res.status(400).json(responseJson);
+    }
+    
+    // If authToken provided, use email in authToken 
+    try {
+        let decodedToken = jwt.decode(req.headers["x-auth"], secret);
+    }
+    catch (ex) {
+        responseJson.message = "Invalid authorization token.";
+        return res.status(400).json(responseJson);
+    }
+    
+    request({
+       method: "POST",
+       uri: "https://api.particle.io/v1/devices/" + req.body.deviceId + "/pingDevice",
+       form: {
+           access_token : particleAccessToken,
+           args: "" + (Math.floor(Math.random() * 11) + 1)
+        }
+    });
+            
+    responseJson.success = true;
+    responseJson.message = "Device ID " + req.body.deviceId + " pinged.";
+    return res.status(200).json(responseJson);
+});
 
 
 
