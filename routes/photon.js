@@ -71,10 +71,10 @@ router.post('/hit', function(req, res, next) {
     var GPS = [];
     for(var i = 0; i < req.lon.length; i++){
         var object= {
-            lon: req.body.lon[i],
-            lat: req.body.lat[i],
-            speed: req.body.speed[i],
-            uv: req.body.uv[i]
+            lon: Float.parseFloat(req.body.lon[i]),
+            lat: Float.parseFloat(req.body.lat[i]),
+            speed: Float.parseFloat(req.body.speed[i]),
+            uv: Float.parseFloat(req.body.uv[i])
         };
         console.log(object);
         GPS.push(object);
