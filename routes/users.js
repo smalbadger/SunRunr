@@ -113,11 +113,6 @@ router.get("/account" , function(req, res) {
 
 
 
-//TODO: write the replace device
-//TODO: write the get all users info
-//router.get("/adddiv" , function(req, res)
-
-
 
 
 module.exports = router;

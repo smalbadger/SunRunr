@@ -120,12 +120,13 @@ router.post('/register', function(req, res, next) {
 });
 
 //replacing the device
-router.post('/replace', function(req, res, next) {
+router.put('/replace', function(req, res, next) {
     let responseJson = {
-        registered: false,
+        replaced: false,
         message : "",
         apikey : "none",
-        deviceId : "none"
+        oldDeviceId : "none",
+        newDeviceId : "none"
     };
     let deviceExists = false;
 
@@ -156,7 +157,8 @@ router.post('/replace', function(req, res, next) {
         }
         email = req.body.email;
     }
-    // See if device is already registered
+
+     // See if device is already registered
     Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
         if (device == null) { //device not found
             responseJson.message = "Device ID " + req.body.deviceId + "is not already registered.";
@@ -173,15 +175,16 @@ router.post('/replace', function(req, res, next) {
                 apikey: deviceApikey
             });
 
-            // Save device. If successful, return success. If not, return error message.
-            newDevice.findOneAndUpdate({ deviceId: req.body.deviceId }, {  responseJson.registered: true, responseJson.apikey: deviceApikey,
-                    responseJson.deviceId: req.body.deviceId }, function(err, newDevice) {
+            Device.findOneAndUpdate({ deviceId: req.body.deviceId }, { apikey: deviceApikey, deviceId: req.body.deviceId  } , function(err, device) {
                 if (err) {
                     responseJson.message = err;
                     // This following is equivalent to: res.status(400).send(JSON.stringify(responseJson));
                     return res.status(400).json(responseJson);
                 }
                 else {
+                    responseJson.replaced = true;
+                    responseJson.apikey = deviceApikey;
+                    responseJson.deviceId = req.body.deviceId;
                     responseJson.message = "Device ID " + req.body.deviceId + " was replaced.";
                     return res.status(201).json(responseJson);
                 }
@@ -189,5 +192,75 @@ router.post('/replace', function(req, res, next) {
         }
     });
 });
+
+
+//removing the device
+router.delete('/remove', function(req, res, next) {
+    let responseJson = {
+        remove: false,
+        message : "",
+        apikey : "none",
+        oldDeviceId : "none",
+        newDeviceId : "none"
+    };
+    let deviceExists = false;
+
+    // Ensure the request includes the deviceId parameter
+    if( !req.body.hasOwnProperty("deviceId")) {
+        responseJson.message = "Missing deviceId.";
+        return res.status(400).json(responseJson);
+    }
+
+    let email = "";
+
+    // If authToken provided, use email in authToken
+    if (req.headers["x-auth"]) {
+        try {
+            let decodedToken = jwt.decode(req.headers["x-auth"], secret);
+            email = decodedToken.email;
+        }
+        catch (ex) {
+            responseJson.message = "Invalid authorization token.";
+            return res.status(400).json(responseJson);
+        }
+    }
+    else {
+        // Ensure the request includes the email parameter
+        if( !req.body.hasOwnProperty("email")) {
+            responseJson.message = "Invalid authorization token or missing email address.";
+            return res.status(400).json(responseJson);
+        }
+        email = req.body.email;
+    }
+
+     // See if device is already registered
+    Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
+        if (device == null) { //device not found
+            responseJson.message = "Device ID " + req.body.deviceId + "is not already registered.";
+            return res.status(400).json(responseJson);
+        }
+        else {
+
+            Device.remove({ deviceId: req.body.deviceId }, , function(err, device) {
+                if (err) {
+                    responseJson.message = err;
+                    // This following is equivalent to: res.status(400).send(JSON.stringify(responseJson));
+                    return res.status(400).json(responseJson);
+                }
+                else {
+                    responseJson.remove = true;
+                    responseJson.apikey = deviceApikey;
+                    responseJson.deviceId = req.body.deviceId;
+                    responseJson.message = "Device ID " + req.body.deviceId + " was removed.";
+                    return res.status(201).json(responseJson);
+                }
+            });
+        }
+    });
+});
+
+
+
+
 
 module.exports = router;
