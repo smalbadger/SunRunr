@@ -90,7 +90,7 @@ function accountInfoError(jqXHR, textStatus, errorThrown) {
 
 // Registers the specified device with the server.
 function registerDevice() {
-  var letterNumber = /^[0-9a-zA-Z]+$/;
+  var letterNumber = /^[0-9a-fA-F]+$/;
   if($("#deviceId").val().match(letterNumber) && $("#deviceId").val().length == 24){
       $.ajax({
         url: '/devices/register',
@@ -102,6 +102,8 @@ function registerDevice() {
        })
        .done(function (data, textStatus, jqXHR) {
          addDeviceListing($("#deviceId").val(), data["apikey"])
+         hideAddDeviceForm()
+        
        })
        .fail(function(jqXHR, textStatus, errorThrown) {
          let response = JSON.parse(jqXHR.responseText);
@@ -110,7 +112,7 @@ function registerDevice() {
        });
   }
   else{
-    $("#error").html("Error: Device ID is either not the correct length or has characters other than letters and numbers");
+    $("#error").html("Error: Device ID is either not the correct length or has characters other than hexadecimal");
     $("#error").show();
   }
 }

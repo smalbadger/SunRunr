@@ -4,8 +4,22 @@ function sendRegisterRequest() {
   let fullName = $('#fullName').val();
   let passwordConfirm = $('#passwordConfirm').val();
 
-  // Check to make sure the passwords match
-  // FIXME: Check to ensure strong password
+
+  var strongRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+
+  if(!strongRegex.test(password)){
+    $('#ServerResponse').html("<span class='red-text text-darken-2'>Password is not strong enough. Please make sure password has:"
+                              +"<ul> <li>length of 8 or more characters</li>"
+                              +"<li>At least one Capital letter</li>"
+                              +"<li>At least one lower case letter</li>"
+                              +"<li>At least one number</li>"
+                              +"<li>At least one lower Special Character</li>"
+                              +"</ul></span>");
+    $('#ServerResponse').show();
+    return;
+  }
+  
+    // Check to make sure the passwords match
   if (password != passwordConfirm) {
     $('#ServerResponse').html("<span class='red-text text-darken-2'>Passwords do not match.</span>");
     $('#ServerResponse').show();
