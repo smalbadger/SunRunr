@@ -28,11 +28,11 @@ router.post('/hit', function(req, res, next) {
         return res.status(201).send(JSON.stringify(responseJson));
     }
 
-    if( !req.body.hasOwnProperty("GPS") ) {
+    /*if( !req.body.hasOwnProperty("GPS") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing GPS parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
-    }
+    }*/
 
     if( !req.body.hasOwnProperty("date") ) {
         responseJson.status = "ERROR";
@@ -43,12 +43,6 @@ router.post('/hit', function(req, res, next) {
     if( !req.body.hasOwnProperty("duration") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing GPS parameter.";
-        return res.status(201).send(JSON.stringify(responseJson));
-    }
-    /*
-    if( req.body.GPS.isEmpty() ) {
-        responseJson.status = "ERROR";
-        responseJson.message = "Request missing GPS is empty parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
     
@@ -68,7 +62,18 @@ router.post('/hit', function(req, res, next) {
         responseJson.message = "Request missing uv parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
-    */
+    var GPS = [];
+    for(int i = 0; i < req.lon.length; i++){
+        var object= {
+            lon: req.lon[i],
+            lat: req.lat[i],
+            speed: req.speed[i],
+            uv: req.uv[i]
+        };
+        GPS.push(object);
+    }
+    
+    
     // Find the device and verify the apikey
     Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
         if (device !== null) {
@@ -83,7 +88,7 @@ router.post('/hit', function(req, res, next) {
                 var newActivity = new Activity ({
                     userEmail: device.userEmail,
                     deviceid: req.body.deviceId,
-                    GPS: "",//req.body.GPS,
+                    GPS: GPS,
                     date: req.body.date,
                     duration: req.body.duration,
                     calories: 0,
