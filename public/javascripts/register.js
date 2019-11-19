@@ -6,9 +6,9 @@ function sendRegisterRequest() {
 
   // Check to make sure the passwords match
   // FIXME: Check to ensure strong password
-  var mediumRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");;
+  var mediumRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;;
 
-  if(mediumRegex.test(password)){
+  if(!password.match(mediumRegex)){
     $('#ServerResponse').html("<span class='red-text text-darken-2'>Password is not strong enough. Please make sure password has:"
                               +"<ul> <li>length of 8 or more characters</li>"
                               +"<li>At least one Capital letter</li>"
