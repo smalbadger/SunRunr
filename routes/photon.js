@@ -38,7 +38,7 @@ router.post('/hit', function(req, res, next) {
         responseJson.message = "Request missing GPS is empty parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
-    
+    /*
     if( !req.body.hasOwnProperty("lat") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing latitude parameter.";
@@ -55,7 +55,7 @@ router.post('/hit', function(req, res, next) {
         responseJson.message = "Request missing uv parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
-
+    */
     // Find the device and verify the apikey
     Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
         if (device !== null) {
@@ -70,10 +70,10 @@ router.post('/hit', function(req, res, next) {
                 var newActivity = new Activity ({
                     userEmail: device.userEmail,
                     deviceid: req.body.deviceId,
-                    lon: req.body.lon,
-                    lat: req.body.lat,
+                    GPS: req.body.GPS,
+                    /*lat: req.body.lat,
                     speed: req.body.speed,
-                    uv: req.body.uv
+                    uv: req.body.uv*/
                 });
 
                 // Save device. If successful, return success. If not, return error message.
