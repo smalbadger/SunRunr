@@ -13,7 +13,7 @@ function addDeviceListing(deviceId, apiKey){
   $("#addDeviceForm").before(
     "<li class='collection-item' id='deviceListing-" + deviceId + "'>" +
       "<div class='row'>" +
-        "<div class='col s9 m9 l9'"
+        "<div class='col s9 m9 l9'" +
           "<div style='display:inline-block; width:70%'>" +
             "ID: " + deviceId +
             "</br>APIKEY: " + apiKey +
