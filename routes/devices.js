@@ -151,20 +151,19 @@ router.put('/replace', function(req, res, next) {
     // Find the device
     Device.findOne({ oldDeviceId: req.params.oldDeviceId }, function(err, device) {
        if (device === null) {
-           return res.status(400).send("No Device found");
+           return res.status(400).json("No Device found");
        } else {
            Device.findOneAndUpdate({ oldDeviceId: req.body.oldDeviceId }, { apikey: deviceApikey, oldDeviceId: req.body.newDeviceId  } , function(err, device) {
                 if (err) {
-                    return res.status(400).send(err);
+                    return res.status(400).json(err);
                 } else if (device) {
-                    return res.status(204).send("Device ID " + req.params.deviceId + " was updated.");
+                    return res.status(204).json("Device ID " + req.params.deviceId + " was updated.");
                 } else {
-                    return res.status(404).send("Device ID " + req.params.deviceId + " was not found.");
+                    return res.status(404).json("Device ID " + req.params.deviceId + " was not found.");
                 }
-            });
-       }
+          });
+        }
     });
-
 });
 
 
@@ -212,10 +211,10 @@ router.delete("/remove/:deviceId", function(req, res) {
     });
 
 
-   
+
 });
 
- 
+
 
 
 // pinging the user
