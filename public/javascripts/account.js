@@ -94,14 +94,24 @@ function registerDevice() {
 }
 
 function showReplaceDeviceForm(id){
+<<<<<<< HEAD
   $("#deviceId-" + id).val("");
   $("#replace-" + id).hide();
+=======
+  $("#deviceId-"id).val("");
+  $("#replace-"+id).hide();
+>>>>>>> d83c856b5c572096af26ffda25368b690670a045
   $("#replaceDeviceForm-"+id).slideDown();
 }
 
 function hideReplaceDeviceForm(id){
+<<<<<<< HEAD
   $("#replace-" + id).show();
   $("#replaceDeviceForm-" + id).slideUp();
+=======
+  $("#replace-"+id).show();
+  $("#replaceDeviceForm-"+id).slideUp();
+>>>>>>> d83c856b5c572096af26ffda25368b690670a045
   $("#error").hide();
 }
 
