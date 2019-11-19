@@ -56,7 +56,7 @@ router.post('/register', function(req, res, next) {
                   res.status(401).json({success : false, message : "Can't connect to DB."});
               }
               else if(!user) { // couldnt authenticate the user
-                User.insertOne(newUser,function(err, user) {
+                User.insert(newUser,function(err, user) {
                     if (err) {
                         res.status(400).json({success : false, message : err.errmsg});
                     }
