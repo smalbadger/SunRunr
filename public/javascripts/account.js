@@ -33,6 +33,10 @@ function addDeviceListing(deviceId, apiKey){
     showReplaceDeviceForm(deviceId);
   });
 
+  $("#replaceDevice-"+deviceId).click(function(event) {
+    replaceDevice(deviceId);
+  });
+
   $("#cancel-"+deviceId).click(function(event){
     hideReplaceDeviceForm(deviceId);
   });
@@ -40,7 +44,6 @@ function addDeviceListing(deviceId, apiKey){
   $("#remove-"+deviceId).click(function(event) {
     removeDevice(deviceId);
   });
-
   hideReplaceDeviceForm(deviceId)
 }
 
@@ -90,6 +93,43 @@ function registerDevice() {
    })
    .done(function (data, textStatus, jqXHR) {
      addDeviceListing($("#deviceId").val(), data["apikey"])
+   })
+   .fail(function(jqXHR, textStatus, errorThrown) {
+     let response = JSON.parse(jqXHR.responseText);
+     $("#error").html("Error: " + response.message);
+     $("#error").show();
+   });
+}
+
+function replaceDevice(oldId){
+  newId = $("#deviceId-"+oldId).val()
+  $.ajax({
+    url: '/devices/replace/',
+    type: 'PUT',
+    headers: { 'x-auth': window.localStorage.getItem("authToken") },
+    contentType: 'application/json',
+    data: JSON.stringify({ newDeviceId: oldId, oldDeviceId}),
+    dataType: 'json'
+   })
+   .done(function (data, textStatus, jqXHR) {
+     //change device listing information
+     oldListing = $("deviceListing-"+oldId).clone()
+     oldText = oldListing.children().remove().end().text().split(" ")
+     oldText[1] = newId
+     newText = oldText.join(" ")
+
+     oldListing.empty()
+     oldListing.text(newText)
+     oldListing.append($("deviceListing-"+oldId).children())
+
+     $("deviceListing-"+oldId).replaceWith(oldListing)
+     $("#deviceListing-"+oldId).attr("id", "#deviceListing-"+newId)
+     $("#ping-"+oldId).attr("id", "#ping-"+newId)
+     $("#replace-"+oldId).attr("id", "#replace-"+newId)
+     $("#remove-"+oldId).attr("id", "#remove-"+newId)
+     $("#replaceDevice-"+oldId).attr("id", "#replaceDevice-"+newId)
+     $("#deviceId-"+oldId).attr("id", "#deviceId-"+newId)
+     $("#cancel-"+oldId).attr("id", "#cancel-"+newId)
    })
    .fail(function(jqXHR, textStatus, errorThrown) {
      let response = JSON.parse(jqXHR.responseText);
