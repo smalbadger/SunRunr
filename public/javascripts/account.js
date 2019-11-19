@@ -112,28 +112,7 @@ function replaceDevice(oldId){
     dataType: 'json'
    })
    .done(function (data, textStatus, jqXHR) {
-     //change device listing information
-     oldListing = $("deviceListing-"+oldId).clone()
-     oldText = oldListing.text().split(" ")
-     console.log("Old Text:" + oldText)
-     oldText[1] = newId
-     console.log("Old Text:" + oldText)
-     newText = oldText.join(" ")
-     console.log("New Text:" + newText)
-
-     oldListing.empty()
-     oldListing.text(newText)
-     oldListing.append($("deviceListing-"+oldId).children())
-     console.log(oldListing.text())
-     $("deviceListing-"+oldId).replaceWith(oldListing)
-
-     $("#deviceListing-"+oldId).attr("id", "#deviceListing-"+newId)
-     $("#ping-"+oldId).attr("id", "#ping-"+newId)
-     $("#replace-"+oldId).attr("id", "#replace-"+newId)
-     $("#remove-"+oldId).attr("id", "#remove-"+newId)
-     $("#replaceDevice-"+oldId).attr("id", "#replaceDevice-"+newId)
-     $("#deviceId-"+oldId).attr("id", "#deviceId-"+newId)
-     $("#cancel-"+oldId).attr("id", "#cancel-"+newId)
+     document.location.reload(true);
    })
    .fail(function(jqXHR, textStatus, errorThrown) {
      let response = JSON.parse(jqXHR.responseText);
