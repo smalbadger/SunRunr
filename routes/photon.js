@@ -45,6 +45,11 @@ router.post('/hit', function(req, res, next) {
         responseJson.message = "Request missing GPS parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
+    if( !req.body.hasOwnProperty("lon") ) {
+        responseJson.status = "ERROR";
+        responseJson.message = "Request missing latitude parameter.";
+        return res.status(201).send(JSON.stringify(responseJson));
+    }
     
     if( !req.body.hasOwnProperty("lat") ) {
         responseJson.status = "ERROR";
@@ -70,8 +75,10 @@ router.post('/hit', function(req, res, next) {
             speed: req.speed[i],
             uv: req.uv[i]
         };
+        console.log(object);
         GPS.push(object);
     }
+    console.log(GPS);
     
     
     // Find the device and verify the apikey
@@ -96,6 +103,7 @@ router.post('/hit', function(req, res, next) {
                     humidity: 0
                     
                 });
+                console.log(newActivity);
 
                 // Save device. If successful, return success. If not, return error message.
                 newActivity.save(function(err, newActivity) {
