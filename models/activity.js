@@ -12,7 +12,7 @@ var activitySchema = new db.Schema({
     GPS: [{"lon":  Number, "lat":   Number, "GPS_speed": Number, "uv": Number}]
 });
 
-// Creates a Devices (plural) collection in the db using the device schema
+// Creates a Activities (plural) collection in the db using the activity schema
 var Activity = db.model("activity", activitySchema);
 
 module.exports = activitySchema;
