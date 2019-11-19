@@ -164,7 +164,7 @@ router.put('/replace', function(req, res, next) {
                   console.log("updated")
                     return res.status(204).json("Device ID " + req.body.oldDeviceId + " was updated to " + req.body.newDeviceId + ".");
                 } else {
-                    return res.status(404).json("Device ID " + req.params.oldDeviceId + " was not found.");
+                    return res.status(400).json("Device ID " + req.params.oldDeviceId + " was not found.");
                 }
           });
         }
