@@ -50,7 +50,7 @@ function removeDeviceListing(deviceId){
   window.setTimeout(function(){
     $("#replaceDeviceForm-"+deviceId).remove();
     $("#deviceListing-"+deviceId).remove();
-  }, 200);
+  }, 2000);
 }
 
 function accountInfoSuccess(data, textSatus, jqXHR) {
