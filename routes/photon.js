@@ -14,7 +14,6 @@ router.post('/hit', function(req, res, next) {
         status : "",
         message : ""
     };
-       console.log(req);
     // Ensure the POST data include properties id and email
     if( !req.body.hasOwnProperty("deviceId") ) {
         responseJson.status = "ERROR";
@@ -27,12 +26,6 @@ router.post('/hit', function(req, res, next) {
         responseJson.message = "Request missing apikey parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
-
-    /*if( !req.body.hasOwnProperty("GPS") ) {
-        responseJson.status = "ERROR";
-        responseJson.message = "Request missing GPS parameter.";
-        return res.status(201).send(JSON.stringify(responseJson));
-    }*/
 
     if( !req.body.hasOwnProperty("date") ) {
         responseJson.status = "ERROR";
@@ -67,7 +60,7 @@ router.post('/hit', function(req, res, next) {
         responseJson.message = "Request missing uv parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
-    console.log("After Checking");
+
     var GPS = [];
     var lon = JSON.parse(req.body.lon);
     var lat = JSON.parse(req.body.lat);
@@ -80,10 +73,7 @@ router.post('/hit', function(req, res, next) {
             speed: speed[i],
             uv: uv[i]
         });
-        console.log(req.body.lon[i]);
-        console.log(req.body.lat[i]);
     }
-    console.log(GPS);
     
     
     // Find the device and verify the apikey
@@ -108,7 +98,6 @@ router.post('/hit', function(req, res, next) {
                     humidity: 0
                     
                 });
-                console.log(newActivity);
 
                 // Save device. If successful, return success. If not, return error message.
                 newActivity.save(function(err, newActivity) {
