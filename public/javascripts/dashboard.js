@@ -63,12 +63,10 @@ function addAllListing(Activities){
           url: '/activity/all',
           type: 'GET',
           headers: { 'x-auth': window.localStorage.getItem("authToken") },
-          contentType: 'application/json'
+          dataType: 'json'
          })
-         .done(function (data, textStatus, jqXHR) {
-           addAllListing(data["activities"])
-
-         })
+         .done(addAllListing(data["activities"]))
+    
          .fail(function(jqXHR, textStatus, errorThrown) {
            let response = JSON.parse(jqXHR.responseText);
            $("#error").html("Error: " + response.message);
