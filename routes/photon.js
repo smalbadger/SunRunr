@@ -62,7 +62,7 @@ router.post('/hit', function(req, res, next) {
             }
             else {
                 // Create a new hw data with user email time stamp
-                var newActivity = new activity({
+                var newActivity = new Activity ({
                     userEmail: device.userEmail,
                     deviceid: req.body.deviceId,
                     lon: req.body.lon,
@@ -81,6 +81,7 @@ router.post('/hit', function(req, res, next) {
                     else {
                         responseJson.status = "OK";
                         responseJson.message = "Data saved in db with object ID " + newActivity._id + ".";
+
                         return res.status(201).send(JSON.stringify(responseJson));
                     }
                 });
