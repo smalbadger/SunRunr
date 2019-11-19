@@ -8,7 +8,10 @@ var usersRouter = require('./routes/users');
 var devicesRouter = require('./routes/devices');
 var app = express();
 
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
+
 
 // This is to enable cross-origin access
 app.use(function (req, res, next) {

@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/smalbadger/SunRunr#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "html": "^1.0.0",
+    "jwt-simple": "^0.5.6"
   }
 }
