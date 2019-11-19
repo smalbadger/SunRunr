@@ -90,22 +90,29 @@ function accountInfoError(jqXHR, textStatus, errorThrown) {
 
 // Registers the specified device with the server.
 function registerDevice() {
-  $.ajax({
-    url: '/devices/register',
-    type: 'POST',
-    headers: { 'x-auth': window.localStorage.getItem("authToken") },
-    contentType: 'application/json',
-    data: JSON.stringify({ deviceId: $("#deviceId").val() }),
-    dataType: 'json'
-   })
-   .done(function (data, textStatus, jqXHR) {
-     addDeviceListing($("#deviceId").val(), data["apikey"])
-   })
-   .fail(function(jqXHR, textStatus, errorThrown) {
-     let response = JSON.parse(jqXHR.responseText);
-     $("#error").html("Error: " + response.message);
-     $("#error").show();
-   });
+  var letterNumber = /^[0-9a-zA-Z]+$/;
+  if($("#deviceId").val().match(letterNumber) && $("#deviceId").val().length() == 24){
+      $.ajax({
+        url: '/devices/register',
+        type: 'POST',
+        headers: { 'x-auth': window.localStorage.getItem("authToken") },
+        contentType: 'application/json',
+        data: JSON.stringify({ deviceId: $("#deviceId").val() }),
+        dataType: 'json'
+       })
+       .done(function (data, textStatus, jqXHR) {
+         addDeviceListing($("#deviceId").val(), data["apikey"])
+       })
+       .fail(function(jqXHR, textStatus, errorThrown) {
+         let response = JSON.parse(jqXHR.responseText);
+         $("#error").html("Error: " + response.message);
+         $("#error").show();
+       });
+  }
+  else{
+    $("#error").html("Error: Device ID is either not the correct length or has characters other than letters and numbers);
+    $("#error").show();
+  }
 }
 
 function replaceDevice(oldId){
