@@ -9,8 +9,16 @@ var photonRouter = require('./routes/photon');
 var usersRouter = require('./routes/users');
 var devicesRouter = require('./routes/devices');
 var app = express();
+<<<<<<< HEAD
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug')
+=======
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'html');
+>>>>>>> d175c2c481955a3c30448a802ad7ea848e857f33
+
 
 // This is to enable cross-origin access
 app.use(function (req, res, next) {
