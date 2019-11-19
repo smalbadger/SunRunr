@@ -61,7 +61,7 @@ function addAllListing(Activities){
   function getActivities(){
   $.ajax({
           url: '/activity/all',
-          type: 'POST',
+          type: 'GET',
           headers: { 'x-auth': window.localStorage.getItem("authToken") },
           contentType: 'application/json'
          })
