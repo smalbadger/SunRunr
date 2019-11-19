@@ -222,7 +222,7 @@ router.delete("/remove/:deviceId", function(req, res) {
     // Find the device
     Device.findOne({ deviceId: req.params.deviceId }, function(err, device) {
        if (device === null) {
-          console.log("No Device found");
+           return res.status(400).send("No Device found");
        } else {
            Device.deleteOne({ deviceId: req.params.deviceId }, function(err, device)  {
                 if (err) {
