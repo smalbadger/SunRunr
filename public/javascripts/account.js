@@ -15,7 +15,7 @@ function addDeviceListing(deviceId, apiKey){
       deviceId + ", APIKEY: " + apiKey +
       " <button id='ping-" + deviceId + "' class='waves-effect waves-light btn'>Ping</button> " +
       " <button id='replace-" + deviceId + "' class='waves-effect waves-light btn'>Replace</button> " +
-      " <button id='remove-" + deviceId + "' class='waves-effect red darken-3 btn'><i class='fa fas-trash-alt'></i></button> " +
+      " <button id='remove-" + deviceId + "' class='waves-effect red darken-3 btn'><i class='material-icons medium'>highlight_off</i></button> " +
     "</li>" +
     "<li class='collection-item' id='replaceDeviceForm-" + deviceId + "'>" +
       "<label for='deviceId-" + deviceId + "'>New Device ID:</label>" +
