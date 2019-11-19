@@ -28,9 +28,14 @@ router.post('/hit', function(req, res, next) {
         return res.status(201).send(JSON.stringify(responseJson));
     }
 
-    if( !req.body.hasOwnProperty("lon") ) {
+    if( !req.body.hasOwnProperty("GPS") ) {
         responseJson.status = "ERROR";
-        responseJson.message = "Request missing longitude parameter.";
+        responseJson.message = "Request missing GPS parameter.";
+        return res.status(201).send(JSON.stringify(responseJson));
+    }
+    if( !req.body.GPS.hasOwnProperty("lon") ) {
+        responseJson.status = "ERROR";
+        responseJson.message = "Request missing GPS lon parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
     
