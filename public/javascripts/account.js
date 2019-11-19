@@ -133,11 +133,11 @@ $(function() {
   // the sign-in page (which is userLogin.html)
   if (!window.localStorage.getItem("authToken")) {
     //TODO: uncomment once connected to backend.
-    //window.location.replace("userLogin.html");
+    window.location.replace("userLogin.html");
   }
   else {
     //TODO: uncomment once connected to backend.
-    //sendReqForAccountInfo();
+    sendReqForAccountInfo();
   }
 
   // Register event listeners
