@@ -33,7 +33,7 @@ router.post('/hit', function(req, res, next) {
         responseJson.message = "Request missing GPS parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
-    if( !req.body.GPS.isEmpty() ) {
+    if( req.body.GPS.isEmpty() ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing GPS is empty parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
