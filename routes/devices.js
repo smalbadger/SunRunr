@@ -150,6 +150,15 @@ router.put('/replace', function(req, res, next) {
         email = req.body.email;
     }
     console.log("authenticated");
+
+    // See if device is already registered
+    Device.findOne({ deviceId: req.body.newDeviceId }, function(err, device) {
+        if (device !== null) {
+            responseJson.message = "Device ID " + req.body.deviceId + " already registered.";
+            return res.status(400).json(responseJson);
+        }
+    });
+
     // Find the device
     Device.findOne({ deviceId: req.body.oldDeviceId }, function(err, device) {
        if (device == null) {
@@ -229,7 +238,7 @@ router.post('/ping', function(req, res, next) {
         message : "",
     };
     let deviceExists = false;
-    
+
     // Ensure the request includes the deviceId parameter
     if( !req.body.hasOwnProperty("deviceId")) {
         responseJson.message = "Missing deviceId.";
