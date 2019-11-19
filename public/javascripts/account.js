@@ -105,8 +105,9 @@ function removeDevice(deviceId){
   $.ajax({
        url: '/devices/remove/'+deviceId,
        type: 'DELETE',
-       headers: { 'email': $("#email").html()},
+       headers: { 'x-auth':  window.localStorage.getItem("authToken") },
        data: {},
+       contentType: 'application/json',
        responseType: 'json',
        success: function (data, textStatus, jqXHR) {
            console.log("Device removed from account:" + deviceId);
