@@ -47,6 +47,8 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
     $("#remove-"+device.deviceId).click(function(event) {
       removeDevice(device.deviceId);
     });
+
+    hideReplaceDeviceForm(device.deviceId)
   }
 }
 
@@ -131,8 +133,8 @@ function removeDevice(deviceId){
   $.ajax({
        url: '/devices/remove',
        type: 'DELETE',
-       headers: {},
-       data: { 'deviceId': deviceId, 'email': $("#email").html()},
+       headers: { 'x-auth': window.localStorage.getItem("authToken") },
+       data: { 'deviceId': deviceId },
        responseType: 'json',
        success: function (data, textStatus, jqXHR) {
            console.log("Device removed from account:" + deviceId);
