@@ -122,7 +122,10 @@ router.post('/register', function(req, res, next) {
 //replacing the device
 router.put('/replace', function(req, res, next) {
     //Ensure the request includes the deviceId parameter
-    if( !req.params.hasOwnProperty("deviceId")) {
+    if( !req.params.hasOwnProperty("oldDeviceId")) {
+         return res.status(400).json("Missing deviceId.");
+    }
+    if( !req.params.hasOwnProperty("newDeviceId")) {
          return res.status(400).json("Missing deviceId.");
     }
 
@@ -146,11 +149,11 @@ router.put('/replace', function(req, res, next) {
         email = req.body.email;
     }
     // Find the device
-    Device.findOne({ deviceId: req.params.deviceId }, function(err, device) {
+    Device.findOne({ oldDeviceId: req.params.oldDeviceId }, function(err, device) {
        if (device === null) {
            return res.status(400).send("No Device found");
        } else {
-           Device.findOneAndUpdate({ deviceId: req.body.deviceId }, { apikey: deviceApikey, deviceId: req.body.deviceId  } , function(err, device) {
+           Device.findOneAndUpdate({ oldDeviceId: req.body.oldDeviceId }, { apikey: deviceApikey, oldDeviceId: req.body.newDeviceId  } , function(err, device) {
                 if (err) {
                     return res.status(400).send(err);
                 } else if (device) {
@@ -238,14 +241,14 @@ router.post('/ping', function(req, res, next) {
         return res.status(400).json(responseJson);
     }
 
-    request({
-       method: "POST",
-       uri: "https://api.particle.io/v1/devices/" + req.body.deviceId + "/pingDevice",
-       form: {
-           access_token : particleAccessToken,
-           args: "" + (Math.floor(Math.random() * 11) + 1)
-        }
-    });
+    // request({
+    //    method: "POST",
+    //    uri: "https://api.particle.io/v1/devices/" + req.body.deviceId + "/pingDevice",
+    //    form: {
+    //        access_token : particleAccessToken,
+    //        args: "" + (Math.floor(Math.random() * 11) + 1)
+    //     }
+    // });
 
     responseJson.success = true;
     responseJson.message = "Device ID " + req.body.deviceId + " pinged.";

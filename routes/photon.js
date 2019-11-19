@@ -14,7 +14,7 @@ router.post('/hit', function(req, res, next) {
         status : "",
         message : ""
     };
-
+       console.log(req);
     // Ensure the POST data include properties id and email
     if( !req.body.hasOwnProperty("deviceId") ) {
         responseJson.status = "ERROR";
@@ -28,11 +28,11 @@ router.post('/hit', function(req, res, next) {
         return res.status(201).send(JSON.stringify(responseJson));
     }
 
-    if( !req.body.hasOwnProperty("GPS") ) {
+    /*if( !req.body.hasOwnProperty("GPS") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing GPS parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
-    }
+    }*/
 
     if( !req.body.hasOwnProperty("date") ) {
         responseJson.status = "ERROR";
@@ -45,10 +45,9 @@ router.post('/hit', function(req, res, next) {
         responseJson.message = "Request missing GPS parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
-    /*
-    if( req.body.GPS.isEmpty() ) {
+    if( !req.body.hasOwnProperty("lon") ) {
         responseJson.status = "ERROR";
-        responseJson.message = "Request missing GPS is empty parameter.";
+        responseJson.message = "Request missing latitude parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
     
@@ -68,7 +67,22 @@ router.post('/hit', function(req, res, next) {
         responseJson.message = "Request missing uv parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
-    */
+    console.log("After Checking");
+    var GPS = [];
+    console.log(req.body.lon.length);
+    for(var i = 0; i < req.body.lon.length; i++){
+        GPS.push({
+            lon: Float.parseFloat(req.body.lon[i]),
+            lat: Float.parseFloat(req.body.lat[i]),
+            speed: Float.parseFloat(req.body.speed[i]),
+            uv: Float.parseFloat(req.body.uv[i])
+        });
+        console.log(req.body.lon[i]);
+        console.log(req.body.lat[i]);
+    }
+    console.log(GPS);
+    
+    
     // Find the device and verify the apikey
     Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
         if (device !== null) {
@@ -83,7 +97,7 @@ router.post('/hit', function(req, res, next) {
                 var newActivity = new Activity ({
                     userEmail: device.userEmail,
                     deviceid: req.body.deviceId,
-                    GPS: "",//req.body.GPS,
+                    GPS: GPS,
                     date: req.body.date,
                     duration: req.body.duration,
                     calories: 0,
@@ -91,6 +105,7 @@ router.post('/hit', function(req, res, next) {
                     humidity: 0
                     
                 });
+                console.log(newActivity);
 
                 // Save device. If successful, return success. If not, return error message.
                 newActivity.save(function(err, newActivity) {
