@@ -77,7 +77,7 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
           dataType: 'json'
          })
          .done(function(data, textStatus, jqXHR){
-          addAllListing(data["activities"])
+          addAllListing(data["activities"]);
     
           });
     
