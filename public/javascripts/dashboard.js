@@ -52,20 +52,10 @@ function addActivityListing(activity){
     );
   }
   
-function addAllListing(Activities){
+function accountInfoSuccess(data, textSatus, jqXHR) {
+  // Add the devices to the list before the list item for the add device button (link)
   for(var activity in Activities){
     addActivityListing(activity);
-  }
-}
-function accountInfoSuccess(data, textSatus, jqXHR) {
-  $("#email").html(data.email);
-  $("#fullName").html(data.fullName);
-  $("#lastAccess").html(data.lastAccess);
-  $("#main").show();
-
-  // Add the devices to the list before the list item for the add device button (link)
-  for (var device of data.devices) {
-    addDeviceListing(device.deviceId, device.apikey);
   }
 }  
 
@@ -76,10 +66,7 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
           headers: { 'x-auth': window.localStorage.getItem("authToken") },
           dataType: 'json'
          })
-         .done(function(data, textStatus, jqXHR){
-          addAllListing(data["activities"]);
-    
-          });
+         .done(accountInfoSuccess);
     
          .fail(function(jqXHR, textStatus, errorThrown) {
            let response = JSON.parse(jqXHR.responseText);
