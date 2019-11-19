@@ -9,8 +9,8 @@ function sendSigninRequest() {
     data: JSON.stringify({ email : email, password : password }),
     dataType: 'json'
   })
-    .done(signinSuccess)
-    .fail(signinError);
+  .done(signinSuccess)
+  .fail(signinError);
 }
 
 function signinSuccess(data, textSatus, jqXHR) {
