@@ -91,7 +91,7 @@ function accountInfoError(jqXHR, textStatus, errorThrown) {
 // Registers the specified device with the server.
 function registerDevice() {
   var letterNumber = /^[0-9a-zA-Z]+$/;
-  if($("#deviceId").val().match(letterNumber) && $("#deviceId").val().length() == 24){
+  if($("#deviceId").val().match(letterNumber) && $("#deviceId").val().length == 24){
       $.ajax({
         url: '/devices/register',
         type: 'POST',
