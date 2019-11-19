@@ -44,6 +44,13 @@ function addDeviceListing(deviceId, apiKey){
   hideReplaceDeviceForm(deviceId)
 }
 
+function removeDeviceListing(deviceId){
+  $("#replaceDeviceForm-"+deviceId).slideUp()
+  $("#deviceListing-"+deviceId).slideUp()
+  $("#replaceDeviceForm-"+deviceId).remove()
+  $("#deviceListing-"+deviceId).remove()
+}
+
 function accountInfoSuccess(data, textSatus, jqXHR) {
   $("#email").html(data.email);
   $("#fullName").html(data.fullName);
@@ -111,7 +118,7 @@ function removeDevice(deviceId){
        responseType: 'json',
        success: function (data, textStatus, jqXHR) {
            console.log("Device removed from account:" + deviceId);
-
+           removeDeviceLising(deviceId);
        },
        error: function(jqXHR, textStatus, errorThrown) {
            var response = JSON.parse(jqXHR.responseText);
