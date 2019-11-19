@@ -71,6 +71,8 @@ router.post('/hit', function(req, res, next) {
                     userEmail: device.userEmail,
                     deviceid: req.body.deviceId,
                     GPS: req.body.GPS,
+                    date: req.body.date,
+                    duration: req.body.duration
                     /*lat: req.body.lat,
                     speed: req.body.speed,
                     uv: req.body.uv*/
