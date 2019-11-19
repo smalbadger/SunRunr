@@ -9,6 +9,41 @@ function sendReqForAccountInfo() {
     .fail(accountInfoError);
 }
 
+function addDeviceListing(deviceId, apiKey){
+  $("#addDeviceForm").before(
+    "<li class='collection-item' id='deviceListing-" +  + "'>ID: " +
+      deviceId + ", APIKEY: " + apiKey +
+      " <button id='ping-" + deviceId + "' class='waves-effect waves-light btn'>Ping</button> " +
+      " <button id='replace-" + deviceId + "' class='waves-effect waves-light btn'>Replace</button> " +
+      " <button id='remove-" + deviceId + "' class='waves-effect waves-light btn'>Remove</button> " +
+    "</li>" +
+    "<li class='collection-item' id='replaceDeviceForm-" + deviceId + "'>" +
+      "<label for='deviceId-" + deviceId + "'>New Device ID:</label>" +
+      "<input type='text' id='deviceId-" + deviceId +"' name='newDeviceId' col='30'>" +
+      "<button id='replaceDevice-" + deviceId + "' class='waves-effect waves-light btn'>Replace</button>" +
+      "<button id='cancel-" + deviceId + "' class='waves-effect waves-light btn'>Cancel</button>" +
+    "</li>"
+  );
+
+  $("#ping-"+deviceId).click(function(event) {
+    pingDevice(deviceId);
+  });
+
+  $("#replace-"+deviceId).click(function(event) {
+    showReplaceDeviceForm(deviceId);
+  });
+
+  $("#cancel-"+deviceId).click(function(event){
+    hideReplaceDeviceForm(deviceId);
+  });
+
+  $("#remove-"+deviceId).click(function(event) {
+    removeDevice(.deviceId);
+  });
+
+  hideReplaceDeviceForm(deviceId)
+}
+
 function accountInfoSuccess(data, textSatus, jqXHR) {
   $("#email").html(data.email);
   $("#fullName").html(data.fullName);
@@ -17,38 +52,7 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
 
   // Add the devices to the list before the list item for the add device button (link)
   for (var device of data.devices) {
-    $("#addDeviceForm").before(
-      "<li class='collection-item'>ID: " +
-        device.deviceId + ", APIKEY: " + device.apikey +
-        " <button id='ping-" + device.deviceId + "' class='waves-effect waves-light btn'>Ping</button> " +
-        " <button id='replace-" + device.deviceId + "' class='waves-effect waves-light btn'>Replace</button> " +
-        " <button id='remove-" + device.deviceId + "' class='waves-effect waves-light btn'>Remove</button> " +
-      "</li>" +
-      "<li class='collection-item' id='replaceDeviceForm-" + device.deviceId + "'>" +
-        "<label for='deviceId-" + device.deviceId + "'>New Device ID:</label>" +
-        "<input type='text' id='deviceId-" + device.deviceId +"' name='newDeviceId' col='30'>" +
-        "<button id='replaceDevice-" + device.deviceId + "' class='waves-effect waves-light btn'>Replace</button>" +
-        "<button id='cancel-" + device.deviceId + "' class='waves-effect waves-light btn'>Cancel</button>" +
-      "</li>"
-    );
-
-    $("#ping-"+device.deviceId).click(function(event) {
-      pingDevice(event, device.deviceId);
-    });
-
-    $("#replace-"+device.deviceId).click(function(event) {
-      showReplaceDeviceForm(device.deviceId);
-    });
-
-    $("#cancel-"+device.deviceId).click(function(event){
-      hideReplaceDeviceForm(device.deviceId);
-    });
-
-    $("#remove-"+device.deviceId).click(function(event) {
-      removeDevice(device.deviceId);
-    });
-
-    hideReplaceDeviceForm(device.deviceId)
+    addDeviceListing(device.deviceId, device.apikey);
   }
 }
 
@@ -76,39 +80,7 @@ function registerDevice() {
     dataType: 'json'
    })
    .done(function (data, textStatus, jqXHR) {
-     // Add new device to the device list
-     $("#addDeviceForm").before(
-       "<li class='collection-item'>ID: " +
-         $("#deviceId").val() + ", APIKEY: " + data["apikey"] +
-         " <button id='ping-" + $("#deviceId").val() + "' class='waves-effect waves-light btn'>Ping</button> " +
-         " <button id='replace-" + $("#deviceId").val() + "' class='waves-effect waves-light btn'>Replace</button> " +
-         " <button id='remove-" + $("#deviceId").val() + "' class='waves-effect waves-light btn'>Remove</button> " +
-       "</li>" +
-       "<li class='collection-item' id='replaceDeviceForm-" + $("deviceId").val() + "'>" +
-         "<label for='deviceId-" + $("deviceId").val() + "'>New Device ID:</label>" +
-         "<input type='text' id='deviceId-" + $("deviceId").val() +"' name='newDeviceId' col='30'>" +
-         "<button id='replaceDevice-" + $("deviceId").val() + "' class='waves-effect waves-light btn'>Replace</button>" +
-         "<button id='cancel-" + $("deviceId").val() + "' class='waves-effect waves-light btn'>Cancel</button>" +
-       "</li>"
-     );
-
-     $("#ping-"+$("#deviceId").val()).click(function(event) {
-       pingDevice(event, $("#deviceId").val());
-     });
-
-     $("#replace-"+$("#deviceId").val()).click(function(event) {
-       showReplaceDeviceForm($("#deviceId").val());
-     });
-
-     $("#cancel-"+$("#deviceId").val()).click(function(event){
-       hideReplaceDeviceForm($("#deviceId").val());
-     });
-
-     $("#remove-"+$("#deviceId").val()).click(function(event) {
-       removeDevice($("#deviceId").val());
-     });
-
-     hideAddDeviceForm();
+     addDeviceListing($("#deviceId").val(), data["apikey"])
    })
    .fail(function(jqXHR, textStatus, errorThrown) {
      let response = JSON.parse(jqXHR.responseText);
@@ -138,6 +110,7 @@ function removeDevice(deviceId){
        responseType: 'json',
        success: function (data, textStatus, jqXHR) {
            console.log("Device removed from account:" + deviceId);
+
        },
        error: function(jqXHR, textStatus, errorThrown) {
            var response = JSON.parse(jqXHR.responseText);
@@ -147,7 +120,7 @@ function removeDevice(deviceId){
    });
 }
 
-function pingDevice(event, deviceId) {
+function pingDevice(deviceId) {
    $.ajax({
         url: '/devices/ping',
         type: 'POST',
