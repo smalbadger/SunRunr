@@ -133,7 +133,7 @@ function removeDevice(deviceId){
   $.ajax({
        url: '/devices/remove/'+deviceId,
        type: 'DELETE',
-       headers: { 'x-auth': window.localStorage.getItem("authToken") },
+       headers: { 'email': $("#email").html()},
        data: {},
        responseType: 'json',
        success: function (data, textStatus, jqXHR) {
