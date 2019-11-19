@@ -108,7 +108,7 @@ function replaceDevice(oldId){
     type: 'PUT',
     headers: { 'x-auth': window.localStorage.getItem("authToken") },
     contentType: 'application/json',
-    data: JSON.stringify({ newDeviceId: oldId, oldDeviceId}),
+    data: JSON.stringify({ "newDeviceId": newId, "oldDeviceId":oldId}),
     dataType: 'json'
    })
    .done(function (data, textStatus, jqXHR) {
