@@ -69,13 +69,16 @@ router.post('/hit', function(req, res, next) {
     }
     console.log("After Checking");
     var GPS = [];
-    console.log(req.body.lon.length);
-    for(var i = 0; i < req.body.lon.length; i++){
+    var lon = req.body.lon.parseJson();
+    var lat = req.body.lat.parseJson();
+    var speed = req.body.speed.parseJson();
+    var uv = req.body.uv.parseJson();
+    for(var i = 0; i < lon.length; i++){
         GPS.push({
-            lon: Float.parseFloat(req.body.lon[i]),
-            lat: Float.parseFloat(req.body.lat[i]),
-            speed: Float.parseFloat(req.body.speed[i]),
-            uv: Float.parseFloat(req.body.uv[i])
+            lon: lon[i],
+            lat: lat[i],
+            speed: speed[i],
+            uv: uv[i]
         });
         console.log(req.body.lon[i]);
         console.log(req.body.lat[i]);

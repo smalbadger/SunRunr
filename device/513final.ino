@@ -29,11 +29,21 @@ int trys = 0;
 int tSpeed = 0;
 unsigned long lastSync = millis();
 bool executeStateMachines = false;
-
+String APIKEY = String();
 unsigned long duration = 0;
 enum State {S_stop, S_record, S_pause};
 
 State state;
+
+
+void PostHandler(const char *event, const char *data) {
+  // Handle the integration response
+  
+  String output = String::format("POST Response:\n  %s\n  %s\n", event, data);
+  
+  Serial.println(output);
+}
+          
 
 
 void setup() {
@@ -52,11 +62,14 @@ void setup() {
     UVTracker.begin(VEML6070_1_T);
     state = S_stop;
     
-    
+    Particle.subscribe("hook-response/hit", PostHandler, MY_DEVICES); 
     //need to subscribe and create the response handler
 }
 
+
+
 void loop() {
+    Serial.println(APIKEY);
     if(state == S_stop && digitalRead(button) == 1){
         while(digitalRead(button) == 1){ //wait till end of button press
             delay(1000);
@@ -85,10 +98,12 @@ void loop() {
         
         for(int i = 0; i < recorded.size(); i++){
             Serial.println(recorded.at(i));
+            Particle.publish("hit", recorded.at(i));
+            delay(6000);
             
         }
-        
-        //recorded.clear();
+        //Particle.publish("hit", recorded.at(i));
+        recorded.clear();
     }
     
     

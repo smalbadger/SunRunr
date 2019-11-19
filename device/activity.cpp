@@ -67,20 +67,37 @@ using namespace std;
     
     String Activity::createJson(){
         String data = String();
+        String lon = String("\"lon\": [ ");
+        String lat = String("\"lat\": [");
+        String Speed = String("\"speed\": [");
+        String uv = String(" \"uv\": [");
         for(int i = 0; i < locations.size(); i++){
-            String curr = String::format("{\"lon:\" \"%.2f\", \"lat:\" \"%.2f\", \"speed:\" \"%.2f\", \"uv:\" \"%.2f\"}", this->locations.at(i).getLongitude(), this->locations.at(i).getLatitude(), this->locations.at(i).getSpeed(), this->locations.at(i).getUV() );
-            data.concat(curr);
+            lon.concat(String::format("\"%.2f\"", this->locations.at(i).getLongitude()));
+            lat.concat(String::format("\"%.2f\"",  this->locations.at(i).getLatitude() ));
+            Speed.concat(String::format("\"%.2f\"", this->locations.at(i).getSpeed()));
+            uv.concat(String::format("\"%.2f\"",this->locations.at(i).getUV()));
+            //data.concat(curr);
             if(i != locations.size() - 1){
-                data.concat(", ");
+                lon.concat(", ");
+                lat.concat(", ");
+                Speed.concat(", ");
+                uv.concat(", ");
             }
         }
+        lon.concat("], ");
+        lat.concat("], ");
+        Speed.concat("], ");
+        uv.concat("] ");
+        
         Serial.println(data);
-        String Data = String::format("{\"date:\" \"");
+        String Data = String::format("{\"date\": \"");
         Data.concat(this->date);
-        String header = String::format("\", \"duration:\" \"%lu\",  \"GPS:\" [", this->duration);
+        String header = String::format("\", \"duration\": \"%lu\",", this->duration);
         Data.concat(header);
-        Data.concat(data);
-        Data.concat(" ]");
+        Data.concat(lon);
+        Data.concat(lat);
+        Data.concat(Speed);
+        Data.concat(uv);
         Serial.println(Data);
         return Data;
         
