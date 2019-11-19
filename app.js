@@ -2,13 +2,13 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 
-var indexRouter = require('./routes/index');
+
 var photonRouter = require('./routes/photon');
 var usersRouter = require('./routes/users');
 var devicesRouter = require('./routes/devices');
-
 var app = express();
 
+app.set('view engine', 'html');
 
 // This is to enable cross-origin access
 app.use(function (req, res, next) {
@@ -48,4 +48,3 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
-
