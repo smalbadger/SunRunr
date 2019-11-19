@@ -241,7 +241,7 @@ router.delete('/remove', function(req, res, next) {
         }
         else {
 
-            Device.remove({ deviceId: req.body.deviceId }, , function(err, device) {
+            Device.remove({ deviceId: req.body.deviceId }, function(err, device) {
                 if (err) {
                     responseJson.message = err;
                     // This following is equivalent to: res.status(400).send(JSON.stringify(responseJson));
