@@ -40,33 +40,43 @@ router.post('/signin', function(req, res, next) {
 /* Registering a new user */
 router.post('/register', function(req, res, next) {
 
+    if (!req.body.hasOwnProperty("email")){
+      return res.status(400).json({success:false, message: "Must provide email."})
+    }
+    if (!req.body.hasOwnProperty("fullName")){
+      return res.status(400).json({success:false, message: "Must provide full name."})
+    }
+    if (!req.body.hasOwnProperty("password")){
+      return res.status(400).json({success:false, message: "Must provide password."})
+    }
+
     bcrypt.hash(req.body.password, 10, function(err, hash) {
         if (err) {
-            res.status(400).json({success : false, message : err.errmsg});
+            return res.status(400).json({success : false, message : err.errmsg});
         }
         else {
-            var newUser = new User ({
-                email: req.body.email,
-                fullName: req.body.fullName,
-                passwordHash: hash
-            });
-
             User.findOne({email: req.body.email}, function(err, user) {
               if (err) { // couldnt connect to the database
-                  res.status(401).json({success : false, message : "Can't connect to DB."});
+                  return res.status(401).json({success : false, message : "Can't connect to DB."});
               }
               else if(!user) { // couldnt authenticate the user
+                var newUser = new User ({
+                    email: req.body.email,
+                    fullName: req.body.fullName,
+                    passwordHash: hash
+                });
+
                 User.insert(newUser,function(err, user) {
                     if (err) {
-                        res.status(400).json({success : false, message : err.errmsg});
+                        return res.status(400).json({success : false, message : err.errmsg});
                     }
                     else {
-                        res.status(201).json({success : true, message : user.fullName + "has been created"});
+                        return res.status(201).json({success : true, message : req.body.fullName + "has been created"});
                     }
                 });
               }
               else {
-                  res.status(401).json({success : false, message : "Email is already in use."});
+                  return res.status(401).json({success : false, message : "Email is already in use."});
               }
             });
         }
