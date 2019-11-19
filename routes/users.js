@@ -13,22 +13,22 @@ var secret = fs.readFileSync(__dirname + '/../../jwtkey').toString();
 
 router.post('/signin', function(req, res, next) {
     User.findOne({email: req.body.email}, function(err, user) {
-        if (err) {
+        if (err) { // couldnt connect to the database
             res.status(401).json({success : false, message : "Can't connect to DB."});
         }
-        else if(!user) {
+        else if(!user) { // couldnt authenticate the user
             res.status(401).json({success : false, message : "Email or password invalid."});
         }
-        else {
+        else { 
             bcrypt.compare(req.body.password, user.passwordHash, function(err, valid) {
-                if (err) {
+                if (err) { 
                     res.status(401).json({success : false, message : "Error authenticating. Contact support."});
                 }
-                else if(valid) {
+                else if(valid) { // user was authenticated
                     var authToken = jwt.encode({email: req.body.email}, secret);
                     res.status(201).json({success:true, authToken: authToken});
                 }
-                else {
+                else { // user was found but not valid password
                     res.status(401).json({success : false, message : "Email or password invalid."});
                 }
 
@@ -112,7 +112,7 @@ router.get("/account" , function(req, res) {
 });
 
 
-//TODO: write the adds new device
+
 //TODO: write the replace device
 //TODO: write the get all users info
 //router.get("/adddiv" , function(req, res)
