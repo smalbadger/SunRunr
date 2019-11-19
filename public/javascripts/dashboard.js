@@ -57,7 +57,18 @@ function addAllListing(Activities){
     addActivityListing(activity);
   }
 }
-  
+function accountInfoSuccess(data, textSatus, jqXHR) {
+  $("#email").html(data.email);
+  $("#fullName").html(data.fullName);
+  $("#lastAccess").html(data.lastAccess);
+  $("#main").show();
+
+  // Add the devices to the list before the list item for the add device button (link)
+  for (var device of data.devices) {
+    addDeviceListing(device.deviceId, device.apikey);
+  }
+}  
+
   function getActivities(){
   $.ajax({
           url: '/activity/all',
@@ -65,7 +76,10 @@ function addAllListing(Activities){
           headers: { 'x-auth': window.localStorage.getItem("authToken") },
           dataType: 'json'
          })
-         .done(addAllListing(data["activities"]))
+         .done(function(data, textStatus, jqXHR){
+          addAllListing(data["activities"])
+    
+          });
     
          .fail(function(jqXHR, textStatus, errorThrown) {
            let response = JSON.parse(jqXHR.responseText);
