@@ -51,37 +51,26 @@ router.post('/register', function(req, res, next) {
     }
 
     bcrypt.hash(req.body.password, 10, function(err, hash) {
-        if (err) {
-            return res.status(400).json({success : false, message : err.errmsg});
-        }
-        else {
-            User.findOne({email: req.body.email}, function(err, user) {
-              if (err) { // couldnt connect to the database
-                  return res.status(401).json({success : false, message : "Can't connect to DB."});
-              }
-              else if(!user) { // couldnt authenticate the user
-                var newUser = new User ({
-                    email: req.body.email,
-                    fullName: req.body.fullName,
-                    passwordHash: hash
-                });
-                newUser.save();
+      if (err) {
+         res.status(400).json({success : false, message : err.errmsg});
+      }
+      else {
+        var newUser = new User ({
+            email: req.body.email,
+            fullName: req.body.fullName,
+            passwordHash: hash
+        });
 
-                // User.insert(newUser, function(err, user) {
-                //     if (err) {
-                //         return res.status(400).json({success : false, message : err.errmsg});
-                //     }
-                //     else {
-                //         return res.status(201).json({success : true, message : req.body.fullName + "has been created"});
-                //     }
-                // });
-              }
-              else {
-                  return res.status(401).json({success : false, message : "Email is already in use."});
-              }
-            });
-        }
-    });
+        newUser.save(function(err, user) {
+          if (err) {
+             res.status(400).json({success : false, message : err.errmsg});
+          }
+          else {
+             res.status(201).json({success : true, message : user.fullName + "has been created"});
+          }
+        });
+      }
+   });
 });
 
 
