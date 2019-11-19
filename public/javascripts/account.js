@@ -22,8 +22,35 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
       " <button id='ping-" + device.deviceId + "' class='waves-effect waves-light btn'>Ping</button> " +
       " </li>");
 
+    $("#addDeviceForm").before(
+      "<li class='collection-item'>ID: " +
+        device.deviceId + ", APIKEY: " + device.apikey +
+        " <button id='ping-" + device.deviceId + "' class='waves-effect waves-light btn'>Ping</button> " +
+        " <button id='replace-" + device.deviceId + "' class='waves-effect waves-light btn'>Replace</button> " +
+        " <button id='remove-" + device.deviceId + "' class='waves-effect waves-light btn'>Remove</button> " +
+      "</li>" +
+      "<li class='collection-item' id='replaceDeviceForm-" + device.deviceId + "'>" +
+        "<label for='deviceId-" + device.deviceId + "'>New Device ID:</label>" +
+        "<input type='text' id='deviceId-" + device.deviceId +"' name='newDeviceId' col='30'>" +
+        "<button id='replaceDevice-" + device.deviceId + "' class='waves-effect waves-light btn'>Replace</button>" +
+        "<button id='cancel-" + device.deviceId + "' class='waves-effect waves-light btn'>Cancel</button>" +
+      "</li>"
+    );
+
     $("#ping-"+device.deviceId).click(function(event) {
       pingDevice(event, device.deviceId);
+    });
+
+    $("#replace-"+device.deviceId).click(function(event) {
+      showReplaceDeviceForm(device.deviceId);
+    });
+
+    $("#cancel-"+device.deviceId).click(function(event){
+      hideReplaceDeviceForm(device.deviceId);
+    });
+
+    $("#remove-"+device.deviceId).click(function(event) {
+      onRemoveDeviceClicked(event, device.deviceId);
     });
   }
 }
@@ -69,19 +96,19 @@ function registerDevice() {
      );
 
      $("#ping-"+$("#deviceId").val()).click(function(event) {
-       pingDevice(event, device.deviceId);
+       pingDevice(event, $("#deviceId").val());
      });
 
      $("#replace-"+$("#deviceId").val()).click(function(event) {
-       showReplaceDeviceForm(device.deviceId);
+       showReplaceDeviceForm($("#deviceId").val());
      });
 
      $("#cancel-"+$("#deviceId").val()).click(function(event){
-       hideReplaceDeviceForm(device.deviceId);
+       hideReplaceDeviceForm($("#deviceId").val());
      });
 
      $("#remove-"+$("#deviceId").val()).click(function(event) {
-       onRemoveDeviceClicked(event, device.deviceId);
+       removeDevice($("#deviceId").val());
      });
 
      hideAddDeviceForm();
@@ -105,8 +132,22 @@ function hideReplaceDeviceForm(id){
   $("#error").hide();
 }
 
-function onRemoveDeviceClicked(event, deviceId){
-
+function removeDevice(deviceId){
+  $.ajax({
+       url: '/devices/remove',
+       type: 'POST',
+       headers: { 'x-auth': window.localStorage.getItem("authToken") },
+       data: { 'deviceId': deviceId },
+       responseType: 'json',
+       success: function (data, textStatus, jqXHR) {
+           console.log("Device removed from account:" + deviceId);
+       },
+       error: function(jqXHR, textStatus, errorThrown) {
+           var response = JSON.parse(jqXHR.responseText);
+           $("#error").html("Error: " + response.message);
+           $("#error").show();
+       }
+   });
 }
 
 function pingDevice(event, deviceId) {
