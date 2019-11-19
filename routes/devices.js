@@ -219,16 +219,25 @@ router.delete("/remove/:deviceId", function(req, res) {
         }
         email = req.body.email;
     }
-
-    Device.deleteOne({ deviceId: req.params.deviceId }, function(err, device)  {
-        if (err) {
-            return res.status(400).send(err);
-        } else if (device) {
-            return res.status(204).send("Device ID " + req.params.deviceId + " was removed.");
-        } else {
-            return res.status(404).send("Device ID " + req.params.deviceId + " was not found.");
-        }
+    // Find the device
+    Device.findOne({ deviceId: req.params.deviceId }, function(err, device) {
+       if (device === null) {
+          console.log("No Device found");
+       } else {
+           Device.deleteOne({ deviceId: req.params.deviceId }, function(err, device)  {
+                if (err) {
+                    return res.status(400).send(err);
+                } else if (device) {
+                    return res.status(204).send("Device ID " + req.params.deviceId + " was removed.");
+                } else {
+                    return res.status(404).send("Device ID " + req.params.deviceId + " was not found.");
+                }
+            });
+       }
     });
+
+
+   
 });
 
  
