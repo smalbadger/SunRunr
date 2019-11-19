@@ -114,7 +114,7 @@ function replaceDevice(oldId){
    .done(function (data, textStatus, jqXHR) {
      //change device listing information
      oldListing = $("deviceListing-"+oldId).clone()
-     oldText = oldListing.children().remove().end().text().split(" ")
+     oldText = oldListing.text().split(" ")
      console.log("Old Text:" + oldText)
      oldText[1] = newId
      console.log("Old Text:" + oldText)
