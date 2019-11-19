@@ -194,7 +194,7 @@ router.put('/replace', function(req, res, next) {
 
 
 //removing the device
-router.delete("/remove/:id", function(req, res) {
+router.delete("/remove/:deviceId", function(req, res) {
 
     // Ensure the request includes the deviceId parameter
     // if( !req.body.hasOwnProperty("deviceId")) {
@@ -224,13 +224,13 @@ router.delete("/remove/:id", function(req, res) {
     //     email = req.body.email;
     // }
 
-    Device.findByIdAndRemove(req.params.id, function(err, song) {
+    Device.remove({ deviceId: req.params.deviceId }, function(err, device)  {
         if (err) {
             res.status(400).send(err);
-        } else if (song) {
-            return res.status(204).send("Device ID " + req.body.deviceId + " was removed.");
+        } else if (device) {
+            return res.status(204).send("Device ID " + req.params.deviceId + " was removed.");
         } else {
-            return res.status(404).send("Device ID " + req.body.deviceId + " was not found.");
+            return res.status(404).send("Device ID " + req.params.deviceId + " was not found.");
         }
     });
 });
