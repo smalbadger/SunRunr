@@ -4,8 +4,9 @@
 var express = require('express');
 var router = express.Router();
 
+var User = require("../models/user");
 var Device = require("../models/device");
-var activity = require("../models/activity");
+var Activity = require("../models/activity");
 
 /* POST: Register new device. */
 router.post('/hit', function(req, res, next) {
@@ -27,19 +28,28 @@ router.post('/hit', function(req, res, next) {
         return res.status(201).send(JSON.stringify(responseJson));
     }
 
-    // TODO: check if there is gps
-    // TODO: check if there is duration, calories, temp, humadity
-    // if( !req.body.hasOwnProperty("longitude") ) {
-    //     responseJson.status = "ERROR";
-    //     responseJson.message = "Request missing longitude parameter.";
-    //     return res.status(201).send(JSON.stringify(responseJson));
-    // }
-    //
-    // if( !req.body.hasOwnProperty("latitude") ) {
-    //     responseJson.status = "ERROR";
-    //     responseJson.message = "Request missing latitude parameter.";
-    //     return res.status(201).send(JSON.stringify(responseJson));
-    // }
+    if( !req.body.hasOwnProperty("lon") ) {
+        responseJson.status = "ERROR";
+        responseJson.message = "Request missing longitude parameter.";
+        return res.status(201).send(JSON.stringify(responseJson));
+    }
+    
+    if( !req.body.hasOwnProperty("lat") ) {
+        responseJson.status = "ERROR";
+        responseJson.message = "Request missing latitude parameter.";
+        return res.status(201).send(JSON.stringify(responseJson));
+    }
+
+    if( !req.body.hasOwnProperty("speed") ) {
+        responseJson.status = "ERROR";
+        responseJson.message = "Request missing gps speed parameter.";
+        return res.status(201).send(JSON.stringify(responseJson));
+    }
+     if( !req.body.hasOwnProperty("uv") ) {
+        responseJson.status = "ERROR";
+        responseJson.message = "Request missing uv parameter.";
+        return res.status(201).send(JSON.stringify(responseJson));
+    }
 
     // Find the device and verify the apikey
     Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
@@ -55,8 +65,10 @@ router.post('/hit', function(req, res, next) {
                 var newActivity = new activity({
                     userEmail: device.userEmail,
                     deviceid: req.body.deviceId,
-                    longitude: req.body.longitude,
-                    latitude: req.body.latitude
+                    lon: req.body.lon,
+                    lat: req.body.lat,
+                    speed: req.body.speed,
+                    uv: req.body.uv
                 });
 
                 // Save device. If successful, return success. If not, return error message.
