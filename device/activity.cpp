@@ -6,6 +6,7 @@ using namespace std;
         this->longitude = 0.0;
         this->latitude = 0.0;
         this->speed = 0.0;
+        this->uv = 0.0;
     
     }
     
@@ -63,5 +64,32 @@ using namespace std;
         this->locations.push_back(gps);
         return;
     }
+    
+    String Activity::createJson(){
+        String data = String();
+        for(int i = 0; i < locations.size(); i++){
+            String curr = String::format("{\"lon:\" \"%.2f\", \"lat:\" \"%.2f\", \"speed:\" \"%.2f\", \"uv:\" \"%.2f\"}", this->locations.at(i).getLongitude(), this->locations.at(i).getLatitude(), this->locations.at(i).getSpeed(), this->locations.at(i).getUV() );
+            data.concat(curr);
+            if(i != locations.size() - 1){
+                data.concat(", ");
+            }
+        }
+        Serial.println(data);
+        String Data = String::format("{\"date:\" \"");
+        Data.concat(this->date);
+        String header = String::format("\", \"duration:\" \"%lu\",  \"GPS:\" [", this->duration);
+        Data.concat(header);
+        Data.concat(data);
+        Data.concat(" ]");
+        Serial.println(Data);
+        return Data;
+        
+    }
+    
+    String Activity::getDate(){
+        return this->date;
+        
+    }
+    
     
     

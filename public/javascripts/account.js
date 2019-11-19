@@ -52,13 +52,37 @@ function registerDevice() {
    })
    .done(function (data, textStatus, jqXHR) {
      // Add new device to the device list
-     $("#addDeviceForm").before("<li class='collection-item'>ID: " +
-     $("#deviceId").val() + ", APIKEY: " + data["apikey"] +
-       " <button id='ping-" + $("#deviceId").val() + "' class='waves-effect waves-light btn'>Ping</button> " +
-       "</li>");
+     $("#addDeviceForm").before(
+       "<li class='collection-item'>ID: " +
+         $("#deviceId").val() + ", APIKEY: " + data["apikey"] +
+         " <button id='ping-" + $("#deviceId").val() + "' class='waves-effect waves-light btn'>Ping</button> " +
+         " <button id='replace-" + $("#deviceId").val() + "' class='waves-effect waves-light btn'>Replace</button> " +
+         " <button id='remove-" + $("#deviceId").val() + "' class='waves-effect waves-light btn'>Remove</button> " +
+       "</li>" +
+       "<li class='collection-item' id='replaceDeviceForm-" + $("deviceId").val() + "'>" +
+         "<label for='deviceId-" + $("deviceId").val() + "'>New Device ID:</label>" +
+         "<input type='text' id='deviceId-" + $("deviceId").val() +"' name='newDeviceId' col='30'>" +
+         "<button id='replaceDevice-" + $("deviceId").val() + "' class='waves-effect waves-light btn'>Replace</button>" +
+         "<button id='cancel-" + $("deviceId").val() + "' class='waves-effect waves-light btn'>Cancel</button>" +
+       "</li>"
+     );
+
      $("#ping-"+$("#deviceId").val()).click(function(event) {
        pingDevice(event, device.deviceId);
      });
+
+     $("#replace-"+$("#deviceId").val()).click(function(event) {
+       showReplaceDeviceForm(device.deviceId);
+     });
+
+     $("#cancel-"+$("#deviceId").val()).click(function(event){
+       hideReplaceDeviceForm(device.deviceId);
+     });
+
+     $("#remove-"+$("#deviceId").val()).click(function(event) {
+       onRemoveDeviceClicked(event, device.deviceId);
+     });
+
      hideAddDeviceForm();
    })
    .fail(function(jqXHR, textStatus, errorThrown) {
@@ -68,31 +92,20 @@ function registerDevice() {
    });
 }
 
-function replaceDevice() {
-  $.ajax({
-    url: '/devices/replace',
-    type: 'POST',
-    headers: { 'x-auth': window.localStorage.getItem("authToken") },
-    contentType: 'application/json',
-    data: JSON.stringify({ oldDeviceId: $("#oldDeviceId").val(), newDeviceId: $("#newDeviceId").val() }),
-    dataType: 'json'
-   })
-   .done(function (data, textStatus, jqXHR) {
-     // Add new device to the device list
-     $("#addDeviceForm").before("<li class='collection-item'>ID: " +
-     $("#deviceId").val() + ", APIKEY: " + data["apikey"] +
-       " <button id='ping-" + $("#deviceId").val() + "' class='waves-effect waves-light btn'>Ping</button> " +
-       "</li>");
-     $("#ping-"+$("#deviceId").val()).click(function(event) {
-       pingDevice(event, device.deviceId);
-     });
-     hideAddDeviceForm();
-   })
-   .fail(function(jqXHR, textStatus, errorThrown) {
-     let response = JSON.parse(jqXHR.responseText);
-     $("#error").html("Error: " + response.message);
-     $("#error").show();
-   });
+function showReplaceDeviceForm(id){
+  $("#deviceId-"id).val("");
+  $("#replace-"+id).hide();
+  $("#replaceDeviceForm-"+id).slideDown();
+}
+
+function hideReplaceDeviceForm(id){
+  $("#replace-"+id).show();
+  $("#replaceDeviceForm-"+id).slideUp();
+  $("#error").hide();
+}
+
+function onRemoveDeviceClicked(event, deviceId){
+
 }
 
 function pingDevice(event, deviceId) {
@@ -129,14 +142,12 @@ function hideAddDeviceForm() {
 
 // Handle authentication on page load
 $(function() {
-  // If there's no authToekn stored, redirect user to
+  // If there's no authToken stored, redirect user to
   // the sign-in page (which is userLogin.html)
   if (!window.localStorage.getItem("authToken")) {
-    //TODO: uncomment once connected to backend.
     window.location.replace("userLogin.html");
   }
   else {
-    //TODO: uncomment once connected to backend.
     sendReqForAccountInfo();
   }
 
