@@ -13,7 +13,7 @@ function addDeviceListing(deviceId, apiKey){
   $("#addDeviceForm").before(
     "<li class='collection-item' id='deviceListing-" + deviceId + "'>" +
       "<div class='row'>" +
-        "<div class='col s9 m9 l9'" +
+        "<div class='col s9 m9 l9'>" +
           "ID: " + deviceId +
           "</br>APIKEY: " + apiKey +
         "</div>" +
@@ -23,7 +23,7 @@ function addDeviceListing(deviceId, apiKey){
           "<button id='remove-" + deviceId + "' class='waves-effect red darken-3 btn'><i class='material-icons medium'>highlight_off</i></button> " +
         "</div>" +
       "</div>" +
-    "</li>" + 
+    "</li>" +
     "<li class='collection-item' id='replaceDeviceForm-" + deviceId + "'>" +
       "<label for='deviceId-" + deviceId + "'>New Device ID:</label>" +
       "<input type='text' id='deviceId-" + deviceId +"' name='newDeviceId' col='30'>" +
