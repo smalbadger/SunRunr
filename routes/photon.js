@@ -83,9 +83,12 @@ router.post('/hit', function(req, res, next) {
                 var newActivity = new Activity ({
                     userEmail: device.userEmail,
                     deviceid: req.body.deviceId,
-                    //GPS: req.body.GPS,
+                    GPS: "",//req.body.GPS,
                     date: req.body.date,
-                    duration: req.body.duration
+                    duration: req.body.duration,
+                    calories: 0,
+                    temperature: 0,
+                    humidity: 0
                     /*lat: req.body.lat,
                     speed: req.body.speed,
                     uv: req.body.uv*/

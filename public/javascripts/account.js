@@ -11,7 +11,7 @@ function sendReqForAccountInfo() {
 
 function addDeviceListing(deviceId, apiKey){
   $("#addDeviceForm").before(
-    "<li class='collection-item' id='deviceListing-" +  + "'>ID: " +
+    "<li class='collection-item' id='deviceListing-" + deviceId + "'>ID: " +
       deviceId + ", APIKEY: " + apiKey +
       " <button id='ping-" + deviceId + "' class='waves-effect waves-light btn'>Ping</button> " +
       " <button id='replace-" + deviceId + "' class='waves-effect waves-light btn'>Replace</button> " +
