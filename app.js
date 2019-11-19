@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 
-
+var indexRouter = require('./routes/index')
 var photonRouter = require('./routes/photon');
 var usersRouter = require('./routes/users');
 var devicesRouter = require('./routes/devices');
