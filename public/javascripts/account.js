@@ -115,14 +115,18 @@ function replaceDevice(oldId){
      //change device listing information
      oldListing = $("deviceListing-"+oldId).clone()
      oldText = oldListing.children().remove().end().text().split(" ")
+     console.log("Old Text:" + oldText)
      oldText[1] = newId
+     console.log("Old Text:" + oldText)
      newText = oldText.join(" ")
+     console.log("New Text:" + newText)
 
      oldListing.empty()
      oldListing.text(newText)
      oldListing.append($("deviceListing-"+oldId).children())
-
+     console.log(oldListing.text())
      $("deviceListing-"+oldId).replaceWith(oldListing)
+
      $("#deviceListing-"+oldId).attr("id", "#deviceListing-"+newId)
      $("#ping-"+oldId).attr("id", "#ping-"+newId)
      $("#replace-"+oldId).attr("id", "#replace-"+newId)
