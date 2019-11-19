@@ -110,7 +110,7 @@ function registerDevice() {
        });
   }
   else{
-    $("#error").html("Error: Device ID is either not the correct length or has characters other than letters and numbers);
+    $("#error").html("Error: Device ID is either not the correct length or has characters other than letters and numbers");
     $("#error").show();
   }
 }
