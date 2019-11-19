@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./bin/www",
-    "dev": "(git pull origin master) && (killall -9 node) && (DEBUG=SunRunr:* npm start)",
-    "deploy": "git pull origin master && killall -9 node && nohup npm start > ../serverLog & && exit"
+    "dev": "(git pull origin master); (killall -9 node); (DEBUG=SunRunr:* npm start)",
+    "deploy": "(git pull origin master); (killall -9 node); (nohup npm start > ../serverLog &); (exit)"
   },
   "repository": {
     "type": "git",
