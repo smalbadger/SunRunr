@@ -122,13 +122,14 @@ router.post('/register', function(req, res, next) {
 //replacing the device
 router.put('/replace', function(req, res, next) {
     //Ensure the request includes the deviceId parameter
-    if( !req.params.hasOwnProperty("oldDeviceId")) {
+    console.log(req.body)
+    if( !req.body.hasOwnProperty("oldDeviceId")) {
          return res.status(400).json("Missing deviceId.");
     }
-    if( !req.params.hasOwnProperty("newDeviceId")) {
+    if( !req.body.hasOwnProperty("newDeviceId")) {
          return res.status(400).json("Missing deviceId.");
     }
-
+    console.log("data exists");
     let email = "";
 
     //If authToken provided, use email in authToken
@@ -148,12 +149,14 @@ router.put('/replace', function(req, res, next) {
         }
         email = req.body.email;
     }
+    console.log("authenticated");
     // Find the device
     Device.findOne({ oldDeviceId: req.params.oldDeviceId }, function(err, device) {
        if (device === null) {
            return res.status(400).json("No Device found");
        } else {
-           Device.findOneAndUpdate({ oldDeviceId: req.body.oldDeviceId }, { apikey: deviceApikey, oldDeviceId: req.body.newDeviceId  } , function(err, device) {
+         console.log("Found device");
+        Device.findOneAndUpdate({ oldDeviceId: req.body.oldDeviceId }, { apikey: deviceApikey, oldDeviceId: req.body.newDeviceId  } , function(err, device) {
                 if (err) {
                     return res.status(400).json(err);
                 } else if (device) {
