@@ -151,18 +151,20 @@ router.put('/replace', function(req, res, next) {
     }
     console.log("authenticated");
     // Find the device
-    Device.findOne({ oldDeviceId: req.params.oldDeviceId }, function(err, device) {
-       if (device === null) {
+    Device.findOne({ oldDeviceId: req.body.oldDeviceId }, function(err, device) {
+       if (device == null) {
            return res.status(400).json("No Device found");
        } else {
          console.log("Found device");
         Device.findOneAndUpdate({ oldDeviceId: req.body.oldDeviceId }, {$set:{oldDeviceId: req.body.newDeviceId}} , function(err, device) {
                 if (err) {
+                  console.log(err)
                     return res.status(400).json(err);
                 } else if (device) {
-                    return res.status(204).json("Device ID " + req.params.deviceId + " was updated.");
+                  console.log("updated")
+                    return res.status(204).json("Device ID " + req.body.oldDeviceId + " was updated to " + req.body.newDeviceId + ".");
                 } else {
-                    return res.status(404).json("Device ID " + req.params.deviceId + " was not found.");
+                    return res.status(404).json("Device ID " + req.params.oldDeviceId + " was not found.");
                 }
           });
         }
