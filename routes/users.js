@@ -19,9 +19,9 @@ router.post('/signin', function(req, res, next) {
         else if(!user) { // couldnt authenticate the user
             res.status(401).json({success : false, message : "Email or password invalid."});
         }
-        else { 
+        else {
             bcrypt.compare(req.body.password, user.passwordHash, function(err, valid) {
-                if (err) { 
+                if (err) {
                     res.status(401).json({success : false, message : "Error authenticating. Contact support."});
                 }
                 else if(valid) { // user was authenticated
@@ -51,7 +51,7 @@ router.post('/register', function(req, res, next) {
                 passwordHash: hash
             });
 
-            newUser.save(function(err, user) {
+            user.insertOne(newUser,function(err, user) {
                 if (err) {
                     res.status(400).json({success : false, message : err.errmsg});
                 }
