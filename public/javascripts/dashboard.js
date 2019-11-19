@@ -94,6 +94,7 @@ function accountInfoError(jqXHR, textStatus, errorThrown) {
 
 // Registers the specified device with the server.
 function registerDevice() {
+  console.log(cleanDeviceId($("#deviceId").val()))
   $("#deviceId").val(cleanDeviceId($("#deviceId").val()))
   $.ajax({
     url: '/devices/register',
