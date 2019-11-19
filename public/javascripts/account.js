@@ -102,6 +102,8 @@ function registerDevice() {
        })
        .done(function (data, textStatus, jqXHR) {
          addDeviceListing($("#deviceId").val(), data["apikey"])
+         hideAddDeviceForm()
+        
        })
        .fail(function(jqXHR, textStatus, errorThrown) {
          let response = JSON.parse(jqXHR.responseText);
