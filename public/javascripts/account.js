@@ -130,7 +130,7 @@ function hideReplaceDeviceForm(id){
 function removeDevice(deviceId){
   $.ajax({
        url: '/devices/remove',
-       type: 'POST',
+       type: 'DELETE',
        headers: { 'x-auth': window.localStorage.getItem("authToken") },
        data: { 'deviceId': deviceId },
        responseType: 'json',
