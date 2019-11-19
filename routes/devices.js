@@ -156,7 +156,7 @@ router.put('/replace', function(req, res, next) {
            return res.status(400).json("No Device found");
        } else {
          console.log("Found device");
-        Device.findOneAndUpdate({ oldDeviceId: req.body.oldDeviceId }, { apikey: deviceApikey, oldDeviceId: req.body.newDeviceId  } , function(err, device) {
+        Device.findOneAndUpdate({ oldDeviceId: req.body.oldDeviceId }, {$set:{oldDeviceId: req.body.newDeviceId}} , function(err, device) {
                 if (err) {
                     return res.status(400).json(err);
                 } else if (device) {
