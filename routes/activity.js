@@ -26,9 +26,11 @@ router.get('/all', function(req, res, next) {
 
     // If authToken provided, use email in authToken
     if (req.headers["x-auth"]) {
+	    console.log(req.header);
         try {
             let decodedToken = jwt.decode(req.headers["x-auth"], secret);
             email = decodedToken.email;
+		console.log(decodedToken.email);
         }
         catch (ex) {
             responseJson.message = "Invalid authorization token.";
