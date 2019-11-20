@@ -36,7 +36,7 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
 function addGPSTogether(GPS){
   console.log("addGPSTogether reached");
   console.log(GPS);
-var str;
+var str = "";
   for(var i = 0; i < GPS.length; i++){
     str += "</br>lon: " + GPS[i].lon + " lat: " + GPS[i].lat + " speed: " + GPS[i].speed + " uv: " + GPS[i].uv;
   }
