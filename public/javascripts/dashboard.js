@@ -1,4 +1,4 @@
-function sendReqForAccountInfo() {
+/*function sendReqForAccountInfo() {
   $.ajax({
     url: '/users/account',
     type: 'GET',
@@ -7,7 +7,25 @@ function sendReqForAccountInfo() {
   })
     .done(getActivities)
     .fail(accountInfoError);
+}*/
+
+  function getActivities(){
+  $.ajax({
+          url: '/activity/all',
+          type: 'GET',
+          headers: { 'x-auth': window.localStorage.getItem("authToken") },
+          dataType: 'json'
+         })
+         .done(accountInfoSuccess)
+    
+         .fail(function(jqXHR, textStatus, errorThrown) {
+           let response = JSON.parse(jqXHR.responseText);
+           $("#error").html("Error: " + response.message);
+           $("#error").show();
+         });
+
 }
+
 
 function accountInfoError(jqXHR, textStatus, errorThrown) {
   // If authentication error, delete the authToken
@@ -59,22 +77,6 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
   }
 }  
 
-  function getActivities(){
-  $.ajax({
-          url: '/activity/all',
-          type: 'GET',
-          headers: { 'x-auth': window.localStorage.getItem("authToken") },
-          dataType: 'json'
-         })
-         .done(accountInfoSuccess)
-    
-         .fail(function(jqXHR, textStatus, errorThrown) {
-           let response = JSON.parse(jqXHR.responseText);
-           $("#error").html("Error: " + response.message);
-           $("#error").show();
-         });
-
-}
 
 $(function() {
   // If there's no authToken stored, redirect user to
@@ -83,7 +85,7 @@ $(function() {
     window.location.replace("userLogin.html");
   }
   else {
-    sendReqForAccountInfo();
+    getActivities();
   }
 
 });
