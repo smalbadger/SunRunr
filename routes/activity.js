@@ -49,12 +49,12 @@ router.get('/all', function(req, res, next) {
     }
 
     // if the user inputs 'all' then this outputs all activities
-    if ( activitiesId == "all") {
-        let query = {"email": req.body.email};
-    }
+    //if ( activitiesId == "all") {
+        let query = {"email": email};
+    /*}
     else { //otherwise this looks for the specific activities
         //let query = { "activitiesId" : activitiesId, "email": req.body.email };
-    }
+    }*/
 
 
     Activity.find(query, function(err, allActivities) {
