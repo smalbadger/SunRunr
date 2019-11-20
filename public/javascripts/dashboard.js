@@ -49,7 +49,7 @@ function addActivityListing(activity){
   console.log("addActivityListing reached. Activity is:");
   console.log(activity);
     $("#allActivities").before(
-      "<li class='collection-item' id='deviceListing-" + deviceId + "'>" +
+      "<li class='collection-item' id='activityListing-" + activity._id + "'>" +
         "<div class='row'>" +
           "<div class='col s9 m9 l9'>" +
             "</br>Date of Activity: " + activity["date"] +
