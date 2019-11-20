@@ -29,7 +29,7 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
   console.log("accountInfoSuccess reached");
   console.log(data);
   // Add the devices to the list before the list item for the add device button (link)
-  for(int i = 0; i < data.Activities.length; i++){
+  for(var i = 0; i < data.Activities.length; i++){
     console.log(data.Activities[i]);
     addActivityListing(data.Activities[i]);
   }
