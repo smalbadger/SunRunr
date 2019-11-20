@@ -9,6 +9,8 @@ let fs = require('fs');
 let bcrypt = require("bcryptjs");
 let jwt = require("jwt-simple");
 
+var secret = fs.readFileSync(__dirname + '/../../jwtkey').toString();
+
 // Data for testing. These values will be changed for testing.
 var activities = {
 	"Running": "Soon to be determined",
