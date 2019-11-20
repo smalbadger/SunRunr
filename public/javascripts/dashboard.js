@@ -37,18 +37,14 @@ function addGPSTogether(GPS){
   console.log("addGPSTogether reached");
   console.log(GPS);
 var str;
-  for(var gps in GPS){
-    str += "</br>lon: " + gps.lon + " lat: " + gps.lat + " speed: " + gps.speed + " uv: " + gps.uv;
+  for(var i = 0; i < GPS.length; i++){
+    str += "</br>lon: " + GPS[i].lon + " lat: " + GPS[i].lat + " speed: " + GPS[i].speed + " uv: " + GPS[i].uv;
   }
   console.log(str);
   return str;
 }
 
 function addActivityListing(activity){
-  console.log("addActivityListing reached. Activity is:");
-  console.log(activity);
-  console.log(activity.date);
-  console.log(activity.duration);
     $("#allActivities").before(
       "<li class='collection-item' id='activityListing-" + activity._id + "'>" +
         "<div class='row'>" +
