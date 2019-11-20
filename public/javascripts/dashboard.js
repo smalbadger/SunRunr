@@ -28,8 +28,8 @@ function accountInfoError(jqXHR, textStatus, errorThrown) {
 function accountInfoSuccess(data, textSatus, jqXHR) {
   // Add the devices to the list before the list item for the add device button (link)
   for(var i = 0; i < data.activities.length; i++){
-    console.log(data.activities[i]);
-    addActivityListing(data.activities[i]);
+    console.log(data.activities[i].activity);
+    addActivityListing(data.activities[i].activity);
   }
 } 
 
