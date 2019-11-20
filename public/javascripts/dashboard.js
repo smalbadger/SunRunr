@@ -1,14 +1,3 @@
-/*function sendReqForAccountInfo() {
-  $.ajax({
-    url: '/users/account',
-    type: 'GET',
-    headers: { 'x-auth': window.localStorage.getItem("authToken") },
-    dataType: 'json'
-  })
-    .done(getActivities)
-    .fail(accountInfoError);
-}*/
-
   function getActivities(){
   $.ajax({
           url: '/activity/all',
@@ -18,11 +7,7 @@
          })
          .done(accountInfoSuccess)
     
-         .fail(function(jqXHR, textStatus, errorThrown) {
-           let response = JSON.parse(jqXHR.responseText);
-           $("#error").html("Error: " + response.message);
-           $("#error").show();
-         });
+         .fail(accountInfoError);
 
 }
 
@@ -51,7 +36,8 @@ var str;
 }
 
 function addActivityListing(activity){
-  
+  console.log("addActivityListing reached. Activity is:");
+  console.log(activity);
     $("#allActivities").before(
       "<li class='collection-item' id='deviceListing-" + deviceId + "'>" +
         "<div class='row'>" +
@@ -71,6 +57,7 @@ function addActivityListing(activity){
   }
   
 function accountInfoSuccess(data, textSatus, jqXHR) {
+  console.log("accountInfoSuccess reached");
   // Add the devices to the list before the list item for the add device button (link)
   for(var activity in data.Activities){
     addActivityListing(activity);
