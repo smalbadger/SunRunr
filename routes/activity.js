@@ -65,7 +65,7 @@ router.get('/all', function(req, res, next) {
         else {
             for(let doc of allActivities) {
 		    console.log(doc);
-                responseJson.devices.push({ doc }); 
+                responseJson.activities.push({ doc }); 
             }
         }
         res.status(200).json(responseJson);
