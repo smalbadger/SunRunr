@@ -3,11 +3,13 @@ let router = express.Router();
 
 let User = require("../models/user");
 let Device = require("../models/device");
-let Device = require("../models/activity");
+let Activity = require("../models/activity");
 
 let fs = require('fs');
 let bcrypt = require("bcryptjs");
 let jwt = require("jwt-simple");
+
+var secret = fs.readFileSync(__dirname + '/../../jwtkey').toString();
 
 // Data for testing. These values will be changed for testing.
 var activities = {
@@ -45,12 +47,12 @@ router.get('/all', function(req, res, next) {
     }
 
     // if the user inputs 'all' then this outputs all activities
-    if ( activitiesId == "all") {
-        let query = {"email": req.body.email};
-    }
+    //if ( activitiesId == "all") {
+        let query = {"userEmail": email};
+    /*}
     else { //otherwise this looks for the specific activities
-        let query = { "activitiesId" : activitiesId, "email": req.body.email };
-    }
+        //let query = { "activitiesId" : activitiesId, "email": req.body.email };
+    }*/
 
 
     Activity.find(query, function(err, allActivities) {
@@ -59,11 +61,12 @@ router.get('/all', function(req, res, next) {
             res.status(400).json(errorMsg);
         }
         else {
-            for(let doc of allActivities) {
-                responseJson.devices.push({ doc }); 
+            for(let activity of allActivities) {
+                responseJson.activities.push({ activity}); 
             }
         }
         res.status(200).json(responseJson);
     });
 });
 
+module.exports = router;

@@ -13,6 +13,6 @@ var activitySchema = new db.Schema({
 });
 
 // Creates a Activities (plural) collection in the db using the activity schema
-var Activity = db.model("activity", activitySchema);
+var Activity = db.model("Activity", activitySchema);
 
 module.exports = Activity;
