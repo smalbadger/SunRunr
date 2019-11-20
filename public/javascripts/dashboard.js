@@ -35,6 +35,7 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
 
 function addGPSTogether(GPS){
   console.log("addGPSTogether reached");
+  console.log(GPS);
 var str;
   for(var gps in GPS){
     str += "</br>lon: " + gps.lon + " lat: " + gps.lat + " speed: " + gps.speed + " uv: " + gps.uv;
@@ -53,7 +54,7 @@ function addActivityListing(activity){
         "<div class='row'>" +
           "<div class='col s9 m9 l9'>" +
             "</br>Date of Activity: " + activity.date +
-            "</br>Duration: " + activity.duration +
+            "</br>Duration: " + activity.duration + " ms" + 
             "</br>Calories: " + activity.calories +
             "</br>Temperature: " + activity.temperature +
             "</br>Humidity: " + activity.humidity +
