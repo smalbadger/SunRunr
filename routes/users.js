@@ -14,7 +14,7 @@ var secret = fs.readFileSync(__dirname + '/../../jwtkey').toString();
 router.post('/signin', function(req, res, next) {
     User.findOne({email: req.body.email}, function(err, user) {
         if (err) { // couldnt connect to the database
-            res.status(401).json({success : false, message : "Can't connect to DB."});
+            res.status(503).json({success : false, message : "Can't connect to DB."});
         }
         else if(!user) { // couldnt authenticate the user
             res.status(401).json({success : false, message : "Email or password invalid."});
