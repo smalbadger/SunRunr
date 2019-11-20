@@ -52,7 +52,6 @@ function addActivityListing(activity){
       "<li class='collection-item' id='deviceListing-" + deviceId + "'>" +
         "<div class='row'>" +
           "<div class='col s9 m9 l9'>" +
-            "From Device: " + activity["deviceId"] +
             "</br>Date of Activity: " + activity["date"] +
             "</br>Duration: " + activity["duration"] +
             "</br>Calories: " + activity["calories"] +
