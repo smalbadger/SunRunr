@@ -63,9 +63,9 @@ router.get('/all', function(req, res, next) {
             res.status(400).json(errorMsg);
         }
         else {
-            for(let doc of allActivities) {
+            for(let activity of allActivities) {
 		    console.log(doc);
-                responseJson.activities.push({ doc }); 
+                responseJson.activities.push({ activity}); 
             }
         }
         res.status(200).json(responseJson);
