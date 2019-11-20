@@ -22,7 +22,7 @@ router.post('/signin', function(req, res, next) {
         else {
             bcrypt.compare(req.body.password, user.passwordHash, function(err, valid) {
                 if (err) {
-                    res.status(401).json({success : false, message : "Error authenticating. Contact support."});
+                    res.status(512).json({success : false, message : "Error authenticating. Contact support."});
                 }
                 else if(valid) { // user was authenticated
                     var authToken = jwt.encode({email: req.body.email}, secret);
