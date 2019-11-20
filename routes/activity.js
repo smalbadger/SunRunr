@@ -53,7 +53,7 @@ router.get('/all', function(req, res, next) {
         let query = {"email": req.body.email};
     }
     else { //otherwise this looks for the specific activities
-        let query = { "activitiesId" : activitiesId, "email": req.body.email };
+        //let query = { "activitiesId" : activitiesId, "email": req.body.email };
     }
 
 
