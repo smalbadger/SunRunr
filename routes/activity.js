@@ -3,7 +3,7 @@ let router = express.Router();
 
 let User = require("../models/user");
 let Device = require("../models/device");
-let activity = require("../models/activity");
+let Activity = require("../models/activity");
 
 let fs = require('fs');
 let bcrypt = require("bcryptjs");
