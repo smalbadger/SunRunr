@@ -27,6 +27,7 @@ function accountInfoError(jqXHR, textStatus, errorThrown) {
 
 
 function addGPSTogether(GPS){
+  console.log("addGPSTogether reached");
 var str;
   for(var gps in GPS){
     str += "</br>lon: " + gps.lon + " lat: " + gps.lat + " speed: " + gps.speed + " uv: " + gps.uv;
