@@ -26,8 +26,6 @@ function accountInfoError(jqXHR, textStatus, errorThrown) {
 }
 
 function accountInfoSuccess(data, textSatus, jqXHR) {
-  console.log("accountInfoSuccess reached");
-  console.log(data);
   // Add the devices to the list before the list item for the add device button (link)
   for(var i = 0; i < data.activities.length; i++){
     console.log(data.activities[i]);
@@ -48,6 +46,8 @@ var str;
 function addActivityListing(activity){
   console.log("addActivityListing reached. Activity is:");
   console.log(activity);
+  console.log(activity.date);
+  console.log(activity.duration);
     $("#allActivities").before(
       "<li class='collection-item' id='activityListing-" + activity._id + "'>" +
         "<div class='row'>" +
