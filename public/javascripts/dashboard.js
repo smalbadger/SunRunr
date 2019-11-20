@@ -25,6 +25,15 @@ function accountInfoError(jqXHR, textStatus, errorThrown) {
   }
 }
 
+function accountInfoSuccess(data, textSatus, jqXHR) {
+  console.log("accountInfoSuccess reached");
+  console.log(data);
+  // Add the devices to the list before the list item for the add device button (link)
+  for(int i = 0; i < data.Activities.length; i++){
+    console.log(data.Activities[i]);
+    addActivityListing(data.Activities[i]);
+  }
+} 
 
 function addGPSTogether(GPS){
   console.log("addGPSTogether reached");
@@ -57,17 +66,6 @@ function addActivityListing(activity){
     );
   }
   
-function accountInfoSuccess(data, textSatus, jqXHR) {
-  console.log("accountInfoSuccess reached");
-  console.log(data);
-  console.log(data.activities);
-  // Add the devices to the list before the list item for the add device button (link)
-  for(var activity in data.Activities){
-    addActivityListing(activity);
-  }
-}  
-
-
 $(function() {
   // If there's no authToken stored, redirect user to
   // the sign-in page (which is userLogin.html)
