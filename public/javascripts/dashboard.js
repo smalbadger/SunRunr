@@ -59,6 +59,8 @@ function addActivityListing(activity){
   
 function accountInfoSuccess(data, textSatus, jqXHR) {
   console.log("accountInfoSuccess reached");
+  console.log(data);
+  console.log(data.activities);
   // Add the devices to the list before the list item for the add device button (link)
   for(var activity in data.Activities){
     addActivityListing(activity);
