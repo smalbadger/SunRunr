@@ -63,9 +63,21 @@ function removeDeviceListing(deviceId){
   }, 2000);
 }
 
+function onPersonalInfoEdited(){
+  $("#saveInfoSection").slideDown()
+}
+
+function onPersonalInfoEditSaved(){
+  $("#saveInfoSection").slideUp()
+}
+
+function onPersonalInfoEditCancelled(){
+  $("#saveInfoSection").slideUp()
+}
+
 function accountInfoSuccess(data, textSatus, jqXHR) {
-  $("#email").html(data.email);
-  $("#fullName").html(data.fullName);
+  $("#email").val(data.email);
+  $("#fullName").val(data.fullName);
   $("#lastAccess").html(data.lastAccess);
   $("#main").show();
 
@@ -212,6 +224,9 @@ function hideAddDeviceForm() {
 
 // Handle authentication on page load
 $(function() {
+
+  $("#saveInfoSection").hide()
+
   // If there's no authToken stored, redirect user to
   // the sign-in page (which is userLogin.html)
   if (!window.localStorage.getItem("authToken")) {
@@ -222,6 +237,10 @@ $(function() {
   }
 
   // Register event listeners
+  $("#email").changed(onPersonalInfoEdited)
+  $("#fullName").changed(onPersonalInfoEdited)
+  $("#saveInfoChange").click(onPersonalInfoEditSaved)
+  $("#cancelInfoChange").click(onPersonalInfoEditCancelled)
   $("#addDevice").click(showAddDeviceForm);
   $("#registerDevice").click(registerDevice);
   $("#cancel").click(hideAddDeviceForm);
