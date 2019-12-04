@@ -225,7 +225,7 @@ function hideAddDeviceForm() {
 // Handle authentication on page load
 $(function() {
 
-  $("#saveInfoSection").hide()
+  $("#saveInfoSection").slideUp()
 
   // If there's no authToken stored, redirect user to
   // the sign-in page (which is userLogin.html)
