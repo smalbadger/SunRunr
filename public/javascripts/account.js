@@ -15,7 +15,7 @@ function updateAccountInfo(){
 
 function addDeviceListing(deviceId, apiKey){
   $("#addDeviceForm").before(
-    "<li class='collection-item' id='deviceListing-" + deviceId + "'>" +
+    "<li class='collection-item device-listing' id='deviceListing-" + deviceId + "'>" +
       "<div class='row'>" +
         "<div class='col s9 m9 l9'>" +
           "ID: " + deviceId +
@@ -89,6 +89,7 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
   $("#main").show();
 
   // Add the devices to the list before the list item for the add device button (link)
+  $('.device-listing').remove();  
   for (var device of data.devices) {
     addDeviceListing(device.deviceId, device.apikey);
   }
