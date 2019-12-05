@@ -64,7 +64,6 @@ function removeDeviceListing(deviceId){
 }
 
 function onPersonalInfoEdited(){
-  console.log("EDIT")
   $("#saveInfoSection").slideDown()
 }
 
@@ -226,7 +225,7 @@ function hideAddDeviceForm() {
 // Handle authentication on page load
 $(function() {
 
-  $("#saveInfoSection").slideUp()
+  $("#saveInfoSection").hide()
 
   // If there's no authToken stored, redirect user to
   // the sign-in page (which is userLogin.html)
@@ -238,8 +237,8 @@ $(function() {
   }
 
   // Register event listeners
-  $("#email").changed(onPersonalInfoEdited)
-  $("#fullName").changed(onPersonalInfoEdited)
+  $("#email").change(onPersonalInfoEdited)
+  $("#fullName").change(onPersonalInfoEdited)
   $("#saveInfoChange").click(onPersonalInfoEditSaved)
   $("#cancelInfoChange").click(onPersonalInfoEditCancelled)
   $("#addDevice").click(showAddDeviceForm);
