@@ -64,6 +64,7 @@ function removeDeviceListing(deviceId){
 }
 
 function onPersonalInfoEdited(){
+  console.log("EDIT")
   $("#saveInfoSection").slideDown()
 }
 
