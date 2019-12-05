@@ -9,6 +9,10 @@ function sendReqForAccountInfo() {
     .fail(accountInfoError);
 }
 
+function updateAccountInfo(){
+  console.log("Need to update account info here.")
+}
+
 function addDeviceListing(deviceId, apiKey){
   $("#addDeviceForm").before(
     "<li class='collection-item' id='deviceListing-" + deviceId + "'>" +
@@ -68,10 +72,13 @@ function onPersonalInfoEdited(){
 }
 
 function onPersonalInfoEditSaved(){
+  updateAccountInfo()
+  sendReqForAccountInfo()
   $("#saveInfoSection").slideUp()
 }
 
 function onPersonalInfoEditCancelled(){
+  sendReqForAccountInfo()
   $("#saveInfoSection").slideUp()
 }
 
@@ -237,8 +244,8 @@ $(function() {
   }
 
   // Register event listeners
-  $("#email").on("change",onPersonalInfoEdited)
-  $("#fullName").on("change",onPersonalInfoEdited)
+  $("#email").on("input",onPersonalInfoEdited)
+  $("#fullName").on("input",onPersonalInfoEdited)
   $("#saveInfoChange").click(onPersonalInfoEditSaved)
   $("#cancelInfoChange").click(onPersonalInfoEditCancelled)
   $("#addDevice").click(showAddDeviceForm);
