@@ -237,8 +237,8 @@ $(function() {
   }
 
   // Register event listeners
-  $("#email").change(onPersonalInfoEdited)
-  $("#fullName").change(onPersonalInfoEdited)
+  $("#email").on("change",onPersonalInfoEdited)
+  $("#fullName").on("change",onPersonalInfoEdited)
   $("#saveInfoChange").click(onPersonalInfoEditSaved)
   $("#cancelInfoChange").click(onPersonalInfoEditCancelled)
   $("#addDevice").click(showAddDeviceForm);
