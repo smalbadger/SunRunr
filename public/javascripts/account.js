@@ -55,7 +55,7 @@ function addDeviceListing(deviceId, apiKey){
   $("#remove-"+deviceId).click(function(event) {
     removeDevice(deviceId);
   });
-  hideReplaceDeviceForm(deviceId)
+  $(".replace-form").hide()
 }
 
 function removeDeviceListing(deviceId){
@@ -94,6 +94,7 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
   for (var device of data.devices) {
     addDeviceListing(device.deviceId, device.apikey);
   }
+  $('.replace-form').hide();
 }
 
 function accountInfoError(jqXHR, textStatus, errorThrown) {
