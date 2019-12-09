@@ -107,5 +107,4 @@ var chart = new CanvasJS.Chart("chartContainer", {
   });
   chart.render();
 
-  $(".activity-content").slideUp()
 }
