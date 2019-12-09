@@ -77,6 +77,7 @@ $(function() {
 ////////////////////////////////////////////////////////////////////////////////
 window.onload = function () {
 
+
 var chart = new CanvasJS.Chart("chartContainer", {
   animationEnabled: true,
   theme: "light2",
@@ -105,4 +106,6 @@ var chart = new CanvasJS.Chart("chartContainer", {
   	}]
   });
   chart.render();
+
+  $(".activity-content").slideUp()
 }
