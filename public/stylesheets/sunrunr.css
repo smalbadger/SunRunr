@@ -29,3 +29,8 @@
 .input-field input {
    color: white;
 }
+
+.info-tab {
+  padding-left: 3px;
+  padding-right: 3px;
+}
