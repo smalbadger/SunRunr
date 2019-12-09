@@ -14,7 +14,10 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-	 <link href="stylesheets/sunrunr.css" rel="stylesheet">
+    <!-- Graphing lib -->
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+   <link href="stylesheets/sunrunr.css" rel="stylesheet">
 	 <script src="javascripts/activities.js"></script>
 	 <script src="javascripts/signout.js"></script>
 
@@ -51,7 +54,15 @@
 		</div>
 	</nav>
 
+
+
 	<div class="row" id="main_">
+
+    <!-- Setting up to show each activity nicely -->
+    <div class="col s12 m12 l6">
+      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    </div>
+
 		<div class="col s12 m12">
 			<ul class="collection with-header" id="Activities">
 				<li class="collection-header">
