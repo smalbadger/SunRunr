@@ -1,7 +1,12 @@
 var currActivityID = null
+
+function getCurrId(){
+  return currActivityID+"-"+id;
+}
+
 function getByCurrId(id){
   if (currActivityID != null){
-    return $('#'+currActivityID+"-"+id);
+    return $('#'+getCurrId(id));
   }
   else{
     return $("#"+id);
@@ -87,6 +92,32 @@ function showMap(){
   //TODO render map for current activity
 }
 
+function showSpeedGraph(){
+  console.log("Showing speed graph for activity " + currActivityID);
+
+  getByCurrId("activity-map").slideUp()
+  getByCurrId("speed-graph").slideDown()
+  getByCurrId("uv-graph").slideUp()
+
+  speedData = [
+    {y:0},
+    {y:11},
+    {y:12},
+    {y:10},
+    {y:12},
+    {y:10},
+    {y:9},
+    {y:7},
+    {y:12},
+    {y:6},
+    {y:7},
+    {y:8},
+    {y:7},
+    {y:7},
+  ]
+  lineGraph(getCurrId("speed-graph"), speedData, "Time", "Speed (MPH)", "Activity Speed");
+}
+
 $(function() {
   // If there's no authToken stored, redirect user to
   // the sign-in page (which is userLogin.html)
@@ -106,7 +137,8 @@ window.onload = function () {
 
     //The details of the current activity are shown
     $(".activity-content").show();
-    showMap();
+    //showMap();
+    showSpeedGraph();
 
     //All other activities are collapsed
   })
