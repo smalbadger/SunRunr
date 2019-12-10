@@ -107,8 +107,17 @@ router.post('/hit', function(req, res, next) {
                         return res.status(201).send(JSON.stringify(responseJson));
                     }
                     else {
+                        var str = "";
+                        User.findOne({email: device.userEmail}, function(err, user) {
+                            if(err) {
+                               return res.status(400).json({success: false, message: "User does not exist."});
+                            }
+                            else {
+                                str = "Max Uv: " + user.UV;
+                            }
+                        }
                         responseJson.status = "OK";
-                        responseJson.message = "Data saved in db with object ID " + newActivity._id + ".";
+                        responseJson.message = "Data saved in db with object ID " + newActivity._id + "." + str;
 
                         return res.status(201).send(JSON.stringify(responseJson));
                     }
