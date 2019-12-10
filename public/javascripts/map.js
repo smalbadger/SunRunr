@@ -6,7 +6,7 @@ function pin_point_users(embedID, numDays, numMiles) {
   //TODO: Get all activity locations within the past numDays and within the numMiles radius.
 
   //TODO: Calculate center of all activities
-  var center = {lat: 32.2226, lng: 110.9747}; //This is a placeholder
+  var center = {lat: 32.222607, lng: -110.974709}; //This is a placeholder
 
   // The map, centered at Uluru
   var map = new google.maps.Map(
