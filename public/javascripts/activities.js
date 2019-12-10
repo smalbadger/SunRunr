@@ -108,6 +108,38 @@ function lineGraph(targetID, data, xLabel, yLabel, title){
 
 
 window.onload = function () {
+  speedData = [
+    {y:0},
+    {y:11},
+    {y:12},
+    {y:10},
+    {y:12},
+    {y:10},
+    {y:9},
+    {y:7},
+    {y:12},
+    {y:6},
+    {y:7},
+    {y:8},
+    {y:7},
+    {y:7},
+  ]
+  uvData = [
+    {y:2.2},
+    {y:2},
+    {y:2.1},
+    {y:1.9},
+    {y:2.3},
+    {y:2.4},
+    {y:2},
+    {y:1.8},
+    {y:1},
+    {y:1.1},
+    {y:1.2},
+    {y:1.1},
+    {y:2.0},
+    {y:1.5},
+  ]
   lineGraph("speed-graph", speedData, "Time", "Speed (MPH)", "Activity Speed");
   lineGraph("uv-graph", uvData, "Time", "UV Strength", "UV Exposure");
 }
