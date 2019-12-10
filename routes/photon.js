@@ -115,7 +115,7 @@ router.post('/hit', function(req, res, next) {
                             else {
                                 str = "Max Uv: " + user.UV;
                             }
-                        }
+                        )};
                         responseJson.status = "OK";
                         responseJson.message = "Data saved in db with object ID " + newActivity._id + "." + str;
 
