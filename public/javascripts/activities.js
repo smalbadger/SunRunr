@@ -99,23 +99,23 @@ function showSpeedGraph(){
   getByCurrId("speed-graph").slideDown()
   getByCurrId("uv-graph").slideUp()
 
-  speedData = [
-    {y:0},
-    {y:11},
-    {y:12},
-    {y:10},
-    {y:12},
-    {y:10},
-    {y:9},
-    {y:7},
-    {y:12},
-    {y:6},
-    {y:7},
-    {y:8},
-    {y:7},
-    {y:7},
-  ]
+  //TODO: make query to get actual speed data for this activity
+  speedData = [{y:0}, {y:11}, {y:12}, {y:10}, {y:12}, {y:10}, {y:9}, {y:7}, {y:12}, {y:6}, {y:7}, {y:8}, {y:7}, {y:7}]
+
   lineGraph(getCurrId("speed-graph"), speedData, "Time", "Speed (MPH)", "Activity Speed");
+}
+
+function showUVGraph(){
+  console.log("Showing UV graph for activity " + currActivityID);
+
+  getByCurrId("activity-map").slideUp()
+  getByCurrId("speed-graph").slideUp()
+  getByCurrId("uv-graph").slideDown()
+
+  //TODO: make query to get actual UV data for this activity
+  uvData = [{y:2.2}, {y:2}, {y:2.1}, {y:1.9}, {y:2.3}, {y:2.4}, {y:2}, {y:1.8}, {y:1}, {y:1.1}, {y:1.2}, {y:1.1}, {y:2.0}, {y:1.5}]
+
+  lineGraph("uv-graph", uvData, "Time", "UV Strength", "UV Exposure");
 }
 
 $(function() {
