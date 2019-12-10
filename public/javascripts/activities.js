@@ -1,3 +1,5 @@
+var currActivityID = null
+
 function getActivities(){
   $.ajax({
           url: '/activity/all',
@@ -34,31 +36,37 @@ function accountInfoSuccess(data, textSatus, jqXHR) {
 }
 
 function addGPSTogether(GPS){
-  console.log("addGPSTogether reached");
-  console.log(GPS);
 var str = "";
   for(var i = 0; i < GPS.length; i++){
     str += "</br>lon: " + GPS[i].lon + " lat: " + GPS[i].lat + " speed: " + GPS[i].speed + " uv: " + GPS[i].uv;
   }
-  console.log(str);
   return str;
 }
 
 function addActivityListing(activity){
-    $("#allActivities").before(
-      "<li class='collection-item' id='activityListing-" + activity._id + "'>" +
-        "<div class='row'>" +
-          "<div class='col s9 m9 l9'>" +
-            "</br>Date of Activity: " + activity.date +
-            "</br>Duration: " + activity.duration + " ms" +
-            "</br>Calories: " + activity.calories +
-            "</br>Temperature: " + activity.temperature +
-            "</br>Humidity: " + activity.humidity +
-            "</br>GPS: " + addGPSTogether(activity.GPS) +
-          "</div>" +
-        "</div>" +
-      "</li>"
-    );
+
+  var activityTemplate = $(".activity-template")
+  var newActivity = activityTemplate.clone()
+
+  //TODO: edit new activity node to contain the data for the specific activity
+
+  activityTemplate.before(newActivity)
+
+
+    // $("#allActivities").before(
+    //   "<li class='collection-item' id='activityListing-" + activity._id + "'>" +
+    //     "<div class='row'>" +
+    //       "<div class='col s9 m9 l9'>" +
+    //         "</br>Date of Activity: " + activity.date +
+    //         "</br>Duration: " + activity.duration + " ms" +
+    //         "</br>Calories: " + activity.calories +
+    //         "</br>Temperature: " + activity.temperature +
+    //         "</br>Humidity: " + activity.humidity +
+    //         "</br>GPS: " + addGPSTogether(activity.GPS) +
+    //       "</div>" +
+    //     "</div>" +
+    //   "</li>"
+    // );
   }
 
 $(function() {
@@ -72,42 +80,12 @@ $(function() {
   }
 });
 
-////////////////////////////////////////////////////////////////////////////////
-//  GRAPHING CODE
-////////////////////////////////////////////////////////////////////////////////
-function lineGraph(targetID, data, xLabel, yLabel, title){
-  var chart = new CanvasJS.Chart(targetID, {
-    animationEnabled: true,
-    theme: "light2",
-    title:{
-      text: title
-    },
-    axisY:{
-    	includeZero: true
-    },
-    data: [{
-  		type: "line",
-  		dataPoints: [
-  			{ y: 450 },
-  			{ y: 414},
-  			{ y: 520, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
-  			{ y: 460 },
-  			{ y: 450 },
-  			{ y: 500 },
-  			{ y: 480 },
-  			{ y: 480 },
-  			{ y: 410 , indexLabel: "lowest",markerColor: "DarkSlateGrey", markerType: "cross" },
-  			{ y: 500 },
-  			{ y: 480 },
-  			{ y: 510 }
-  		]
-    }]
-  });
-  chart.render();
-}
-
-
 window.onload = function () {
+  $(".activity-content").hide()
+  $(".activity-dropdown-btn").click(function(){
+    $(".activity-content").show()
+  })
+
   speedData = [
     {y:0},
     {y:11},
@@ -142,4 +120,25 @@ window.onload = function () {
   ]
   lineGraph("speed-graph", speedData, "Time", "Speed (MPH)", "Activity Speed");
   lineGraph("uv-graph", uvData, "Time", "UV Strength", "UV Exposure");
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//  GRAPHING CODE
+////////////////////////////////////////////////////////////////////////////////
+function lineGraph(targetID, data, xLabel, yLabel, title){
+  var chart = new CanvasJS.Chart(targetID, {
+    animationEnabled: true,
+    theme: "light2",
+    title:{
+      text: title
+    },
+    axisY:{
+    	includeZero: true
+    },
+    data: [{
+  		type: "line",
+  		dataPoints: data
+    }]
+  });
+  chart.render();
 }
