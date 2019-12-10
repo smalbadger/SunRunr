@@ -1,6 +1,6 @@
 var currActivityID = null
 
-function getCurrId(){
+function getCurrId(id){
   return currActivityID+"-"+id;
 }
 
