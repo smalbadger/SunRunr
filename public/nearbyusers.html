@@ -69,9 +69,13 @@
   <script>
     $('.dropdown-trigger').dropdown();
 
-    $(function(){
+    function initMap() {
       pin_point_users("map", 7, 25);
-    })
+    }
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTguMstpVrOCikPMA2DSWFw4wFE-8NtM0&callback=initMap">
   </script>
 
 </html>
