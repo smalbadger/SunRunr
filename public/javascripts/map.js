@@ -1,7 +1,7 @@
 
 // Initialize and add a map that shows all the users within a certain radius
 //
-function pin_point_users(var embedID, var numDays, var numMiles) {
+function pin_point_users(embedID, numDays, numMiles) {
 
   //TODO: Get all activity locations within the past numDays and within the numMiles radius.
 
