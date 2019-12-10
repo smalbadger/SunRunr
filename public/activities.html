@@ -18,7 +18,7 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
    <link href="stylesheets/sunrunr.css" rel="stylesheet">
-	 <script src="javascripts/activities.js"></script>
+	 <script src="javascripts/map.js"></script>
 	 <script src="javascripts/signout.js"></script>
 
 	 <!-- Let browser know website is optimized for mobile -->
@@ -81,9 +81,18 @@
             <div class="btn blue-grey lighten-2"><i class="material-icons">more_vert</i></div>
           </div>
         </div>
+        <div class="card-tabs">
+          <ul class="tabs tabs-fixed-width">
+            <li class="tab"><a class="active" href="#activity-map">Test 1</a></li>
+            <li class="tab"><a href="#speed-graph">Test 2</a></li>
+            <li class="tab"><a href="#uv-graph">Test 3</a></li>
+          </ul>
+        </div>
         <div class="activity-content">
           <div class="card-content">
-            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+            <div id="activity-map"></div>
+            <div id="speed-graph"></div>
+            <div id="uv-graph"></div>
           </div>
           <div class="card-action">
             <div class="row">
@@ -117,6 +126,14 @@
   <!-- Initialize dropdown menu in materialize -->
   <script>
     $('.dropdown-trigger').dropdown();
+
+    function initMap() {
+      map_out_path("activity-map", {});
+    }
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTguMstpVrOCikPMA2DSWFw4wFE-8NtM0&callback=initMap">
   </script>
 
 </html>

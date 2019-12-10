@@ -75,19 +75,17 @@ $(function() {
 ////////////////////////////////////////////////////////////////////////////////
 //  GRAPHING CODE
 ////////////////////////////////////////////////////////////////////////////////
-window.onload = function () {
-
-
-var chart = new CanvasJS.Chart("chartContainer", {
-  animationEnabled: true,
-  theme: "light2",
-  title:{
-    text: "Simple Line Chart"
-  },
-  axisY:{
-  	includeZero: false
-  },
-  data: [{
+function lineGraph(targetID, data, xLabel, yLabel, title){
+  var chart = new CanvasJS.Chart(targetID, {
+    animationEnabled: true,
+    theme: "light2",
+    title:{
+      text: title
+    },
+    axisY:{
+    	includeZero: true
+    },
+    data: [{
   		type: "line",
   		dataPoints: [
   			{ y: 450 },
@@ -103,8 +101,13 @@ var chart = new CanvasJS.Chart("chartContainer", {
   			{ y: 480 },
   			{ y: 510 }
   		]
-  	}]
+    }]
   });
   chart.render();
+}
 
+
+window.onload = function () {
+  lineGraph("speed-graph", speedData, "Time", "Speed (MPH)", "Activity Speed");
+  lineGraph("uv-graph", uvData, "Time", "UV Strength", "UV Exposure");
 }
