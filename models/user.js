@@ -7,7 +7,7 @@ var userSchema = new db.Schema({
     lastAccess:   { type: Date, default: Date.now },
     userDevices:  { type:[String], default:[], sparse:true},
     verified: { type: String, default: "disabled" },
-    UV: {type: Number, default: 10}
+    uv: {type: Number, default: 10}
 });
 
 var User = db.model("User", userSchema);
