@@ -105,7 +105,7 @@ router.post('/hit', function(req, res, next) {
                        return res.status(400).json({success: false, message: "User does not exist."});
                     }
                     else {
-                        UVstr = "Max Uv: " + user.uv;
+                        UVstr = "Max Uv:" + user.uv;
                         console.log("found user with email");
                     }
                 });
