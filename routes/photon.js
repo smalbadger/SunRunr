@@ -98,7 +98,18 @@ router.post('/hit', function(req, res, next) {
                     humidity: 0
                     
                 });
-
+                
+                var UVstr = "";
+                User.findOne({email: device.userEmail}, function(err, user) {
+                    if(err) {
+                       return res.status(400).json({success: false, message: "User does not exist."});
+                    }
+                    else {
+                        UVstr = "Max Uv: " + user.uv;
+                        console.log("found user with email");
+                    }
+                });
+                
                 // Save device. If successful, return success. If not, return error message.
                 newActivity.save(function(err, newActivity) {
                     if (err) {
@@ -107,17 +118,8 @@ router.post('/hit', function(req, res, next) {
                         return res.status(201).send(JSON.stringify(responseJson));
                     }
                     else {
-                        var str = "";
-                        User.findOne({email: device.userEmail}, function(err, user) {
-                            if(err) {
-                               return res.status(400).json({success: false, message: "User does not exist."});
-                            }
-                            else {
-                                str = "Max Uv: " + user.uv;
-                            }
-                        });
                         responseJson.status = "OK";
-                        responseJson.message = "Data saved in db with object ID " + newActivity._id + "." + str;
+                        responseJson.message = "Data saved in db with object ID " + newActivity._id + "." + UVstr;
 
                         return res.status(201).send(JSON.stringify(responseJson));
                     }
