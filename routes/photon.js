@@ -74,7 +74,16 @@ router.post('/hit', function(req, res, next) {
             uv: uv[i]
         });
     }
-    
+    var UVstr = "";
+    User.findOne({email: req.body.userEmail}, function(err, user) {
+        if(err) {
+           return res.status(400).json({success: false, message: "User does not exist."});
+        }
+        else {
+            UVstr = "Max Uv:" + user.uv;
+            console.log("found user with email");
+        }
+    });
     
     // Find the device and verify the apikey
     Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
@@ -86,6 +95,9 @@ router.post('/hit', function(req, res, next) {
                 return res.status(201).send(JSON.stringify(responseJson));
             }
             else {
+                
+                var UVstr = "Max Uv:" + device.uv;
+                console.log(UVstr);
                 // Create a new hw data with user email time stamp
                 var newActivity = new Activity ({
                     userEmail: device.userEmail,
@@ -98,18 +110,7 @@ router.post('/hit', function(req, res, next) {
                     humidity: 0
                     
                 });
-                
-                var UVstr = "";
-                User.findOne({email: device.userEmail}, function(err, user) {
-                    if(err) {
-                       return res.status(400).json({success: false, message: "User does not exist."});
-                    }
-                    else {
-                        UVstr = "Max Uv:" + user.uv;
-                        console.log("found user with email");
-                    }
-                });
-                
+                              
                 // Save device. If successful, return success. If not, return error message.
                 newActivity.save(function(err, newActivity) {
                     if (err) {
