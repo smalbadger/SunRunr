@@ -83,8 +83,6 @@ function addActivityListing(activity){
 
 
 function showMap(){
-  console.log("Showing map for activity " + currActivityID);
-
   getByCurrId("activity-map").slideDown()
   getByCurrId("speed-graph").slideUp()
   getByCurrId("uv-graph").slideUp()
@@ -137,8 +135,10 @@ window.onload = function () {
 
     //The details of the current activity are shown
     $(".activity-content").show();
-    //showMap();
-    showSpeedGraph();
+    getByCurrId("mapBtn").click(showMap)
+    getByCurrId("speedBtn").click(showSpeedGraph)
+    getByCurrId("uvBtn").click(showUVGraph)
+    showMap();
 
     //All other activities are collapsed
   })
