@@ -75,7 +75,7 @@ router.post('/hit', function(req, res, next) {
             });
         }
    
-    if(!req.body.hasOwnProperty("cont"){ //not a continuation of a Activity
+    if(!req.body.hasOwnProperty("cont")){ //not a continuation of a Activity
         
         // Find the device and verify the apikey
         Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
