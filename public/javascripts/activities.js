@@ -1,16 +1,22 @@
 var currActivityID = null
+function getByCurrId(id){
+  if (currActivityID != null){
+    return $('#'+currActivityID+"-"+id);
+  }
+  else{
+    return $("#"+id);
+  }
+}
 
 function getActivities(){
   $.ajax({
-          url: '/activity/all',
-          type: 'GET',
-          headers: { 'x-auth': window.localStorage.getItem("authToken") },
-          dataType: 'json'
-         })
-         .done(accountInfoSuccess)
-
-         .fail(accountInfoError);
-
+    url: '/activity/all',
+    type: 'GET',
+    headers: { 'x-auth': window.localStorage.getItem("authToken") },
+    dataType: 'json'
+  })
+  .done(accountInfoSuccess)
+  .fail(accountInfoError);
 }
 
 
@@ -69,6 +75,18 @@ function addActivityListing(activity){
     // );
   }
 
+
+
+function showMap(){
+  console.log("Showing map for activity " + currActivityID);
+
+  getByCurrId("activity-map").slideDown()
+  getByCurrId("speed-graph").slideUp()
+  getByCurrId("uv-graph").slideUp()
+
+  //TODO render map for current activity
+}
+
 $(function() {
   // If there's no authToken stored, redirect user to
   // the sign-in page (which is userLogin.html)
@@ -83,9 +101,14 @@ $(function() {
 window.onload = function () {
   $(".activity-content").hide()
   $(".activity-dropdown-btn").click(function(){
+    //The id of the current activity is found
     currActivityID = this.id.slice(0, this.id.length-4);
-    console.log(currActivityID);
+
+    //The details of the current activity are shown
     $(".activity-content").show();
+    showMap();
+
+    //All other activities are collapsed
   })
 
   // speedData = [
