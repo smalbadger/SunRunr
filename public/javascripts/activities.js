@@ -113,7 +113,7 @@ function showUVGraph(){
   //TODO: make query to get actual UV data for this activity
   uvData = [{y:2.2}, {y:2}, {y:2.1}, {y:1.9}, {y:2.3}, {y:2.4}, {y:2}, {y:1.8}, {y:1}, {y:1.1}, {y:1.2}, {y:1.1}, {y:2.0}, {y:1.5}]
 
-  lineGraph("uv-graph", uvData, "Time", "UV Strength", "UV Exposure");
+  lineGraph(getCurrId("uv-graph"), uvData, "Time", "UV Strength", "UV Exposure");
 }
 
 $(function() {
