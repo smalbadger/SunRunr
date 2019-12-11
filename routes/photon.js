@@ -80,7 +80,8 @@ router.post('/hit', function(req, res, next) {
                 uv: uv[i]
             });
         }
-   console.log(req.body);
+    
+    //console.log(req.body);
     if(req.body.cont == ''){ //not a continuation of a Activity
         
         // Find the device and verify the apikey
@@ -133,7 +134,7 @@ router.post('/hit', function(req, res, next) {
     }
     else{
         console.log("has cont");
-        Activity.update({_id: req.body.cont, deviceId: req.body.deviceId}, { $push: { GPS: {$each gps } } } ), {safe:true, upsert: true}, function(err, result){ {
+        Activity.update({_id: req.body.cont, deviceId: req.body.deviceId}, { $push: { GPS: gps } ), function(err, result){ {
             if (err) {
                 responseJson.status = "ERROR";
                 responseJson.message = "Error saving data in db.";
