@@ -20,6 +20,7 @@ router.post('/hit', function(req, res, next) {
         responseJson.message = "Request missing deviceId parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
+    
 
     if( !req.body.hasOwnProperty("apikey") ) {
         responseJson.status = "ERROR";
@@ -30,6 +31,11 @@ router.post('/hit', function(req, res, next) {
     if( !req.body.hasOwnProperty("date") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing date parameter.";
+        return res.status(201).send(JSON.stringify(responseJson));
+    }
+    if(!req.body.hasOwnProperty("cont")){
+        responseJson.status = "ERROR";
+        responseJson.message = "Request missing cont parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
 
@@ -75,7 +81,7 @@ router.post('/hit', function(req, res, next) {
             });
         }
    console.log(req.body);
-    if(!req.body.hasOwnProperty("cont")){ //not a continuation of a Activity
+    if(req.body.cont == ''){ //not a continuation of a Activity
         
         // Find the device and verify the apikey
         Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
