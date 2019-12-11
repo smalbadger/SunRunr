@@ -134,7 +134,7 @@ router.post('/hit', function(req, res, next) {
     else{
         console.log("has cont");
         Activity.findById(req.body.cont, function(err, activity) {
-            if(activity != null){
+            if(activity != null && activity.deviceId != req.body.deviceId){
                 console.log("activity not null");
                 activity.GPS.push(GPS);
                 console.log(activity.GPS);
