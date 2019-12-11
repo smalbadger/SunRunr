@@ -134,7 +134,7 @@ router.post('/hit', function(req, res, next) {
     }
     else{
         console.log("has cont");
-        Activity.update({_id: req.body.cont, deviceId: req.body.deviceId}, { $push: { GPS: gps } }, function(err, result){
+        Activity.updateOne({_id: req.body.cont, deviceId: req.body.deviceId}, { $push: { GPS: gps } }, function(err, result){
             if (err) {
                 responseJson.status = "ERROR";
                 responseJson.message = "Error saving data in db.";
@@ -143,7 +143,7 @@ router.post('/hit', function(req, res, next) {
             }
             else {
                 responseJson.status = "OK";
-                responseJson.message = "ID:" + req.body.cont + "," + UVstr;
+                responseJson.message = "ID:" + req.body.cont;
                 console.log("activity resaved!!");
                 return res.status(201).send(JSON.stringify(responseJson));
             }
