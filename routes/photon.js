@@ -126,7 +126,7 @@ router.post('/hit', function(req, res, next) {
         });
     }
     else{
-        Activity.updateOne({ _id: req.body.cont,  deviceId: req.body.deviceId}, function(err, activity) {
+        Activity.findById(req.body.cont, function(err, activity) {
             if(activity != null){
                 activity.GPS.push(GPS);
                 
@@ -139,12 +139,13 @@ router.post('/hit', function(req, res, next) {
                         else {
                             responseJson.status = "OK";
                             responseJson.message = "ID:" + activity._id + "," + UVstr;
-
+                            console.log("activity resaved!!);
                             return res.status(201).send(JSON.stringify(responseJson));
                         }
                     });
             }
             else{
+                console.log("couldn't find the data to resave");
                 responseJson.status = "ERROR";
                 responseJson.message = "Device ID " + req.body.deviceId + " is not registered, or Activity id invalid";
                 return res.status(201).send(JSON.stringify(responseJson));
