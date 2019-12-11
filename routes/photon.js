@@ -142,7 +142,7 @@ router.post('/hit', function(req, res, next) {
                         else {
                             responseJson.status = "OK";
                             responseJson.message = "ID:" + activity._id + "," + UVstr;
-                            console.log("activity resaved!!);
+                            console.log("activity resaved!!");
                             return res.status(201).send(JSON.stringify(responseJson));
                         }
                     });
