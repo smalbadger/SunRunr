@@ -130,7 +130,7 @@ router.post('/hit', function(req, res, next) {
             if(activity != null){
                 activity.GPS.push(GPS);
                 
-                activity.save(function(err, newActivity) {
+                activity.save(function(err, activity) {
                         if (err) {
                             responseJson.status = "ERROR";
                             responseJson.message = "Error saving data in db.";
