@@ -126,15 +126,18 @@ router.post('/hit', function(req, res, next) {
         });
     }
     else{
+        console.log("has cont");
         Activity.findById(req.body.cont, function(err, activity) {
             if(activity != null){
+                console.log("activity not null);
                 activity.GPS.push(GPS);
-                
+                console.log(activity.GPS);
                 activity.save(function(err, activity) {
                         if (err) {
                             responseJson.status = "ERROR";
                             responseJson.message = "Error saving data in db.";
                             return res.status(201).send(JSON.stringify(responseJson));
+                            console.log("error resaving activity");
                         }
                         else {
                             responseJson.status = "OK";
