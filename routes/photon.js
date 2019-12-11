@@ -129,7 +129,7 @@ router.post('/hit', function(req, res, next) {
         console.log("has cont");
         Activity.findById(req.body.cont, function(err, activity) {
             if(activity != null){
-                console.log("activity not null);
+                console.log("activity not null");
                 activity.GPS.push(GPS);
                 console.log(activity.GPS);
                 activity.save(function(err, activity) {
