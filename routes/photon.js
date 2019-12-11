@@ -74,7 +74,7 @@ router.post('/hit', function(req, res, next) {
                 uv: uv[i]
             });
         }
-   
+   console.log(req.body);
     if(!req.body.hasOwnProperty("cont")){ //not a continuation of a Activity
         
         // Find the device and verify the apikey
