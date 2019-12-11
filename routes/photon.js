@@ -126,7 +126,7 @@ router.post('/hit', function(req, res, next) {
         });
     }
     else{
-        Activity.findOne({ _id: req.body.cont,  deviceId: req.body.deviceId}, function(err, activity) {
+        Activity.updateOne({ _id: req.body.cont,  deviceId: req.body.deviceId}, function(err, activity) {
             if(activity != null){
                 activity.GPS.push(GPS);
                 
