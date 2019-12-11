@@ -67,13 +67,13 @@ router.post('/hit', function(req, res, next) {
         return res.status(201).send(JSON.stringify(responseJson));
     }
     
-    var GPS = [];
+    var gps = [];
         var lon = JSON.parse(req.body.lon);
         var lat = JSON.parse(req.body.lat);
         var speed = JSON.parse(req.body.speed);
         var uv = JSON.parse(req.body.uv);
         for(var i = 0; i < lon.length; i++){
-            GPS.push({
+            gps.push({
                 lon: lon[i],
                 lat: lat[i],
                 speed: speed[i],
@@ -99,7 +99,7 @@ router.post('/hit', function(req, res, next) {
                     var newActivity = new Activity ({
                         userEmail: device.userEmail,
                         deviceid: req.body.deviceId,
-                        GPS: GPS,
+                        GPS: gps,
                         date: req.body.date,
                         duration: req.body.duration,
                         calories: 0,
@@ -133,37 +133,21 @@ router.post('/hit', function(req, res, next) {
     }
     else{
         console.log("has cont");
-        Activity.findById(req.body.cont, function(err, activity) {
-            if(activity != null && activity.deviceId != req.body.deviceId){
-                console.log("activity not null");
-                activity.GPS.push(GPS);
-                console.log(activity.GPS);
-                activity.save(function(err, activity) {
-                        if (err) {
-                            responseJson.status = "ERROR";
-                            responseJson.message = "Error saving data in db.";
-                            return res.status(201).send(JSON.stringify(responseJson));
-                            console.log("error resaving activity");
-                        }
-                        else {
-                            responseJson.status = "OK";
-                            responseJson.message = "ID:" + activity._id + "," + UVstr;
-                            console.log("activity resaved!!");
-                            return res.status(201).send(JSON.stringify(responseJson));
-                        }
-                    });
-            }
-            else{
-                console.log("couldn't find the data to resave");
+        Activity.update({_id: req.body.cont, deviceId: req.body.deviceId}, { $push: { GPS: {$each [gps] } } } ), {safe:true, upsert: true}, function(err, result){ {
+            if (err) {
                 responseJson.status = "ERROR";
-                responseJson.message = "Device ID " + req.body.deviceId + " is not registered, or Activity id invalid";
+                responseJson.message = "Error saving data in db.";
+                return res.status(201).send(JSON.stringify(responseJson));
+                console.log("error resaving activity");
+            }
+            else {
+                responseJson.status = "OK";
+                responseJson.message = "ID:" + activity._id + "," + UVstr;
+                console.log("activity resaved!!");
                 return res.status(201).send(JSON.stringify(responseJson));
             }
-    
-    
-        });
-            
-            }
+        });       
+    }
 });
 
 module.exports = router;
