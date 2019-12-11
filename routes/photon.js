@@ -142,6 +142,7 @@ router.post('/hit', function(req, res, next) {
                 console.log("error resaving activity");
             }
             else {
+                console.log(result);
                 responseJson.status = "OK";
                 responseJson.message = "ID:" + req.body.cont;
                 console.log("activity resaved!!");
