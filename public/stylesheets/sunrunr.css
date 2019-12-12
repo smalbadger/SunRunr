@@ -40,3 +40,25 @@
   width: 100%;
   height: 500px;
 }
+
+/* Default tab text color */
+.tabs .tab a{
+    color:#90a4ae; /* blue-grey lighten-2 */
+}
+
+/*Text color on hover*/
+.tabs .tab a:hover {
+    background-color:#607d8b; /* blue-grey */
+    color:#90a4ae; /* blue-grey lighten-2 */
+}
+
+/*Background and text color when a tab is active*/
+.tabs .tab a.active {
+    background-color:#37474f; /*blue-grey darken-3*/
+    color:#eceff1; /* blue-grey lighten-5 */
+}
+
+ /*Color of underline*/
+.tabs .indicator {
+    background-color:#eceff1; /* blue-grey lighten-5 */
+}
