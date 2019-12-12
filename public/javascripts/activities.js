@@ -55,7 +55,7 @@ var str = "";
 }
 
 function addActivityListing(activity){
-
+  console.log(activity)
   var activityTemplate = $(".activity-template")
   var newActivity = activityTemplate.clone()
 
