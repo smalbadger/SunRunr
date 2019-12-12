@@ -55,8 +55,9 @@ var str = "";
 }
 
 function addActivityListing(activity){
-  var activityTemplate = $(".activity-template")
+  var activityTemplate = $("#temp")
   var newActivity = activityTemplate.clone()
+  newActivity.removeClass("activity-template")
 
   // Edit new activity node to contain the data for the specific activity
   newActivity.attr("id", activity._id)
