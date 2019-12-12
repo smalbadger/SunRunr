@@ -90,6 +90,7 @@ function showMap(){
   // Create callback function for creating the map
   window.gMapsCallback = function(){
       pathData = {}
+      console.log(getCurrId("activity-map"))
       map_out_path(getByCurrId("activity-map"), pathData);
   }
 
