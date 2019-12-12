@@ -180,7 +180,8 @@ window.onload = function () {
 function lineGraph(targetID, data, xLabel, yLabel, title){
   var chart = new CanvasJS.Chart(targetID, {
     animationEnabled: true,
-    theme: "light2",
+    backgroundColor: "#546E7A",
+    theme: "dark2",
     title:{
       text: title
     },
