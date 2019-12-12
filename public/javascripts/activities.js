@@ -142,7 +142,7 @@ function addActivityListing(activity){
   calTag.attr("id", activity._id+"-calories");
   calTag.text(calories.toString() + " cals burned");
 
-  activityTemplate.before(newActivity)
+  //activityTemplate.before(newActivity)
 }
 
 function showMap(){
