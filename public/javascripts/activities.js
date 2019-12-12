@@ -186,7 +186,7 @@ function lineGraph(targetID, data, xLabel, yLabel, title){
       text: title
     },
     axisY:{
-    	includeZero: true
+    	includeZero: false
     },
     data: [{
   		type: "line",
