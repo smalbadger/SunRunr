@@ -142,6 +142,8 @@ function addActivityListing(activity){
   calTag.attr("id", activity._id+"-calories");
   calTag.text(calories.toString() + " cals burned");
 
+  console.log(newActivity.html());
+
   //activityTemplate.before(newActivity)
 }
 
