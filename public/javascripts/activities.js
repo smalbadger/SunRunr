@@ -90,8 +90,8 @@ function showMap(){
   // Create callback function for creating the map
   window.gMapsCallback = function(){
       pathData = {}
-      console.log(getByCurrId("activity-map"))
-      map_out_path(getByCurrId("activity-map"), pathData);
+      console.log(getCurrId("activity-map"))
+      map_out_path(getCurrId("activity-map"), pathData);
   }
 
   // Create the script element that links to the google maps API
