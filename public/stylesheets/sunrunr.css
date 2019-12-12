@@ -35,6 +35,10 @@
   padding-right: 3px;
 }
 
+.info-btn {
+  width: 100%;
+}
+
 .graph, .map {
   width: 100%;
   height: 500px;
