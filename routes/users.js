@@ -123,7 +123,43 @@ router.get("/account" , function(req, res) {
 });
 
 
+// updating user info
+router.put("/updateuser" , function(req, res) {
+    // Check for authentication token in x-auth header
+    if (!req.headers["x-auth"]) {
+        return res.status(401).json({success: false, message: "No authentication token"});
+    }
 
+    var authToken = req.headers["x-auth"];
+
+    try {
+        var decodedToken = jwt.decode(authToken, secret);
+        var userStatus = {};
+
+        // find the user and make sure they exist in the database
+        User.findOne({email: decodedToken.email}, function(err, user) {
+            if(err) {
+                return res.status(400).json({success: false, message: "User does not exist."});
+            }
+            else {
+                User.findOneAndUpdate({ email: decodedToken.email }, {$set:{email: req.body.email, fullName: req.body.fullName}} , function(err, user) {
+                    if (err) {
+                        console.log(err)
+                        return res.status(400).json(err);
+                    } else if (user) {
+                        console.log("updated")
+                        return res.status(204).json("User " + req.body.email + " was updated.");
+                    } else {
+                        return res.status(400).json("User " + req.body.email + " was not found.");
+                    }
+          });
+            }
+        });
+    }
+    catch (ex) {
+        return res.status(401).json({success: false, message: "Invalid authentication token."});
+    }
+});
 
 
 module.exports = router;
