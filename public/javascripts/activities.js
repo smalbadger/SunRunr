@@ -190,6 +190,7 @@ function lineGraph(targetID, data, xLabel, yLabel, title){
     },
     data: [{
   		type: "line",
+      lineColor: "red",
   		dataPoints: data
     }]
   });
