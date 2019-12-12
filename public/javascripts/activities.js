@@ -94,7 +94,7 @@ function showMap(){
       map_out_path(getCurrId("activity-map"), pathData);
   }
 
-  // remove any goog maps API script tags
+  // remove any google maps API script tags
   googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDTguMstpVrOCikPMA2DSWFw4wFE-8NtM0&callback=gMapsCallback"
   $('script[src="' + googleMapsAPI + '"]').remove();
 
@@ -144,8 +144,11 @@ $(function() {
 
 window.onload = function () {
   $(".activity-content").hide()
+  $(".activity-dropup-btn").hide()
 
   $(".activity-dropdown-btn").click(function(){
+
+    this.hide()
 
     //The id of the current activity is found and set as the gobal currActivityID
     selectedActivityID = this.id.slice(0, this.id.length-("-btn-more".length));
@@ -163,6 +166,8 @@ window.onload = function () {
   })
 
   $(".activity-dropup-btn").click(function(){
+    $(".activity-dropup-btn").hide()
+    $(".activity-dropdown-btn").show()
     $(".activity-content").slideUp();
     currActivityID = null
   })
