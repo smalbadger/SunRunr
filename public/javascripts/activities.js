@@ -87,8 +87,17 @@ function showMap(){
   getByCurrId("speed-graph").slideUp()
   getByCurrId("uv-graph").slideUp()
 
-  //TODO render map for current activity
-  map_out_path(getByCurrId("activity-map"), {});
+  // Create callback function for creating the map
+  window.gMapsCallback = function(){
+      pathData = {}
+      map_out_path(getByCurrId("activity-map"), pathData);
+  }
+
+  // Create the script element that links to the google maps API
+  var script_tag = document.createElement('script');
+  script_tag.setAttribute("type","text/javascript");
+  script_tag.setAttribute("src","https://maps.googleapis.com/maps/api/js?key=AIzaSyDTguMstpVrOCikPMA2DSWFw4wFE-8NtM0&callback=gMapsCallback");
+  (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
 }
 
 function showSpeedGraph(){
