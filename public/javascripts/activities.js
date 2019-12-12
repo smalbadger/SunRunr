@@ -167,8 +167,8 @@ window.onload = function () {
   })
 
   $("#temp-btn-less").click(function(){
-    $("#temp-btn-more").hide()
-    $("#temp-btn-less").show()
+    $("#temp-btn-more").show()
+    $("#temp-btn-less").hide()
     $(".activity-content").slideUp();
     currActivityID = null
   })
