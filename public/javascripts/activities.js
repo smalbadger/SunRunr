@@ -140,15 +140,12 @@ $(function() {
 
 window.onload = function () {
   $(".activity-content").hide()
+
   $(".activity-dropdown-btn").click(function(){
 
-    //The id of the current activity is found
+    //The id of the current activity is found and set as the gobal currActivityID
     selectedActivityID = this.id.slice(0, this.id.length-4);
-    if (currActivityID == selectedActivityID) {
-      console.log("Click blocked")
-      return;
-    }
-    console.log("Click allowed")
+    if (currActivityID == selectedActivityID) {return}
     currActivityID = selectedActivityID;
 
     //The details of the current activity are shown
@@ -159,6 +156,11 @@ window.onload = function () {
     showMap();
 
     //TODO: All other activities are collapsed
+  })
+  
+  $(".activity-dropup-btn").click(function(){
+    $(".activity-content").slideUp();
+    currActivityID = null
   })
 }
 
