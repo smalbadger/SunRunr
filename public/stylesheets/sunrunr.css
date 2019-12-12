@@ -46,6 +46,11 @@
     color:#90a4ae; /* blue-grey lighten-2 */
 }
 
+/* Default tab text color */
+.tabs .tab{
+    background-color:#90a4ae; /* blue-grey lighten-2 */
+}
+
 /*Text color on hover*/
 .tabs .tab a:hover {
     background-color:#607d8b; /* blue-grey */
