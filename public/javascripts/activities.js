@@ -65,7 +65,7 @@ function addActivityListing(activity){
 
   dateTag = newActivity.find("#temp-date")
   dateTag.attr("id", activity._id + "-date")
-  dateTag.text(activity.date)
+  dateTag.text(activity.date.split("T")[0])
 
   durationTag = newActivity.find("#temp-activity-duration")
   durationTag.attr("id", activity._id + "-activity-duration")
