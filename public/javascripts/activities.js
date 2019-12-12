@@ -144,7 +144,7 @@ window.onload = function () {
   $(".activity-dropdown-btn").click(function(){
 
     //The id of the current activity is found and set as the gobal currActivityID
-    selectedActivityID = this.id.slice(0, this.id.length-8);
+    selectedActivityID = this.id.slice(0, this.id.length-("-btn-more".length));
     if (currActivityID == selectedActivityID) {return}
     currActivityID = selectedActivityID;
 
