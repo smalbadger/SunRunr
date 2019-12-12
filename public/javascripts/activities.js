@@ -148,7 +148,7 @@ window.onload = function () {
 
   $(".activity-dropdown-btn").click(function(){
 
-    this.hide()
+    $("#temp-btn-more").hide()
 
     //The id of the current activity is found and set as the gobal currActivityID
     selectedActivityID = this.id.slice(0, this.id.length-("-btn-more".length));
@@ -166,8 +166,8 @@ window.onload = function () {
   })
 
   $(".activity-dropup-btn").click(function(){
-    $(".activity-dropup-btn").hide()
-    $(".activity-dropdown-btn").show()
+    $("#temp-button-up").hide()
+    $("#temp-button-down").show()
     $(".activity-content").slideUp();
     currActivityID = null
   })
