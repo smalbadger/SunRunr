@@ -71,6 +71,13 @@ function addActivityListing(activity){
   durationTag.attr("id", activity._id + "-activity-duration")
   durationTag.text(activity.duration.toString())
 
+  typeSelect = newActivity.find("#temp-activity-type-selection")
+  typeSelect.attr("id", activity._id + "-activity-type-selection")
+  typeSelect.attr("data-target", activity._id + '-activity-type-dropdown')
+
+  typeDropDown = newActivity.find('#temp-activity-type-dropdown')
+  typeDropDown.attr("id", activity._id + "-activity-type-dropdown")
+
   typeTag = newActivity.find("#temp-activity-type")
   typeTag.attr("id", activity._id + "-activity-type")
   // TODO: set activity type
