@@ -65,31 +65,50 @@ using namespace std;
         return;
     }
     
+    std::vector<String> Activity::allJSON(){
+        std::vector<String> Sending;
+        Sending.push_back(createJson());
+        
+        while(this->locations.size() > 0){
+            String one = String("1");
+            one.concat(createJson());
+            Sending.push_back(one);
+        }
+        return Sending;
+    }
+    
     String Activity::createJson(){
         String data = String();
-        String lon = String("\"lon\": [ ");
-        String lat = String("\"lat\": [");
-        String Speed = String("\"speed\": [");
-        String uv = String(" \"uv\": [");
-        for(int i = 0; i < locations.size(); i++){
-            lon.concat(String::format("\"%.2f\"", this->locations.at(i).getLongitude()));
-            lat.concat(String::format("\"%.2f\"",  this->locations.at(i).getLatitude() ));
-            Speed.concat(String::format("\"%.2f\"", this->locations.at(i).getSpeed()));
-            uv.concat(String::format("\"%.2f\"",this->locations.at(i).getUV()));
+        String lon = String("\"lon\": \"[ ");
+        String lat = String("\"lat\": \"[");
+        String Speed = String("\"speed\": \"[");
+        String uv = String("\"uv\": \"[");
+        int lengthi = this->locations.size();
+        if(lengthi > 12){
+            lengthi = 12;
+        }
+        for(int i = 0; i < lengthi; i++){
+            lon.concat(String::format("%.2f", this->locations.at(i).getLongitude()));
+            lat.concat(String::format("%.2f",  this->locations.at(i).getLatitude() ));
+            Speed.concat(String::format("%.2f", this->locations.at(i).getSpeed()));
+            uv.concat(String::format("%.2f",this->locations.at(i).getUV()));
             //data.concat(curr);
-            if(i != locations.size() - 1){
+            if(i != lengthi - 1){
                 lon.concat(", ");
                 lat.concat(", ");
                 Speed.concat(", ");
                 uv.concat(", ");
             }
         }
-        lon.concat("], ");
-        lat.concat("], ");
-        Speed.concat("], ");
-        uv.concat("] ");
+        //Serial.println(this->locations.size());
+        this->locations.erase(this->locations.begin(), this->locations.begin() + lengthi);
+        //Serial.println(this->locations.size());
+        lon.concat("]\", ");
+        lat.concat("]\", ");
+        Speed.concat("]\", ");
+        uv.concat("]\" ");
         
-        Serial.println(data);
+        //Serial.println(data);
         String Data = String::format("{\"date\": \"");
         Data.concat(this->date);
         String header = String::format("\", \"duration\": \"%lu\",", this->duration);
@@ -98,7 +117,8 @@ using namespace std;
         Data.concat(lat);
         Data.concat(Speed);
         Data.concat(uv);
-        Serial.println(Data);
+        Data.concat("}");
+        //Serial.println(Data);
         return Data;
         
     }
@@ -107,6 +127,3 @@ using namespace std;
         return this->date;
         
     }
-    
-    
-    

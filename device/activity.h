@@ -38,6 +38,7 @@ public:
     void add(GPS gps);
     void setDuration(unsigned long dur);
     String createJson();
+    std::vector<String> allJSON();
 
 
 };
