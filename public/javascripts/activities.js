@@ -144,7 +144,7 @@ window.onload = function () {
   $(".activity-dropdown-btn").click(function(){
 
     //The id of the current activity is found and set as the gobal currActivityID
-    selectedActivityID = this.id.slice(0, this.id.length-4);
+    selectedActivityID = this.id.slice(0, this.id.length-8);
     if (currActivityID == selectedActivityID) {return}
     currActivityID = selectedActivityID;
 
@@ -157,7 +157,7 @@ window.onload = function () {
 
     //TODO: All other activities are collapsed
   })
-  
+
   $(".activity-dropup-btn").click(function(){
     $(".activity-content").slideUp();
     currActivityID = null
