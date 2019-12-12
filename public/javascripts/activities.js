@@ -141,13 +141,14 @@ $(function() {
 window.onload = function () {
   $(".activity-content").hide()
   $(".activity-dropdown-btn").click(function(){
+
     //The id of the current activity is found
     selectedActivityID = this.id.slice(0, this.id.length-4);
-
     if (currActivityID == selectedActivityID) {
+      console.log("Click blocked")
       return;
     }
-
+    console.log("Click allowed")
     curActivityID = selectedActivityID;
 
     //The details of the current activity are shown
