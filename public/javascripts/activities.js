@@ -96,7 +96,7 @@ function showMap(){
 
   // remove any goog maps API script tags
   googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDTguMstpVrOCikPMA2DSWFw4wFE-8NtM0&callback=gMapsCallback"
-  $('script[src=' + googleMapsAPI + ']').remove();
+  $('script[src="' + googleMapsAPI + '"]').remove();
 
   // Create the script element that links to the google maps API
   var script_tag = document.createElement('script');
