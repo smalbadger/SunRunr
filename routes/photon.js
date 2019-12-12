@@ -135,7 +135,7 @@ router.post('/hit', function(req, res, next) {
     else{
         console.log(gps);
         console.log("has cont");
-        Activity.findByIdAndUpdate({_id: req.body.cont}, { $push: { GPS: {$each: gps} } }, function(err, result){
+        Activity.findByIdAndUpdate({_id: req.body.cont}, { $push: { GPS: {$each: gps} } },{  safe: true}, function(err, result){
             if (err) {
                 responseJson.status = "ERROR";
                 responseJson.message = "Error saving data in db.";
