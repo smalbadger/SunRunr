@@ -36,7 +36,7 @@
   padding-right: 3px;
 }
 
-.graph {
+.graph, .map {
   width: 100%;
   height: 500px;
 }
