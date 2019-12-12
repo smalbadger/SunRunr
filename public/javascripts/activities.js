@@ -94,10 +94,14 @@ function showMap(){
       map_out_path(getCurrId("activity-map"), pathData);
   }
 
+  // remove any goog maps API script tags
+  googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDTguMstpVrOCikPMA2DSWFw4wFE-8NtM0&callback=gMapsCallback"
+  $('script[src=' + googleMapsAPI + ']').remove();
+
   // Create the script element that links to the google maps API
   var script_tag = document.createElement('script');
   script_tag.setAttribute("type","text/javascript");
-  script_tag.setAttribute("src","https://maps.googleapis.com/maps/api/js?key=AIzaSyDTguMstpVrOCikPMA2DSWFw4wFE-8NtM0&callback=gMapsCallback");
+  script_tag.setAttribute("src", googleMapsAPI);
   (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
 }
 
