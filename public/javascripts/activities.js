@@ -149,7 +149,7 @@ window.onload = function () {
       return;
     }
     console.log("Click allowed")
-    curActivityID = selectedActivityID;
+    currActivityID = selectedActivityID;
 
     //The details of the current activity are shown
     $(".activity-content").show();
