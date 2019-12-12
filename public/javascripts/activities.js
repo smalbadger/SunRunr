@@ -149,7 +149,7 @@ window.onload = function () {
   $(".activity-dropdown-btn").click(function(){
 
     $("#temp-btn-more").hide()
-    //$("#temp-btn-less").show()
+    $("#temp-btn-less").show()
 
     //The id of the current activity is found and set as the gobal currActivityID
     selectedActivityID = this.id.slice(0, this.id.length-("-btn-more".length));
@@ -166,7 +166,7 @@ window.onload = function () {
     //TODO: All other activities are collapsed
   })
 
-  $("#temp-btn-more").click(function(){
+  $("#temp-btn-less").click(function(){
     $("#temp-btn-more").hide()
     $("#temp-btn-less").show()
     $(".activity-content").slideUp();
