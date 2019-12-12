@@ -142,7 +142,13 @@ window.onload = function () {
   $(".activity-content").hide()
   $(".activity-dropdown-btn").click(function(){
     //The id of the current activity is found
-    currActivityID = this.id.slice(0, this.id.length-4);
+    selectedActivityID = this.id.slice(0, this.id.length-4);
+
+    if (currActivityID == selectedActivityID) {
+      return;
+    }
+
+    curActivityID = selectedActivityID;
 
     //The details of the current activity are shown
     $(".activity-content").show();
