@@ -144,7 +144,7 @@ function addActivityListing(activity){
 
   console.log(newActivity.html());
 
-  //activityTemplate.before(newActivity)
+  $("#main_").append(newActivity);
 }
 
 function showMap(){
