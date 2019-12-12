@@ -65,30 +65,85 @@ function addActivityListing(activity){
   dateTag.attr("id", activity._id + "-date")
   dateTag.text(activity.date)
 
+  durationTag = newActivity.find("#temp-activity-duration")
+  durationTag.attr("id", activity._id + "-activity-duration")
+  durationTag.text(activity.duration.toString())
+
   typeTag = newActivity.find("#temp-activity-type")
   typeTag.attr("id", activity._id + "-activity-type")
   // TODO: set activity type
 
+  activityContent = newActivity.find("#temp-activity-content");
+  activityContent.attr("id", activity._id+"-activity-content");
+  activityContent.hide();
+
+  moreBtn = newActivity.find("#temp-btn-more");
+  moreBtn.attr("id", activity._id+"-btn-more");
+  moreBtn.click(function(){
+    //The id of the current activity is found and set as the gobal currActivityID
+    selectedActivityID = this.id.slice(0, this.id.length-("-btn-more".length));
+    $("#"+selectedActivityID+"-btn-more").hide();
+    $("#"+selectedActivityID+"-btn-less").show();
+
+    if (currActivityID == selectedActivityID) {return}
+    currActivityID = selectedActivityID;
+
+    //The details of the current activity are shown
+    getByCurrId("activity-content").slideDown();
+    showMap();
+
+    //TODO: All other activities are collapsed
+  })
+
+  lessBtn = newActivity.find("#temp-btn-less");
+  lessBtn.attr("id", activity._id+"-btn-less");
+  lessBtn.hide();
+  lessBtn.click(function(){
+    getByCurrId("btn-more").show();
+    getByCurrId("btn-less").hide();
+    getByCurrId("activity-content").slideUp();
+    currActivityID = null;
+  })
+
+  mapBtn = newActivity.find("#temp-mapBtn");
+  mapBtn.attr("id", activity._id+"-mapBtn");
+  mapBtn.click(showMap);
+
+  speedBtn = newActivity.find("#temp-speedBtn");
+  speedBtn.attr("id", activity._id+"-speedBtn");
+  speedBtn.click(showSpeedGraph);
+
+  uvBtn = newActivity.find("#temp-uvBtn");
+  uvBtn.attr("id", activity._id+"-uvBtn");
+  uvBtn.click(showUVGraph);
+
+  newActivity.find("#temp-activity-map").attr("id", activity._id+"-activity-map");
+  newActivity.find("#temp-speed-graph").attr("id", activity._id+"-speed-graph");
+  newActivity.find("#temp-uv-graph").attr("id", activity._id+"-uv-graph");
+  newActivity.find("#temp-btn-box").attr("id", activity._id+"-btn-box");
+
+  uv = 0; //TODO: get total uv exposure
+  uvTag = newActivity.find("#temp-temp-uv")
+  uvTag.attr("id", activity._id+"-uv");
+  uvTag.text(uv)
+
+  temp = 0; //TODO: Get Temperature
+  tempTag = newActivity.find("#temp-temp");
+  tempTag.attr("id", activity._id+"-temp");
+  tempTag.text(temp.toString() + "&degF")
+
+  humidity = 0; //TODO: Get humidity
+  humidTag = newActivity.find("#temp-humidity");
+  humidTag.attr("id", activity._id+"-humidity");
+  humidTag.text(humidity.toString() + "%")
+
+  calories = 0; //TODO: calculate calories
+  calTag = newActivity.find("#temp-calories");
+  calTag.attr("id", activity._id+"-calories");
+  calTag.text(calories.toString() + " cals burned");
+
   activityTemplate.before(newActivity)
-
-
-    // $("#allActivities").before(
-    //   "<li class='collection-item' id='activityListing-" + activity._id + "'>" +
-    //     "<div class='row'>" +
-    //       "<div class='col s9 m9 l9'>" +
-    //         "</br>Date of Activity: " + activity.date +
-    //         "</br>Duration: " + activity.duration + " ms" +
-    //         "</br>Calories: " + activity.calories +
-    //         "</br>Temperature: " + activity.temperature +
-    //         "</br>Humidity: " + activity.humidity +
-    //         "</br>GPS: " + addGPSTogether(activity.GPS) +
-    //       "</div>" +
-    //     "</div>" +
-    //   "</li>"
-    // );
-  }
-
-
+}
 
 function showMap(){
   getByCurrId("activity-map").slideDown()
@@ -146,41 +201,10 @@ $(function() {
     window.location.replace("userLogin.html");
   }
   else {
+    $("#temp").hide();
     getActivities();
   }
 });
-
-window.onload = function () {
-  $(".activity-content").hide()
-  $(".activity-dropup-btn").hide()
-
-  $(".activity-dropdown-btn").click(function(){
-
-    $("#temp-btn-more").hide()
-    $("#temp-btn-less").show()
-
-    //The id of the current activity is found and set as the gobal currActivityID
-    selectedActivityID = this.id.slice(0, this.id.length-("-btn-more".length));
-    if (currActivityID == selectedActivityID) {return}
-    currActivityID = selectedActivityID;
-
-    //The details of the current activity are shown
-    $(".activity-content").show();
-    getByCurrId("mapBtn").click(showMap)
-    getByCurrId("speedBtn").click(showSpeedGraph)
-    getByCurrId("uvBtn").click(showUVGraph)
-    showMap();
-
-    //TODO: All other activities are collapsed
-  })
-
-  $("#temp-btn-less").click(function(){
-    $("#temp-btn-more").show()
-    $("#temp-btn-less").hide()
-    $(".activity-content").slideUp();
-    currActivityID = null
-  })
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 //  GRAPHING CODE
