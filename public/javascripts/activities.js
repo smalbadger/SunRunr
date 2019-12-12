@@ -41,7 +41,7 @@ function accountInfoError(jqXHR, textStatus, errorThrown) {
 function accountInfoSuccess(data, textSatus, jqXHR) {
   // Add the devices to the list before the list item for the add device button (link)
   for(var i = 0; i < data.activities.length; i++){
-    console.log(data.activities[i].activity);
+    console.log(JSON.stringify(data.activities[i].activity));
     addActivityListing(data.activities[i].activity);
   }
 }
@@ -55,11 +55,19 @@ var str = "";
 }
 
 function addActivityListing(activity){
-  console.log(activity)
   var activityTemplate = $(".activity-template")
   var newActivity = activityTemplate.clone()
 
-  //TODO: edit new activity node to contain the data for the specific activity
+  // Edit new activity node to contain the data for the specific activity
+  newActivity.attr("id", activity._id)
+
+  dateTag = newActivity.find("#temp-date")
+  dateTag.attr("id", activity._id + "-date")
+  dateTag.text(activity.date)
+
+  typeTag = newActivity.find("#temp-activity-type")
+  typeTag.attr("id", activity._id + "-activity-type")
+  // TODO: set activity type
 
   activityTemplate.before(newActivity)
 
