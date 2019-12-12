@@ -51,24 +51,31 @@
 		</div>
 	</nav>
 
-	<div class="row" id="main_">
-		<div class="col s12 m12">
-			<ul class="collection with-header" id="Activities">
-				<li class="collection-header">
-					<h5>Activities</h5>
-				</li>
-				<li class="collection-item" id="allActivities">
+  <div class="row" id="main_">
+    <div class="col s0 m0 l2"></div>
+		<div class="col s12 m12 l8">
+      <div class="card blue-grey darken-1">
+        <div class="card-title white-text row center-align">Nearby active users in the past 7 days</div>
 
-				</li>
-			</ul>
-			<div class='red-text text-darken-2' id="error"></div>
+        <!-- Embed google map -->
+        <div class="card-content" id="map"></div>
+      </div>
 		</div>
+    <div class="col s0 m0 l2"></div>
 	</div>
   </body>
 
   <!-- Initialize dropdown menu in materialize -->
   <script>
     $('.dropdown-trigger').dropdown();
+
+    function initMap() {
+      pin_point_users("map", 7, null);
+    }
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTguMstpVrOCikPMA2DSWFw4wFE-8NtM0&callback=initMap">
   </script>
 
 </html>
