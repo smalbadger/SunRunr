@@ -56,6 +56,27 @@ var str = "";
   return str;
 }
 
+function prettyTime(ms){
+  hours = Math.floor(ms/3600000);
+  ms -= hours*360000;
+  mins = Math.floor(ms/60000);
+  ms -= mins*60000;
+  secs = Math.floor(ms/1000);
+  ms -= secs*1000;
+
+  timeStr = "";
+  if (hours > 0){
+    timeStr += `${hours}h `;
+  }
+  if (mins > 0){
+    timeStr += `${mins}m `;
+  }
+  if (secs > 0){
+    timeStr += `${secs}s `;
+  }
+  return timeStr.trim();
+}
+
 function addActivityListing(activity){
   var activityTemplate = $("#temp");
   var newActivity = activityTemplate.clone();
@@ -71,7 +92,7 @@ function addActivityListing(activity){
 
   durationTag = newActivity.find("#temp-activity-duration")
   durationTag.attr("id", activity._id + "-activity-duration")
-  durationTag.text(activity.duration.toString())
+  durationTag.text(prettyTime(activity.duration))
 
   typeSelect = newActivity.find("#temp-activity-type-selection")
   typeSelect.attr("id", activity._id + "-activity-type-selection")
