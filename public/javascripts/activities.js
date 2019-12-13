@@ -247,9 +247,12 @@ function showUVGraph(){
   //TODO: make query to get actual UV data for this activity
   uvData = []
   for(var i=0; i<activityData[currActivityID].length; i++){
+    if (activityData[currActivityID][i].uv == 65535){
+      activityData[currActivityID][i].uv = -1;
+    }
     uvData.push({y:activityData[currActivityID][i].uv})
   }
-  
+
   lineGraph(getCurrId("uv-graph"), uvData, "Time", "UV Strength", "UV Exposure");
 }
 
