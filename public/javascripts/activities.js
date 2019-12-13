@@ -229,7 +229,10 @@ function showSpeedGraph(){
   getByCurrId("uv-graph").slideUp()
 
   //TODO: make query to get actual speed data for this activity
-  speedData = [{y:0}, {y:11}, {y:12}, {y:10}, {y:12}, {y:10}, {y:9}, {y:7}, {y:12}, {y:6}, {y:7}, {y:8}, {y:7}, {y:7}]
+  speedData = []
+  for(var i=0; i<activityData[currActivityID].length; i++){
+    speedData.push({y:activityData[currActivityID][i].speed})
+  }
 
   lineGraph(getCurrId("speed-graph"), speedData, "Time", "Speed (MPH)", "Activity Speed");
 }
