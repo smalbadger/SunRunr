@@ -23,7 +23,8 @@
 }
 
 #nav {
-  height:65px;
+  height: 65px;
+  margin-bottom: 10px;
 }
 
 .input-field input {
