@@ -1,3 +1,4 @@
+var allActivities = null
 var currActivityID = null
 
 function getCurrId(id){
@@ -40,6 +41,7 @@ function accountInfoError(jqXHR, textStatus, errorThrown) {
 
 function accountInfoSuccess(data, textSatus, jqXHR) {
   // Add the devices to the list before the list item for the add device button (link)
+  allActivities = data.activities
   for(var i = 0; i < data.activities.length; i++){
     console.log(JSON.stringify(data.activities[i].activity));
     addActivityListing(data.activities[i].activity);
@@ -102,6 +104,7 @@ function addActivityListing(activity){
     showMap();
 
     //TODO: All other activities are collapsed
+    //$("#"+currActivityID).siblings.slideUp(); //need to enable/disable the correct buttons for the activities that are being hidden.
   })
 
   lessBtn = newActivity.find("#temp-btn-less");
@@ -132,9 +135,9 @@ function addActivityListing(activity){
   newActivity.find("#temp-btn-box").attr("id", activity._id+"-btn-box");
 
   uv = 0; //TODO: get total uv exposure
-  uvTag = newActivity.find("#temp-temp-uv")
+  uvTag = newActivity.find("#temp-uv")
   uvTag.attr("id", activity._id+"-uv");
-  uvTag.text(uv)
+  uvTag.text(uv.toString())
 
   temp = 0; //TODO: Get Temperature
   tempTag = newActivity.find("#temp-temp");
