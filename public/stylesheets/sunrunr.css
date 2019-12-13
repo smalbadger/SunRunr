@@ -83,3 +83,7 @@
 .activity-container {
   margin-bottom: 5px;
 }
+
+.card, .row {
+  margin: 0px;
+}
