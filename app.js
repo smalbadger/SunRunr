@@ -13,9 +13,13 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug')
 
+var hostname = 'whatanutcase.com';
 
 // This is to enable cross-origin access
 app.use(function (req, res, next) {
+	if(req.protocol === 'http') {
+     res.redirect(301, `https://${req.headers.host}${req.url}`);
+	}
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', '*');
     // Request methods you wish to allow

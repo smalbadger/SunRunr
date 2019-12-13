@@ -162,4 +162,62 @@ router.put("/updateuser" , function(req, res) {
 });
 
 
+// getting all users within a certain radius for past 7 days
+// router.get("/allusers" , function(req, res) {
+//     // Check for authentication token in x-auth header
+//     if (!req.headers["x-auth"]) {
+//         return res.status(401).json({success: false, message: "No authentication token"});
+//     }
+
+//     var authToken = req.headers["x-auth"];
+
+//     try {
+//         var decodedToken = jwt.decode(authToken, secret);
+//         var userStatus = {};
+
+//         var query = {
+//             lon = req.body.lng; //user lon
+//             lat = req.body.lat; //user lat
+//             radius = req.body.rad; //radius around the user
+//         }
+
+//         // var R = 6371e3; // metres
+//         // var φ1 = lat1.toRadians();
+//         // var φ2 = lat2.toRadians();
+//         // var Δφ = (lat2-lat1).toRadians();
+//         // var Δλ = (lon2-lon1).toRadians();
+
+//         // var Δψ = Math.log(Math.tan(Math.PI/4+φ2/2)/Math.tan(Math.PI/4+φ1/2));
+//         // var q = Math.abs(Δψ) > 10e-12 ? Δφ/Δψ : Math.cos(φ1); // E-W course becomes ill-conditioned with 0/0
+
+//         // // if dLon over 180° take shorter rhumb line across the anti-meridian:
+//         // if (Math.abs(Δλ) > Math.PI) Δλ = Δλ>0 ? -(2*Math.PI-Δλ) : (2*Math.PI+Δλ);
+
+//         // var dist = Math.sqrt(Δφ*Δφ + q*q*Δλ*Δλ) * R;
+
+//         // find the all users
+//         User.find({email: decodedToken.email}, function(err, user) {
+//             if(err) {
+//                 return res.status(400).json({success: false, message: "User does not exist."});
+//             }
+//             else {
+//                 User.findOneAndUpdate({ email: decodedToken.email }, {$set:{email: req.body.email, fullName: req.body.fullName}} , function(err, user) {
+//                     if (err) {
+//                         console.log(err)
+//                         return res.status(400).json(err);
+//                     } else if (user) {
+//                         console.log("updated")
+//                         return res.status(204).json("User " + req.body.email + " was updated.");
+//                     } else {
+//                         return res.status(400).json("User " + req.body.email + " was not found.");
+//                     }
+//           });
+//             }
+//         });
+//     }
+//     catch (ex) {
+//         return res.status(401).json({success: false, message: "Invalid authentication token."});
+//     }
+// });
+
 module.exports = router;
