@@ -135,7 +135,7 @@ function addActivityListing(activity){
     showMap();
 
     //TODO: All other activities are collapsed
-    $("#"+currActivityID).siblings.each(function (index, value) {
+    $("#"+currActivityID).siblings().each(function (index, value) {
       console.log("Collapsing: " + $(this).attr('id'));
       collapseActivity($(this).attr('id'));
     });
