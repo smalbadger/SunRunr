@@ -75,3 +75,8 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
+.dropdown-content{
+   width: max-content !important;
+   height:auto !important;
+}

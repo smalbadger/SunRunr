@@ -219,6 +219,8 @@ $(function() {
     window.location.replace("userLogin.html");
   }
   else {
+    $('.modal').modal();
+    $('.dropdown-trigger').dropdown();
     $("#temp").hide();
     getActivities();
   }
