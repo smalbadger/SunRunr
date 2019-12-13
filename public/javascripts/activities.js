@@ -77,6 +77,12 @@ function prettyTime(ms){
   return timeStr.trim();
 }
 
+function collapseActivity(activity){
+  $("#" + activity + "-activity-content").hide();
+  $("#" + activity + "-btn-more").show();
+  $("#" + activity + "-btn-less").hide();
+}
+
 function addActivityListing(activity){
   var activityTemplate = $("#temp");
   var newActivity = activityTemplate.clone();
@@ -129,8 +135,11 @@ function addActivityListing(activity){
     showMap();
 
     //TODO: All other activities are collapsed
-    //$("#"+currActivityID).siblings.slideUp(); //need to enable/disable the correct buttons for the activities that are being hidden.
-  })
+    $("#"+currActivityID).siblings.each(function (index, value) {
+      console.log("Collapsing: " + $(this).attr('id'));
+      collapseActivity($(this).attr('id'));
+    });
+  });
 
   lessBtn = newActivity.find("#temp-btn-less");
   lessBtn.attr("id", activity._id+"-btn-less");
