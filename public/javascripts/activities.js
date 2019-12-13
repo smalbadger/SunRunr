@@ -76,6 +76,10 @@ function addActivityListing(activity){
   typeSelect = newActivity.find("#temp-activity-type-selection")
   typeSelect.attr("id", activity._id + "-activity-type-selection")
   typeSelect.attr("data-target", activity._id + '-activity-type-dropdown')
+  typeSelect.click(function(){
+    selectedActivityID = this.id.split("-")[0];
+    $(selectedActivityID + '-activity-type-dropdown').show();
+  })
 
   typeDropDown = newActivity.find('#temp-activity-type-dropdown')
   typeDropDown.attr("id", activity._id + "-activity-type-dropdown")
