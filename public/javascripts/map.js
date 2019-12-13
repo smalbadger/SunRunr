@@ -19,12 +19,12 @@ function pin_point_users(embedID, numDays, numMiles) {
 function map_out_path(embedID, coordinates){
 
   //TODO: Remove these coordinates later
-  var coordinates = [
-    {lat: 37.772, lng: -122.214},
-    {lat: 21.291, lng: -157.821},
-    {lat: -18.142, lng: 178.431},
-    {lat: -27.467, lng: 153.027}
-  ];
+  // var coordinates = [
+  //   {lat: 37.772, lng: -122.214},
+  //   {lat: 21.291, lng: -157.821},
+  //   {lat: -18.142, lng: 178.431},
+  //   {lat: -27.467, lng: 153.027}
+  // ];
 
   center = {lat:0, lng:0}
   for(let i=0; i<coordinates.length; i++){

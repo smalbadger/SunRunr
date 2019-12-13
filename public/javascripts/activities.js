@@ -1,4 +1,4 @@
-var allActivities = null
+var activityData = null
 var currActivityID = null
 
 function getCurrId(id){
@@ -41,10 +41,11 @@ function accountInfoError(jqXHR, textStatus, errorThrown) {
 
 function accountInfoSuccess(data, textSatus, jqXHR) {
   // Add the devices to the list before the list item for the add device button (link)
-  allActivities = data.activities
+  activityData = {}
   for(var i = 0; i < data.activities.length; i++){
     console.log(JSON.stringify(data.activities[i].activity));
     addActivityListing(data.activities[i].activity);
+    activityData[data.activities[i].activity._id] = data.activities[i].activity.GPS;
   }
 }
 
@@ -202,8 +203,10 @@ function showMap(){
 
   // Create callback function for creating the map
   window.gMapsCallback = function(){
-      pathData = {}
-      console.log(getCurrId("activity-map"))
+      pathData = []
+      for(var i=0; i<activityData[currActivityID].length; i++){
+        pathData.push({lat:activityData[currActivityID][i].lat, lng:activityData[currActivityID][i].lon})
+      }
       map_out_path(getCurrId("activity-map"), pathData);
   }
 
