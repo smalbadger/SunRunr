@@ -189,7 +189,7 @@ function addActivityListing(activity){
   calTag.text(calories.toString() + " cals burned");
 
   // console.log(newActivity.html());
-  $("#main_").append(newActivity);
+  $("#activities").append(newActivity);
 
   $('.modal').modal();
   $('.dropdown-trigger').dropdown();
