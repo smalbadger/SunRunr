@@ -167,7 +167,7 @@ function addActivityListing(activity){
   temp = 0; //TODO: Get Temperature
   tempTag = newActivity.find("#temp-temp");
   tempTag.attr("id", activity._id+"-temp");
-  tempTag.text(temp.toString() + " deg F")
+  tempTag.text(temp.toString() + "&#176; F")
 
   humidity = 0; //TODO: Get humidity
   humidTag = newActivity.find("#temp-humidity");
