@@ -6,7 +6,7 @@ function getFiveDayForecast(){
   var key = "152d954ed997be2bb0784df77bdd7781";
   var lat = "32.2226";
   var lon = "-110.9747";
-  var url = "api.openweathermap.org/data/2.5/forecast";
+  var url = "https://api.openweathermap.org/data/2.5/forecast";
 
   $.ajax({
     url: url, //API Call
