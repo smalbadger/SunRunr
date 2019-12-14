@@ -39,7 +39,21 @@ function prettyTime(uglyTime){
   if (hours < 12) {amorpm = "am"}
   else if (hours > 12){hours -= 12}
   if (hours == 0){hours = 12}
-  return dayNames[d.getDay()] + ", " + monthNames[d.getMonth()] + ". " + d.getDate() + "<br><b>" + hours + " " + amorpm + "</b>";
+
+  var date = dayNames[d.getDay()] + ", " + monthNames[d.getMonth()] + ". " + d.getDate()
+
+  var time = ""
+  if (hours != 12){
+    time = hours + " " + amorpm;
+  }
+  else if (amorpm == "am"){
+    time = "Midnight"
+  }
+  else {
+    time = "Noon"
+  }
+
+  return date + "</br><b>" + time + "</b>";
 }
 
 function createWeatherCard(val){
