@@ -16,7 +16,7 @@ function getFiveDayForecast(){
       lat: lat,
       lon: lon,
       appid: key,
-      units: "standard",
+      units: "Imperial",
     },
     success: function(data) {
       console.log('Received data:', data) // For testing
