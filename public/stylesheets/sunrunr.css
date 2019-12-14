@@ -90,24 +90,26 @@ nav {
 }
 
 /* Weather Forecast Stuff */
+.weather-card {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 250px;
+}
+
+.weather-icon {
+  height: 30px;
+}
+
 .scrolling-wrapper {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
-
-  .weather-card {
-    display: inline-block;
-  }
 }
 
 .scrolling-wrapper-flexbox {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
-
-  .weather-card {
-    flex: 0 0 auto;
-  }
 }
 
 .scrolling-wrapper {
