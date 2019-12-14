@@ -34,6 +34,7 @@ function prettyTime(uglyTime){
                       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   var d = new Date(uglyTime);
+  d.setHours(d.getHours-9)
   var amorpm = "pm";
   var hours = d.getHours();
   if (hours < 12) {amorpm = "am"}
