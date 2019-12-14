@@ -28,7 +28,7 @@ function getFiveDayForecast(){
   });
 }
 
-function createWeatherCard(weatherData){
+function createWeatherCard(val){
   $("#weather-forecast").append(
       "<div class='weatherCard'>" +
         val.main.temp + "&degF" +
