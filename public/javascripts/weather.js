@@ -63,7 +63,7 @@ function prettyTime(uglyTime, timezoneAdjustment){
 
 function createWeatherCard(val, timezone){
   $("#weather-forecast").append(
-      "<div class='weather-card card deep-orange lighten-2'>" +
+      "<div class='weather-card card teal lighten-1'>" +
         "<div class='card-title weather-card-title'>" + prettyTime(val.dt_txt.replace(' ', 'T'), timezone) + "</div>" +
         "<div class='row'>" +
           "<div class='col s6 card-image weather-icon-container'>" +
