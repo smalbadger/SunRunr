@@ -38,7 +38,7 @@ function prettyTime(uglyTime, timezoneAdjustment){
   var a = 0;
   for (a=0; a<adjustment; a+=3){}
 
-  d.setHours(d.getHours()-max(adjustment, a))
+  d.setHours(d.getHours()-Math.max(adjustment, a))
   var amorpm = "pm";
   var hours = d.getHours();
   if (hours < 12) {amorpm = "am"}
