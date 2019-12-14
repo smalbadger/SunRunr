@@ -45,11 +45,14 @@ function createWeatherCard(val){
   $("#weather-forecast").append(
       "<div class='weather-card card blue-grey darken-1'>" +
         "<div class='card-title'>" + prettyTime(val.dt_txt.replace(' ', 'T')) + "</div>" +
-        "<div class='card-image weather-icon-container' style='width:45px;'>" +
-          "<img style='width:45px height:45px;' class='weather-icon' src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" +
+        "<div class='row'>" +
+          "<div class=' col s6 card-image weather-icon-container' style='width:45px;'>" +
+            "<img style='width:45px height:45px;' class='weather-icon' src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" +
+          "</div>" +
+          "<div class='col s6'>" +
+            val.main.temp + "&degF<br>" + val.main.humidity + "% humidity" +
+          "</div" +
         "</div>" +
-        val.main.temp + "&degF" +
-        "<span> | " + val.weather[0].description + "</span>" +
       "</div>"
   )
 }
