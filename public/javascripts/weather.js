@@ -45,8 +45,8 @@ function createWeatherCard(val){
   $("#weather-forecast").append(
       "<div class='weather-card card blue-grey darken-1'>" +
         "<div class='card-title'>" + prettyTime(val.dt) + "</div>" +
-        "<div class='card-image weather-icon-container'>" +
-          "<img class='weather-icon' src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" +
+        "<div class='card-image weather-icon-container' style='width:45px;'>" +
+          "<img style='width:45px height:45px;' class='weather-icon' src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" +
         "</div>" +
         val.main.temp + "&degF" +
         "<span> | " + val.weather[0].description + "</span>" +
