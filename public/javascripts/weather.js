@@ -46,7 +46,7 @@ function createWeatherCard(val){
       "<div class='weather-card card blue-grey darken-1'>" +
         "<div class='card-title'>" + prettyTime(val.dt_txt.replace(' ', 'T')) + "</div>" +
         "<div class='row'>" +
-          "<div class=' col s6 card-image weather-icon-container'>" +
+          "<div class='col s6 card-image weather-icon-container'>" +
             "<img style='width:45px height:45px;' class='weather-icon' src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" +
           "</div>" +
           "<div class='col s6'>" +
