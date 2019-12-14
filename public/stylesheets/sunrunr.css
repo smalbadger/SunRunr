@@ -99,8 +99,7 @@ nav {
 }
 
 .weather-icon {
-  height: 30px;
-  width: auto;
+  max-height: 30px;
 }
 
 .scrolling-wrapper {
