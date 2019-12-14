@@ -20,17 +20,20 @@ function getFiveDayForecast(){
     },
     success: function(data) {
       console.log('Received data:', data) // For testing
-      var wf = "";
-      wf += "<h2>" + data.city.name + "</h2>"; // City (displays once)
+      $("#weather").prepend("<h2>" + data.city.name + "</h2>")
       $.each(data.list, function(index, val) {
-        wf += "<p>" // Opening paragraph tag
-        wf += "<b>Day " + index + "</b>: " // Day
-        wf += val.main.temp + "&degF" // Temperature
-        wf += "<span> | " + val.weather[0].description + "</span>"; // Description
-        wf += "<img src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" // Icon
-        wf += "</p>" // Closing paragraph tag
+        createWeatherCard(val)
       });
-      $("#showWeatherForecast").html(wf);
     }
   });
+}
+
+function createWeatherCard(weatherData){
+  $("#weather-forecast").append(
+      "<div class='weatherCard'>" +
+        val.main.temp + "&degF" +
+        "<span> | " + val.weather[0].description + "</span>" +
+        "<img src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" +
+      "</div>"
+  )
 }
