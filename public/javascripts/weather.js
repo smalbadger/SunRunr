@@ -28,12 +28,30 @@ function getFiveDayForecast(){
   });
 }
 
+function prettyTime(uglyTime){
+  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  const d = new Date(uglyTime);
+  var amorpm = "pm";
+  var hours = d.getHours();
+  if (hours < 12) {
+    amorpm = "am";
+    hours -= 12;
+  }
+  return dayNames[d.getDay()] + ", " + monthNames[d.getMonth()] + ". " + d.getDate() + "<br>" + hours + " " + amorpm;
+}
+
 function createWeatherCard(val){
   $("#weather-forecast").append(
-      "<div class='weatherCard'>" +
+      "<div class='weatherCard card'>" +
+        "<div class='card-image'>" +
+          "<img src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" +
+          "<span class='card-title'>" + prettyTime(val.dt) + "</span>" +
+        "</div>" +
         val.main.temp + "&degF" +
         "<span> | " + val.weather[0].description + "</span>" +
-        "<img src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" +
       "</div>"
   )
 }
