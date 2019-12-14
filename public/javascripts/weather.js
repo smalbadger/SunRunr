@@ -31,7 +31,7 @@ function getFiveDayForecast(){
         wf += "<img src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" // Icon
         wf += "</p>" // Closing paragraph tag
       });
-      $("#showWeatherForcast").html(wf);
+      $("#showWeatherForecast").html(wf);
     }
   });
 }
