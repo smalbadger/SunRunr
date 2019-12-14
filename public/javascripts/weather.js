@@ -38,18 +38,18 @@ function prettyTime(uglyTime){
   var hours = d.getHours();
   if (hours < 12) {amorpm = "am"}
   else if (hours > 12){hours -= 12}
-  return dayNames[d.getDay()] + ", " + monthNames[d.getMonth()] + ". " + d.getDate() + "<br>" + hours + " " + amorpm;
+  return dayNames[d.getDay()] + ", " + monthNames[d.getMonth()] + ". " + d.getDate() + "<br><b>" + hours + " " + amorpm + </b>;
 }
 
 function createWeatherCard(val){
   $("#weather-forecast").append(
       "<div class='weather-card card blue-grey darken-1'>" +
-        "<div class='card-title'>" + prettyTime(val.dt_txt.replace(' ', 'T')) + "</div>" +
+        "<div class='card-title weather-card-title'>" + prettyTime(val.dt_txt.replace(' ', 'T')) + "</div>" +
         "<div class='row'>" +
           "<div class='col s6 card-image weather-icon-container'>" +
             "<img style='width:45px height:45px;' class='weather-icon' src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" +
           "</div>" +
-          "<div class='col s6'>" +
+          "<div class='col s6 weather-card-stats'>" +
             val.main.temp + "&degF<br>" + val.main.humidity + "% humidity" +
           "</div" +
         "</div>" +
