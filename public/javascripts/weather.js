@@ -28,13 +28,17 @@ function getFiveDayForecast(){
   });
 }
 
-function prettyTime(uglyTime){
+function prettyTime(uglyTime, timezoneAdjustment){
   const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   var d = new Date(uglyTime);
-  d.setHours(d.getHours()-9)
+  var adjustment = timezoneAdjustment/60/60
+  var a = 0;
+  for (a=0; a<adjustment; a+=3){}
+
+  d.setHours(d.getHours()-max(adjustment, a))
   var amorpm = "pm";
   var hours = d.getHours();
   if (hours < 12) {amorpm = "am"}
@@ -60,7 +64,7 @@ function prettyTime(uglyTime){
 function createWeatherCard(val){
   $("#weather-forecast").append(
       "<div class='weather-card card blue-grey darken-1'>" +
-        "<div class='card-title weather-card-title'>" + prettyTime(val.dt_txt.replace(' ', 'T')) + "</div>" +
+        "<div class='card-title weather-card-title'>" + prettyTime(val.dt_txt.replace(' ', 'T'), val.city.timezone) + "</div>" +
         "<div class='row'>" +
           "<div class='col s6 card-image weather-icon-container'>" +
             "<img style='width:45px height:45px;' class='weather-icon' src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" +
