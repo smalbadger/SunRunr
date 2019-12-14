@@ -33,7 +33,7 @@ function prettyTime(uglyTime, timezoneAdjustment){
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-  var adjustment = timezoneAdjustment/60/60
+  var adjustment = -timezoneAdjustment/60/60
   var a = 0;
   for (a=0; a<adjustment; a+=3){}
 
