@@ -44,7 +44,7 @@ function prettyTime(uglyTime){
 function createWeatherCard(val){
   $("#weather-forecast").append(
       "<div class='weather-card card blue-grey darken-1'>" +
-        "<div class='card-title'>" + prettyTime(val.dt_text.replace(' ', 'T')) + "</div>" +
+        "<div class='card-title'>" + prettyTime(val.dt_txt.replace(' ', 'T')) + "</div>" +
         "<div class='card-image weather-icon-container' style='width:45px;'>" +
           "<img style='width:45px height:45px;' class='weather-icon' src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" +
         "</div>" +
