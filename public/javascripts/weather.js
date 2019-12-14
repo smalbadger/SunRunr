@@ -16,8 +16,7 @@ function getFiveDayForecast(){
       lat: lat,
       lon: lon,
       appid: key,
-      units: "metric",
-      cnt: "10"
+      units: "standard",
     },
     success: function(data) {
       console.log('Received data:', data) // For testing
@@ -26,7 +25,7 @@ function getFiveDayForecast(){
       $.each(data.list, function(index, val) {
         wf += "<p>" // Opening paragraph tag
         wf += "<b>Day " + index + "</b>: " // Day
-        wf += val.main.temp + "&degC" // Temperature
+        wf += val.main.temp + "&degF" // Temperature
         wf += "<span> | " + val.weather[0].description + "</span>"; // Description
         wf += "<img src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" // Icon
         wf += "</p>" // Closing paragraph tag
