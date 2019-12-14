@@ -49,7 +49,7 @@ function createWeatherCard(val){
           "<div class='col s6 card-image weather-icon-container'>" +
             "<img style='width:45px height:45px;' class='weather-icon' src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" +
           "</div>" +
-          "<div class='col s6 weather-card-stats'>" +
+          "<div class='col s6' style='padding-top:15px; padding-left:2px;'>" +
             val.main.temp + "&degF<br>" + val.main.humidity + "% humidity" +
           "</div" +
         "</div>" +
