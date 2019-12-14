@@ -38,6 +38,7 @@ function prettyTime(uglyTime){
   var hours = d.getHours();
   if (hours < 12) {amorpm = "am"}
   else if (hours > 12){hours -= 12}
+  if (hours == 0){hours = 12}
   return dayNames[d.getDay()] + ", " + monthNames[d.getMonth()] + ". " + d.getDate() + "<br><b>" + hours + " " + amorpm + "</b>";
 }
 
