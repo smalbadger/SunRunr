@@ -33,12 +33,15 @@ function prettyTime(uglyTime, timezoneAdjustment){
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-  var d = new Date(uglyTime);
   var adjustment = timezoneAdjustment/60/60
   var a = 0;
   for (a=0; a<adjustment; a+=3){}
 
+  var d = new Date(uglyTime);
   d.setHours(d.getHours()-Math.max(adjustment, a))
+
+  console.log("Calculated Time: " + d.toString());
+
   var amorpm = "pm";
   var hours = d.getHours();
   if (hours < 12) {amorpm = "am"}
