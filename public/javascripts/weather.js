@@ -33,19 +33,17 @@ function prettyTime(uglyTime){
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-  const d = new Date(uglyTime);
+  var d = new Date(uglyTime);
   var amorpm = "pm";
   var hours = d.getHours();
-  if (hours < 12) {
-    amorpm = "am";
-    hours -= 12;
-  }
+  if (hours < 12) {amorpm = "am"}
+  else {hours -= 12}
   return dayNames[d.getDay()] + ", " + monthNames[d.getMonth()] + ". " + d.getDate() + "<br>" + hours + " " + amorpm;
 }
 
 function createWeatherCard(val){
   $("#weather-forecast").append(
-      "<div class='weatherCard card'>" +
+      "<div class='weatherCard card  blue-grey darken-1'>" +
         "<div class='card-image'>" +
           "<img src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>" +
           "<span class='card-title'>" + prettyTime(val.dt) + "</span>" +
