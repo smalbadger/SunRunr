@@ -152,7 +152,7 @@ router.put("/updateuser" , function(req, res) {
                     } else {
                         return res.status(400).json("User " + req.body.email + " was not found.");
                     }
-          });
+                });
             }
         });
     }

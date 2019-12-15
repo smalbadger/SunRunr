@@ -23,6 +23,7 @@ function updateAccountInfo(){
     dataType: 'json'
   })
   .done(function (data, textSatus, jqXHR) {
+    console.log(data)
     window.localStorage.setItem('authToken', data.authToken);
     window.location.reload(false)
   })
