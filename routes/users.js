@@ -148,7 +148,7 @@ router.put("/updateuser" , function(req, res) {
                     } else if (user) {
                         console.log("updated")
                         var authToken = jwt.encode({email: req.body.email}, secret);
-                        return res.status(204).send({success: true, message: "User " + req.body.email + " was updated.", authToken: authToken});
+                        return res.status(204).json({success: true, message: "User " + req.body.email + " was updated.", authToken: authToken});
                     } else {
                         return res.status(400).json({success: false, message: "User " + req.body.email + " was not found."});
                     }
