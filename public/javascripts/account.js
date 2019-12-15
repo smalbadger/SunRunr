@@ -22,10 +22,11 @@ function updateAccountInfo(){
     data: JSON.stringify({email:email, fullName:fullName}),
     dataType: 'json'
   })
-  .done(window.location.reload(false))
-  .fail(function (jqXHR, textStatus, errorThrown) {
-    console.log("UPDATE FAILED:\n\t" + jqXHR.statusCode + ": " + textStatus);
-  });
+  .done(function (data, textSatus, jqXHR) {
+    window.localStorage.setItem('authToken', data.authToken);
+    window.location.reload(false)
+  })
+  .fail(console.log("Unable to update user information."));
 }
 
 function addDeviceListing(deviceId, apiKey){
