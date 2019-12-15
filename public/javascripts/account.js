@@ -24,10 +24,16 @@ function updateAccountInfo(){
   })
   .done(function (data, textSatus, jqXHR) {
     console.log(data)
+    console.log(textStatus)
+    console.log(jqXHR)
     window.localStorage.setItem('authToken', data.authToken);
     window.location.reload(false)
   })
-  .fail(console.log("Unable to update user information."));
+  .fail(function signinError(jqXHR, textStatus, errorThrown) {
+    console.log(jqXHR)
+    console.log(textStatus)
+    console.log(errorThrown)
+  });
 }
 
 function addDeviceListing(deviceId, apiKey){
