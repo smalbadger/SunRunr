@@ -22,18 +22,22 @@ function updateAccountInfo(){
     data: JSON.stringify({email:email, fullName:fullName}),
     dataType: 'json'
   })
-  .done(function (data, textStatus, jqXHR) {
-    console.log(data)
-    console.log(textStatus)
-    console.log(jqXHR)
-    //window.localStorage.setItem('authToken', data.authToken);
-    //window.location.reload(false)
-  })
-  .fail(function (jqXHR, textStatus, errorThrown) {
-    console.log(jqXHR)
-    console.log(textStatus)
-    console.log(errorThrown)
-  });
+  .done(updateSuccess)
+  .fail(updateFailure);
+}
+
+function updateSuccess(data, textStatus, jqXHR) {
+  console.log(data)
+  console.log(textStatus)
+  console.log(jqXHR)
+  //window.localStorage.setItem('authToken', data.authToken);
+  //window.location.reload(false)
+}
+
+function updateFailure(jqXHR, textStatus, errorThrown) {
+  console.log(jqXHR)
+  console.log(textStatus)
+  console.log(errorThrown)
 }
 
 function addDeviceListing(deviceId, apiKey){
