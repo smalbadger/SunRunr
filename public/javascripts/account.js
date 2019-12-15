@@ -27,14 +27,12 @@ function updateAccountInfo(){
 }
 
 function updateSuccess(data, textStatus, jqXHR) {
-  console.log(data)
-  console.log(textStatus)
-  console.log(jqXHR)
-  //window.localStorage.setItem('authToken', data.authToken);
-  //window.location.reload(false)
+  window.localStorage.setItem('authToken', data.authToken);
+  window.location.reload(false)
 }
 
 function updateFailure(jqXHR, textStatus, errorThrown) {
+  console.log("Update Failed")
   console.log(jqXHR)
   console.log(textStatus)
   console.log(errorThrown)
