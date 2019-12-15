@@ -22,7 +22,7 @@ function updateAccountInfo(){
     data: JSON.stringify({email:email, fullName:fullName}),
     dataType: 'json'
   })
-  .done(function (data, textSatus, jqXHR) {
+  .done(function (data, textStatus, jqXHR) {
     console.log(data)
     console.log(textStatus)
     console.log(jqXHR)

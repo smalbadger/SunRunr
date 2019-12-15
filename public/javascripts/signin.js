@@ -13,7 +13,7 @@ function sendSigninRequest() {
   .fail(signinError);
 }
 
-function signinSuccess(data, textSatus, jqXHR) {
+function signinSuccess(data, textStatus, jqXHR) {
   // TODO
   window.localStorage.setItem('authToken', data.authToken);
   window.location = "dashboard.html";
