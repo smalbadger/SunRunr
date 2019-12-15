@@ -123,7 +123,7 @@ router.get("/account" , function(req, res) {
 
 
 // updating user info
-router.post("/updateuser" , function(req, res) {
+router.put("/updateuser" , function(req, res) {
     // Check for authentication token in x-auth header
     if (!req.headers["x-auth"]) {
         return res.status(401).json({success: false, message: "No authentication token"});
