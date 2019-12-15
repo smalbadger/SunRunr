@@ -24,8 +24,8 @@ function updateAccountInfo(){
   })
   .done(function (data) {
     console.log(data)
-    window.localStorage.setItem('authToken', data.authToken);
-    window.location.reload(false)
+    //window.localStorage.setItem('authToken', data.authToken);
+    //window.location.reload(false)
   })
   .fail(function signinError(jqXHR, textStatus, errorThrown) {
     console.log(jqXHR)
