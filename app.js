@@ -9,17 +9,22 @@ var photonRouter = require('./routes/photon');
 var usersRouter = require('./routes/users');
 var devicesRouter = require('./routes/devices');
 var activityRouter = require('./routes/activity');
-var app = express();
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug')
 
-var hostname = 'whatanutcase.com';
+var app = express();
+
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'pug');
+//app.set('view engine','html');
+
+app.set('public', path.join(__dirname, 'public'));
+// Set EJS View Engine**
+app.set('view engine','ejs');
+// Set HTML engine**
+app.engine('html', require('ejs').renderFile);
+
 
 // This is to enable cross-origin access
 app.use(function (req, res, next) {
-	if(req.protocol === 'http') {
-     res.redirect(301, `https://${req.headers.host}${req.url}`);
-	}
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', '*');
     // Request methods you wish to allow
@@ -37,7 +42,7 @@ app.use(logger('dev'))
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, '/public')))
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/', indexRouter);
@@ -46,10 +51,15 @@ app.use('/devices', devicesRouter);
 app.use('/photon', photonRouter);
 app.use('/activity', activityRouter);
 
+
+//indexRouter.get('/', function(req, res) {
+//  res.sendFile(__dirname + '../public/userLogin.html');
+//});
+
 // catch 404 and forward to error handler
-// app.use(function (req, res, next) {
-//     next(createError(404));
-// });
+//app.use(function (req, res, next) {
+//  next(createError(404));
+//});
 
 // error handler
 app.use(function (err, req, res, next) {
@@ -58,7 +68,7 @@ app.use(function (err, req, res, next) {
     }
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    //res.render('error');
 });
 
 module.exports = app;
