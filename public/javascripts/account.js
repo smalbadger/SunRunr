@@ -22,10 +22,8 @@ function updateAccountInfo(){
     data: JSON.stringify({email:email, fullName:fullName}),
     dataType: 'json'
   })
-  .done(function (data, textStatus, jqXHR) {
+  .done(function (data) {
     console.log(data)
-    console.log(textStatus)
-    console.log(jqXHR)
     window.localStorage.setItem('authToken', data.authToken);
     window.location.reload(false)
   })
