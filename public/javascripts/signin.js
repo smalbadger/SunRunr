@@ -14,7 +14,6 @@ function sendSigninRequest() {
 }
 
 function signinSuccess(data, textStatus, jqXHR) {
-  // TODO
   window.localStorage.setItem('authToken', data.authToken);
   window.location = "dashboard.html";
 }
@@ -32,7 +31,6 @@ function signinError(jqXHR, textStatus, errorThrown) {
 
 // Handle authentication on page load
 $(function() {
-  // TODO
   if( window.localStorage.getItem('authToken')) {
     window.location.replace('dashboard.html');
   }
