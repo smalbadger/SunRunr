@@ -21,8 +21,8 @@ function updateAccountInfo(){
     data: JSON.stringify({email:email, fullName:fullName}),
     dataType: 'json'
   })
-  .done(window.location.reload(false))
-  .fail(Console.log("Error updating personal information."));
+  .done(console.log("UPDATED"))
+  .fail(console.log("Error updating personal information."));
 }
 
 function addDeviceListing(deviceId, apiKey){
