@@ -22,8 +22,12 @@ function updateAccountInfo(){
     data: JSON.stringify({email:email, fullName:fullName}),
     dataType: 'json'
   })
-  .done(console.log("UPDATED"))
-  .fail(console.log("Error updating personal information."));
+  .done(function (jqXHR, textStatus, errorThrown) {
+    console.log("UPDATE SUCCESS:\n\t" + jqXHR.statusCode + ": " + textStatus);
+  })
+  .fail(function (jqXHR, textStatus, errorThrown) {
+    console.log("UPDATE FAILED:\n\t" + jqXHR.statusCode + ": " + textStatus);
+  });
 }
 
 function addDeviceListing(deviceId, apiKey){
