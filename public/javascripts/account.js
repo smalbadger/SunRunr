@@ -17,6 +17,7 @@ function updateAccountInfo(){
   $.ajax({
     url: '/users/updateuser',
     type: 'PUT',
+    headers: { 'x-auth': window.localStorage.getItem("authToken") },
     contentType: 'application/json',
     data: JSON.stringify({email:email, fullName:fullName}),
     dataType: 'json'
