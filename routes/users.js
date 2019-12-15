@@ -89,7 +89,7 @@ router.get("/account" , function(req, res) {
         var userStatus = {};
 
         User.findOne({email: decodedToken.email}, function(err, user) {
-            if(err) {
+            if(err || user === null) {
                 return res.status(400).json({success: false, message: "User does not exist."});
             }
             else {
