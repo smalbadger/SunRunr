@@ -11,6 +11,18 @@ function sendReqForAccountInfo() {
 
 function updateAccountInfo(){
   console.log("Need to update account info here.")
+
+  var email = $("#email").val();
+  var fullName = $("#fullName").val();
+  $.ajax({
+    url: '/users/updateuser',
+    type: 'PUT',
+    contentType: 'application/json',
+    data: JSON.stringify({email:email, fullName:fullName}),
+    dataType: 'json'
+  })
+  .done(window.location.reload(false))
+  .fail(Console.log("Error updating personal information."));
 }
 
 function addDeviceListing(deviceId, apiKey){
