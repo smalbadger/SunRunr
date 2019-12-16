@@ -32,6 +32,10 @@ body {
   padding: 10px;
 }
 
+.lil-card {
+  height: 300px;
+}
+
 nav {
   height: 65px;
   margin-bottom: 10px;
