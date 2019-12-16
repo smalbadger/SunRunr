@@ -26,7 +26,7 @@ body {
   display: none;
 }
 
-#summary {
+.summary {
   margin-top: 15px;
   padding: 10px;
 }
