@@ -20,7 +20,7 @@ function getFiveDayForecast(){
     },
     success: function(data) {
       console.log('Received data:', data) // For testing
-      $("#weather").prepend("<h2>" + data.city.name + " Weather</h2><h6>5-day Forecast</h6>")
+      $("#weather").prepend("<div class='card-title white-text center-align'>" + data.city.name + " Weather Forecast</div>")
       $.each(data.list, function(index, val) {
         createWeatherCard(val, data.city.timezone)
       });
