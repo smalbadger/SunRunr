@@ -51,18 +51,43 @@
 		</div>
 	</nav>
 
-	<div class="row" id="main_">
-    <div class="col s0 m0 l2"></div>
-		<div class="col s12 m12 l8">
-      <div class="card blue-grey darken-1">
-        <div class="card-title white-text row center-align">Nearby active users in the past 7 days</div>
+  <div class="row" id="main_">
+    <div class="col s0 m1 l2"></div>
+    <div class="col s12 m10 l8">
+      <div class="row">
+        <div class="col s12 summary">
+          <div class="card blue-grey darken-1">
+            <div class="card-title white-text row center-align">Nearby active users in the past 7 days</div>
+            <div class="card-content" id="map"></div>
+          </div>
+        </div>
 
-        <!-- Embed google map -->
-        <div class="card-content" id="map"></div>
+        <div class="col s12 l4 summary">
+          <div class="card lil-card blue-grey">
+            <div class="card-title"><b>Total Duration</b></div>
+            <div class="card-content" id="total-duration">INSERT TOTAL DURATION</div>
+          </div>
+        </div>
+
+        <div class="col s12 l4 summary">
+          <div class="card lil-card blue-grey">
+            <div class="card-title"><b>Total Calories</b></div>
+            <div class="card-content" id="total-calories">INSERT TOTAL CALORIES</div>
+          </div>
+        </div>
+
+        <div class="col s12 l4 summary">
+          <div class="card lil-card blue-grey">
+            <div class="card-title"><b>Total UV Exposure</b></div>
+            <div class="card-content" id="total-uv">INSERT TOTAL UV EXPOSURE</div>
+          </div>
+        </div>
+
       </div>
-		</div>
-    <div class="col s0 m0 l2"></div>
-	</div>
+    </div>
+    <div class="col s0 m1 l2"></div>
+  </div>
+
   </body>
 
   <!-- Initialize dropdown menu in materialize -->
