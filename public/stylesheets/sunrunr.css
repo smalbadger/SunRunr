@@ -26,6 +26,10 @@ body {
   display: none;
 }
 
+#summary {
+  padding: 10px;
+}
+
 nav {
   height: 65px;
   margin-bottom: 10px;

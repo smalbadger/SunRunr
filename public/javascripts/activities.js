@@ -174,17 +174,17 @@ function addActivityListing(activity){
   uvTag.attr("id", activity._id+"-uv");
   uvTag.text(uv.toString())
 
-  temp = 0; //TODO: Get Temperature
+  temp = activity.temperature;
   tempTag = newActivity.find("#temp-temp");
   tempTag.attr("id", activity._id+"-temp");
   tempTag.html("<span>" + temp.toString() + "&#176; F</span>")
 
-  humidity = 0; //TODO: Get humidity
+  humidity = activity.humidity;
   humidTag = newActivity.find("#temp-humidity");
   humidTag.attr("id", activity._id+"-humidity");
   humidTag.text(humidity.toString() + "%")
 
-  calories = 0; //TODO: calculate calories
+  calories = activity.calories;
   calTag = newActivity.find("#temp-calories");
   calTag.attr("id", activity._id+"-calories");
   calTag.text(calories.toString() + " cals burned");

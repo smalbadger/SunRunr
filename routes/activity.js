@@ -18,8 +18,12 @@ var activities = {
 
 };
 
+// TODO: Create endpoint to change activity type. This should also recalculate
+//       calories burned and update it in the activity.
 
-// GET request return one or "all" activities of one User 
+// TODO: Create endpoint to change activity email (in case the user email changes)
+
+// GET request return one or "all" activities of one User
 router.get('/all', function(req, res, next) {
 	let responseJson = { activities: [] };
 
@@ -62,7 +66,7 @@ router.get('/all', function(req, res, next) {
         }
         else {
             for(let activity of allActivities) {
-                responseJson.activities.push({ activity}); 
+                responseJson.activities.push({ activity});
             }
         }
         res.status(200).json(responseJson);

@@ -55,12 +55,38 @@
   	<div class="row" id="main_">
       <div class="col s0 m1 l2"></div>
       <div class="col s12 m10 l8 card blue-grey">
-    		<div class="col s12" id="weather">
-          <div class="scrolling-wrapper scrolling-wrapper-flexbox" id="weather-forecast">
+        <div class="row">
+      		<div class="col s12" id="weather">
+            <div class="scrolling-wrapper scrolling-wrapper-flexbox" id="weather-forecast"></div>
           </div>
+
+          <div class="col s12 l4 summary">
+            <div class="card teal lighten-1">
+              <div class="card-title">Total Duration</div>
+              <div class="card-content" id="total-duration">7 hours, 3 minutes, 26 seconds</div>
+            </div>
+          </div>
+
+          <div class="col s12 l4 summary">
+            <div class="card teal lighten-1">
+              <div class="card-title">Total Calories</div>
+              <div class="card-content" id="total-calories">9,090 Calories</div>
+            </div>
+          </div>
+
+          <div class="col s12 l4 summary">
+            <div class="card teal lighten-1">
+              <div class="card-title">Total UV Exposure</div>
+              <div class="card-content" id="total-uv"> One whole exposure</div>
+            </div>
+          </div>
+
         </div>
       </div>
       <div class="col s0 m1 l2"></div>
+
+      <!-- TODO: Create cards to show activity summary in the past 7 days -->
+
   	</div>
   </body>
 
