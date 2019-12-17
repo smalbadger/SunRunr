@@ -1,4 +1,4 @@
-export function summarize(activityData){
+function summarize(activityData){
 
   totalDuration = 0;
   totalCalories = 0;

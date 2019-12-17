@@ -15,9 +15,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 	 <link href="stylesheets/sunrunr.css" rel="stylesheet">
+   <script src="javascripts/summary.js"></script>
    <script src="javascripts/weather.js"></script>
 	 <script src="javascripts/dashboard.js"></script>
-   <script src="javascripts/summary.js"></script>
    <script src="javascripts/activities.js"></script>
 	 <script src="javascripts/signout.js"></script>
 
@@ -94,6 +94,20 @@
   <!-- Initialize dropdown menu in materialize -->
   <script>
     $('.dropdown-trigger').dropdown();
+  </script>
+
+  <script>
+    $(function() {
+      // If there's no authToken stored, redirect user to
+      // the sign-in page (which is userLogin.html)
+      if (!window.localStorage.getItem("authToken")) {
+        window.location.replace("userLogin.html");
+      }
+      else {
+        getFiveDayForecast();
+        createSummary();
+      }
+    });
   </script>
 
 </html>
