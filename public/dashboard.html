@@ -104,7 +104,13 @@
         window.location.replace("userLogin.html");
       }
       else {
-        getFiveDayForecast();
+        navigator.geolocation.getCurrentPosition(
+          getFiveDayForecast,
+          function (err) {
+            console.warn(`ERROR(${err.code}): ${err.message}`);
+          },
+          {enableHighAccuracy: true, timeout: 5000, maximumAge: 0}
+        );
         createSummary();
       }
     });
