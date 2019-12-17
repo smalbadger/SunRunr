@@ -89,6 +89,3 @@ app.use(function (err, req, res, next) {
 console.log('point 5');
 
 module.exports = app;
-
-console.log('point 6');
-
