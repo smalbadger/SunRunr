@@ -107,6 +107,7 @@ function onPersonalInfoEditCancelled(){
 }
 
 function accountInfoSuccess(data, textSatus, jqXHR) {
+  console.log(data)
   $("#email").val(data.email);
   $("#fullName").val(data.fullName);
   $("#maxUVExposure").val(data.maxUVExposure);
