@@ -256,20 +256,6 @@ function showUVGraph(){
   lineGraph(getCurrId("uv-graph"), uvData, "Time", "UV Strength", "UV Exposure");
 }
 
-$(function() {
-  // If there's no authToken stored, redirect user to
-  // the sign-in page (which is userLogin.html)
-  if (!window.localStorage.getItem("authToken")) {
-    window.location.replace("userLogin.html");
-  }
-  else {
-    $('.modal').modal();
-    $('.dropdown-trigger').dropdown();
-    $("#temp").hide();
-    getActivities();
-  }
-});
-
 ////////////////////////////////////////////////////////////////////////////////
 //  GRAPHING CODE
 ////////////////////////////////////////////////////////////////////////////////

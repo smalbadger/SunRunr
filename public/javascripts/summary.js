@@ -1,5 +1,3 @@
-import { prettyTime } from './activities.js';
-
 export function summarize(activityData){
 
   totalDuration = 0;

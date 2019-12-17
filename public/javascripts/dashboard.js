@@ -1,5 +1,3 @@
-import { summarize } from './summary.js';
-
 function createSummary(){
   $.ajax({
     url: '/activity/all',
