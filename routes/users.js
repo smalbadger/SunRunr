@@ -141,7 +141,7 @@ router.put("/updateuser" , function(req, res) {
                 return res.status(400).json({success: false, message: "User does not exist."});
             }
             else {
-                User.findOneAndUpdate({ email: decodedToken.email }, {$set:{email: req.body.email, fullName: req.body.fullName}} , function(err, user) {
+                User.findOneAndUpdate({ email: decodedToken.email }, {$set:{email: req.body.email, fullName: req.body.fullName, uv_threshold:req.body.maxUVExposure}} , function(err, user) {
                     if (err) {
                         return res.status(400).json(err);
                     } else if (user) {
@@ -150,9 +150,10 @@ router.put("/updateuser" , function(req, res) {
                           // TODO: change email on all associated activities
                           // TODO: change email on all associated devices
                         }
+                        
                         var authToken = jwt.encode({email: req.body.email}, secret);
                         return res.status(200).json({success: true, message: "User " + req.body.email + " was updated.", authToken: authToken});
-                        
+
                     } else {
                         return res.status(400).json({success: false, message: "User " + req.body.email + " was not found."});
                     }
@@ -227,4 +228,3 @@ router.put("/updateuser" , function(req, res) {
 module.exports = router;
 
 console.log('users routes');
-
