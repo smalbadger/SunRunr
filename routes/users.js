@@ -130,6 +130,8 @@ router.put("/updateuser" , function(req, res) {
         return res.status(401).json({success: false, message: "No authentication token"});
     }
 
+    console.log(req.body);
+
     var authToken = req.headers["x-auth"];
 
     try {
