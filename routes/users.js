@@ -142,7 +142,7 @@ router.put("/updateuser" , function(req, res) {
                 return res.status(400).json({success: false, message: "User does not exist."});
             }
             else {
-                User.findOneAndUpdate({ email: decodedToken.email }, {$set:{email: req.body.email, fullName: req.body.fullName, uv_threshold:req.body.maxUVExposure}} , function(err, user) {
+                User.findOneAndUpdate({ email: decodedToken.email }, {$set:{email: req.body.email, fullName: req.body.fullName, uv_threshold:req.body.uv_threshold}} , function(err, user) {
                     if (err) {
                         return res.status(400).json(err);
                     } else if (user) {
