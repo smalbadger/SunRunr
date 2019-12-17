@@ -18,7 +18,7 @@ function updateAccountInfo(){
     type: 'PUT',
     headers: { 'x-auth': window.localStorage.getItem("authToken") },
     contentType: 'application/json',
-    data: JSON.stringify({email:email, fullName:fullName, maxUVExposure}),
+    data: JSON.stringify({email:email, fullName:fullName, uv_threshold:maxUVExposure}),
     dataType: 'json'
   })
   .done(updateSuccess)
