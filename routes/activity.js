@@ -102,11 +102,11 @@ router.get('/allAct', function(req, res, next) {
     //     email = req.body.email;
     // }
 
-    var query = {
+    //var query = {
         lon = req.body.lng; //user lon
         lat = req.body.lat; //user lat
         radius = req.body.rad; //radius around the user
-    }
+    //}
 
 
     // go through users and find all activities within the radius within past seven days
