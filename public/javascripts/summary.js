@@ -7,7 +7,9 @@ function summarize(activityData){
     totalDuration += activityData[i].duration;
     totalCalories += activityData[i].calories;
     for(let j=0; j<activityData[i].GPS.length; j++){
-      totalUV += activityData[i].GPS[j].uv;
+      if (activityData[i].GPS[j].uv != 65535){
+        totalUV += activityData[i].GPS[j].uv;
+      }
     }
   }
 
