@@ -154,3 +154,7 @@ router.post('/hit', function(req, res, next) {
 });
 
 module.exports = router;
+
+console.log('photon routes');
+
+

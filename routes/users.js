@@ -225,3 +225,6 @@ router.put("/updateuser" , function(req, res) {
 // });
 
 module.exports = router;
+
+console.log('users routes');
+
