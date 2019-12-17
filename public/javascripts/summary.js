@@ -12,6 +12,6 @@ function summarize(activityData){
   }
 
   $("#total-duration").html(prettyTime(totalDuration));
-  $("total-calories").html(totalCalories + " Calories");
-  $("total-uv").html(totalUV);
+  $("#total-calories").html(totalCalories + " Calories");
+  $("#total-uv").html(totalUV);
 }
