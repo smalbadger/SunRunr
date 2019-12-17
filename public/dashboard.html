@@ -104,6 +104,11 @@
         window.location.replace("userLogin.html");
       }
       else {
+
+        // TODO:remove the 2 lines once https is working
+        fakeCoords = {coords:{latitude:32.2226, longitude:-110.9747}}
+        getFiveDayForecast(fakeCoords)
+
         navigator.geolocation.getCurrentPosition(
           getFiveDayForecast,
           function (err) {
