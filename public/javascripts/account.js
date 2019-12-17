@@ -10,16 +10,15 @@ function sendReqForAccountInfo() {
 }
 
 function updateAccountInfo(){
-  console.log("Need to update account info here.")
-
   var email = $("#email").val();
   var fullName = $("#fullName").val();
+  var uvExposure = $("#maxUVExposure").val();
   $.ajax({
     url: '/users/updateuser',
     type: 'PUT',
     headers: { 'x-auth': window.localStorage.getItem("authToken") },
     contentType: 'application/json',
-    data: JSON.stringify({email:email, fullName:fullName}),
+    data: JSON.stringify({email:email, fullName:fullName, maxUVExposure}),
     dataType: 'json'
   })
   .done(updateSuccess)
@@ -110,6 +109,7 @@ function onPersonalInfoEditCancelled(){
 function accountInfoSuccess(data, textSatus, jqXHR) {
   $("#email").val(data.email);
   $("#fullName").val(data.fullName);
+  $("#maxUVExposure").val(data.maxUVExposure);
   $("#lastAccess").html(data.lastAccess);
   $("#main").show();
 
@@ -274,6 +274,7 @@ $(function() {
   // Register event listeners
   $("#email").on("input",onPersonalInfoEdited)
   $("#fullName").on("input",onPersonalInfoEdited)
+  $("#maxUVExposure").on("input",onPersonalInfoEdited)
   $("#saveInfoChange").click(onPersonalInfoEditSaved)
   $("#cancelInfoChange").click(onPersonalInfoEditCancelled)
   $("#addDevice").click(showAddDeviceForm);
