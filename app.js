@@ -22,7 +22,7 @@ app.set('view engine','ejs');
 // Set HTML engine**
 app.engine('html', require('ejs').renderFile);
 
-console.log('point 1');
+//console.log('point 1');
 
 // This is to enable cross-origin access
 app.use(function (req, res, next) {
@@ -39,7 +39,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-console.log('point 2');
+//console.log('point 2');
 
 app.use(logger('dev'))
 app.use(express.json());
@@ -49,7 +49,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}));
 
-console.log('point 3');
+//console.log('point 3');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -57,16 +57,12 @@ app.use('/devices', devicesRouter);
 app.use('/photon', photonRouter);
 app.use('/activity', activityRouter);
 
-console.log('point 4');
+//console.log('point 4');
 
 //indexRouter.get('/', function(req, res) {
 //  res.sendFile(__dirname + '../public/userLogin.html');
 //});
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-//  next(createError(404));
-  res.send(404);
 //catch 404 and forward to error handler
 app.use(function (req, res, next) {
  if (err){
@@ -83,9 +79,9 @@ app.use(function (err, req, res, next) {
     }
     // render the error page
     res.status(err.status || 500);
-    //res.render('error');
+
 });
 
-console.log('point 5');
+//console.log('point 5');
 
 module.exports = app;
