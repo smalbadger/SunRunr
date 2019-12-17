@@ -96,6 +96,7 @@ router.get("/account" , function(req, res) {
                 userStatus['email'] = user.email;
                 userStatus['fullName'] = user.fullName;
                 userStatus['lastAccess'] = user.lastAccess;
+                userStatus['uv_threshold'] = user.uv_threshold;
 
                 // Find devices based on decoded token
                 Device.find({ userEmail : decodedToken.email}, function(err, devices) {
@@ -150,7 +151,7 @@ router.put("/updateuser" , function(req, res) {
                           // TODO: change email on all associated activities
                           // TODO: change email on all associated devices
                         }
-                        
+
                         var authToken = jwt.encode({email: req.body.email}, secret);
                         return res.status(200).json({success: true, message: "User " + req.body.email + " was updated.", authToken: authToken});
 
