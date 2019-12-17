@@ -74,3 +74,7 @@ router.get('/all', function(req, res, next) {
 });
 
 module.exports = router;
+
+console.log('activity routes');
+
+
