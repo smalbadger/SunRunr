@@ -63,12 +63,10 @@ console.log('point 4');
 //  res.sendFile(__dirname + '../public/userLogin.html');
 //});
 
-<<<<<<< HEAD
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
 //  next(createError(404));
   res.send(404);
-=======
 //catch 404 and forward to error handler
 app.use(function (req, res, next) {
  if (err){
@@ -76,7 +74,6 @@ app.use(function (req, res, next) {
     }
     // render the error page
     res.status(404);
->>>>>>> 25a6a11ff3f7ad5b3af731d8cdb7bd587651f3ac
 });
 
 // error handler
