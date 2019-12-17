@@ -57,7 +57,7 @@ var str = "";
   return str;
 }
 
-function prettyTime(ms){
+export function prettyTime(ms){
   hours = Math.floor(ms/3600000);
   ms -= hours*360000;
   mins = Math.floor(ms/60000);
