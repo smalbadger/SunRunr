@@ -65,14 +65,6 @@ app.use('/weather', weatherRouter);
 //  res.sendFile(__dirname + '../public/userLogin.html');
 //});
 
-//catch 404 and forward to error handler
-app.use(function (req, res, next) {
- if (err){
-      console.log("Error", err);
-    }
-    // render the error page
-    res.status(404);
-});
 
 // error handler
 app.use(function (err, req, res, next) {
