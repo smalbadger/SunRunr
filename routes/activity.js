@@ -80,7 +80,7 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
     let responseJson = { activities: [] };
 
 
-    lon = req.params.lng; //user lon
+    lon = req.params.lon; //user lon
     lat = req.params.lat; //user lat
     radius = req.params.rad * (360/24901); //radius around the user
     //console.log(req.query);
