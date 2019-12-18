@@ -2,7 +2,7 @@ const request = require('request');
 let express = require('express');
 let router = express.Router();
 
-router.get("/forecast?lat=:lat&lon=:lon" , function(req, response) {
+router.get("/forecast/:lat/:lon" , function(req, response) {
 
   console.log(req.params)
 
