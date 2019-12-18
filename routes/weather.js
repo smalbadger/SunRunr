@@ -19,5 +19,3 @@ router.get("/forecast" , function(req, response) {
 });
 
 module.exports = router;
-
-console.log('weather routes');

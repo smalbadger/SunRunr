@@ -271,6 +271,3 @@ router.post('/ping', function(req, res, next) {
 
 module.exports = router;
 
-console.log('devices routes');
-
-
