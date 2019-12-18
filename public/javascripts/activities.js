@@ -120,9 +120,6 @@ function addActivityListing(activity){
   typeTag = newActivity.find(".dropdown-trigger")
   typeTag.attr("id", activity._id + "-activity-type-selection")
   typeTag.text(activity.aType)
-  console.log(activity._id + "-activity-type-selection")
-  console.log(typeTag.attr("id"))
-  console.log(activity.aType)
 
   activityContent = newActivity.find("#temp-activity-content");
   activityContent.attr("id", activity._id+"-activity-content");

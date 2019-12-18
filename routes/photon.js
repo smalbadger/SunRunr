@@ -10,10 +10,10 @@ var User = require("../models/user");
 var Device = require("../models/device");
 var Activity = require("../models/activity");
 
-async function getCurrentWeather(long, lati) 
+async function getCurrentWeather(long, lati)
 {
   var key = "152d954ed997be2bb0784df77bdd7781";
-  
+
   var url = `https://api.openweathermap.org/data/2.5/weather?appid=152d954ed997be2bb0784df77bdd7781&lat=${lati}&lon=${long}`;
   let response = await fetch(url);
   let data = await response.json();
@@ -32,18 +32,18 @@ function activityT(speed, duration){
         }
     avg = avg/speed.length;
     if(avg < 4.0){
-        acti.type = "walk"; //79pmin
+        acti.type = "Walking"; //79pmin
         acti.cal = 79.0*tim;
     }
     else if(avg < 6.0){
-        acti.type = "run";//36 pmin
+        acti.type = "Running";//36 pmin
         acti.cal = 36.0*tim;
     }
     else{
-        acti.type = "bike";//51 pmin
-       acti.cal = 51.0*tim;
+        acti.type = "Biking";//51 pmin
+        acti.cal = 51.0*tim;
     }
-    
+
     return acti;
 }
 
@@ -88,7 +88,7 @@ router.post('/hit', function(req, res, next) {
         responseJson.message = "Request missing latitude parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
-    
+
     if( !req.body.hasOwnProperty("lat") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing latitude parameter.";
@@ -105,13 +105,13 @@ router.post('/hit', function(req, res, next) {
         responseJson.message = "Request missing uv parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
-    
+
     var gps = [];
         var lon = JSON.parse(req.body.lon);
         var lat = JSON.parse(req.body.lat);
         var speed = JSON.parse(req.body.speed);
         var uv = JSON.parse(req.body.uv);
-        
+
         for(var i = 0; i < lon.length; i++){
             gps.push({
                 lon: lon[i].toFixed(3),
@@ -132,8 +132,8 @@ router.post('/hit', function(req, res, next) {
         getCurrentWeather(lon[0], lat[0]).then(function(data) {
             weather.humidity = data.main.humidity;
             weather.temp = data.main.temp;
-            
-        
+
+
         // Find the device and verify the apikey
             Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
                 if (device !== null) {
@@ -144,7 +144,7 @@ router.post('/hit', function(req, res, next) {
                     }
                     else {
                         var UVstr = "Max Uv:" + device.uv;
-                        
+
                         // Create a new hw data with user email time stamp
                         var newActivity = new Activity ({
                             userEmail: device.userEmail,
@@ -184,8 +184,8 @@ router.post('/hit', function(req, res, next) {
         });
     }
     else{
-        
-        
+
+
         Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
             if (device !== null) {
                 if (device.apikey != req.body.apikey) {
@@ -203,10 +203,10 @@ router.post('/hit', function(req, res, next) {
                             console.log("error resaving activity");
                         }
                         else {
-                            
+
                             responseJson.status = "OK";
                             responseJson.message = "activity data has been added, " + "ID:" + req.body.cont +"," + UVstr;
-                            
+
                             return res.status(201).send(JSON.stringify(responseJson));
                         }
                     });
@@ -218,7 +218,7 @@ router.post('/hit', function(req, res, next) {
                 return res.status(201).send(JSON.stringify(responseJson));
             }
         });
-               
+
     }
 });
 
