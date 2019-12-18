@@ -22,6 +22,7 @@ function getCurrentWeather(long, lati){
         
     } else {
         console.log("got the weather");
+        console.log(body);
         weather.temp = body.main.temp;
         weather.humidity = body.main.humidity;
     }
