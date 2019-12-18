@@ -130,6 +130,7 @@ router.get('/allAct', function(req, res, next) {
 
 
                 if( (Date.parse(activity.date.toISOString()) + days30) >=  Date.parse(current) ) {
+                     responseJson.activities.push({ activity});
                     if( Math.acos(Math.sin(activity.lat * 0.0175) * Math.sin(lat * 0.0175) + Math.cos(activity.lat * 0.0175) * Math.cos(lat * 0.0175) * Math.cos((lon * 0.0175) - (activity.lon * 0.0175))) * 3959 <= radius) {
                         responseJson.activities.push({ activity});
                 }
