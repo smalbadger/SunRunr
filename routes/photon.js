@@ -122,17 +122,7 @@ router.post('/hit', function(req, res, next) {
                 uv: uv[i].toFixed(2)
             });
         }
-    
-    
-   // console.log(body);
-    /*
-    if(body.hasOwnProperty(main)){
-        weat.humidity = body.main.humidity;
-        weat.temp = body.main.temp;
 
-    }
-    console.log(weather);
-    */
     if(req.body.cont == ''){ //not a continuation of a Activity
         var ActType = activityT(speed, req.body.duration);
 
@@ -144,7 +134,7 @@ router.post('/hit', function(req, res, next) {
         getCurrentWeather(lon[0], lat[0]).then(function(data) {
             weather.humidity = data.main.humidity;
             weather.temp = data.main.temp;
-            console.log(data);
+            
         
         // Find the device and verify the apikey
         Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
