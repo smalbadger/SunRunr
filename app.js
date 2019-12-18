@@ -4,8 +4,8 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var weatherRouter = require('./routes/weather')
-var indexRouter = require('./routes/index')
+var weatherRouter = require('./routes/weather');
+var indexRouter = require('./routes/index');
 var photonRouter = require('./routes/photon');
 var usersRouter = require('./routes/users');
 var devicesRouter = require('./routes/devices');
