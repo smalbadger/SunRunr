@@ -23,9 +23,10 @@ function getCurrentWeather(long, lati){
         console.log("error getting current data");
         
     } else {
-        //console.log(body);
+        console.log(body);
         weather.temp = body.main.temp;
         weather.humidity = body.main.humidity;
+        console.log(weather);
     }
   });
     return weather;
@@ -133,6 +134,7 @@ router.post('/hit', function(req, res, next) {
         }
     
     var ActType = activityT(speed, req.body.duration);
+    var weather = getCurrentWeather(lon, lat);
     
     //console.log(req.body);
     if(req.body.cont == ''){ //not a continuation of a Activity
@@ -146,10 +148,8 @@ router.post('/hit', function(req, res, next) {
                     return res.status(201).send(JSON.stringify(responseJson));
                 }
                 else {
-                    var weather = getCurrentWeather(lon, lat);
-                    console.log(weather);
                     var UVstr = "Max Uv:" + device.uv;
-                    console.log(UVstr);
+                    
                     // Create a new hw data with user email time stamp
                     var newActivity = new Activity ({
                         userEmail: device.userEmail,
