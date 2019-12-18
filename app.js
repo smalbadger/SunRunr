@@ -57,6 +57,7 @@ app.use('/users', usersRouter);
 app.use('/devices', devicesRouter);
 app.use('/photon', photonRouter);
 app.use('/activity', activityRouter);
+app.use('/weather', weatherRouter);
 
 //console.log('point 4');
 
