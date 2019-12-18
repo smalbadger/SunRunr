@@ -109,8 +109,10 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
 										responseJson.activities.push({ activity});
 										var dist = Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2))
 
-                    console.log("LAT: " + activity.GPS[0].lat);
-                    console.log("LON: " + activity.GPS[0].lon);
+										console.log("CURRENT LAT: " + lat);
+                    console.log("CURRENT LON: " + lon);
+                    console.log("ACTIVITY LAT: " + activity.GPS[0].lat);
+                    console.log("ACTIVITY LON: " + activity.GPS[0].lon);
                     console.log ("DIST: " + dist);
                     if(dist <= radius) {
                         //responseJson.activities.push({ activity});
