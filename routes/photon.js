@@ -134,21 +134,21 @@ router.post('/hit', function(req, res, next) {
         .then(function(data) {
             weather.humidity = data.main.humidity;
             weather.temp = data.main.temp;
+            console.log(data);
         })
-      })
       .catch(function(error) {
         // If there is any error you will catch them here
         console.log("error in getting weather data");
       });
-    console.log(body);
-    
+   // console.log(body);
+    /*
     if(body.hasOwnProperty(main)){
         weat.humidity = body.main.humidity;
         weat.temp = body.main.temp;
 
     }
     console.log(weather);
-    
+    */
     if(req.body.cont == ''){ //not a continuation of a Activity
         
         // Find the device and verify the apikey
