@@ -209,6 +209,16 @@ function addActivityListing(activity){
 
   $('.modal').modal();
   $('.dropdown-trigger').dropdown();
+
+  $(".activity-type-select").click(function(){
+    updateActivityType($(this))
+  })
+}
+
+function updateActivityType(selection){
+  var selectedActivityID = selection.parent().attr('id').split('-')[0]
+  var type = selection.clone().children().remove().end().text();
+  console.log(`Changing activity ${selectedActivityID} to type ${type}`)
 }
 
 function showMap(){
