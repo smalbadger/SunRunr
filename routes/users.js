@@ -8,6 +8,16 @@ let fs = require('fs');
 let bcrypt = require("bcryptjs");
 let jwt = require("jwt-simple");
 
+
+////////////////////////////////
+//router.post('/confirmation', userController.confirmationPost);
+//router.post('/resend', userController.resendTokenPost);
+
+var crypto = require('crypto');
+var nodemailer = require('nodemailer');
+
+///////////////////////////////
+
 /* Authenticate user */
 // check if the user already exists
 var secret = fs.readFileSync(__dirname + '/../../jwtkey').toString();
@@ -26,8 +36,17 @@ router.post('/signin', function(req, res, next) {
                     res.status(512).json({success : false, message : "Error authenticating. Contact support."});
                 }
                 else if(valid) { // user was authenticated
-                    var authToken = jwt.encode({email: req.body.email}, secret);
-                    res.status(201).json({success:true, authToken: authToken});
+
+                    //////////////////////////////////////////////////////////////
+                    // Make sure the user has been verified
+                    if (!user.verified) return res.status(401).send({ type: 'not-verified', msg: 'Your account has not been verified.' });
+                    
+                    // Login successful, write token, and send back user
+                    res.status(201).send({ token: generateToken(user), user: user.toJSON() }); 
+                    ///////////////////////////////////////////////////////////////
+
+                    // var authToken = jwt.encode({email: req.body.email}, secret);
+                    // res.status(201).json({success:true, authToken: authToken});
                 }
                 else { // user was found but not valid password
                     res.status(401).json({success : false, message : "Email or password invalid."});
@@ -67,8 +86,25 @@ router.post('/register', function(req, res, next) {
              res.status(400).json({success : false, message : err.errmsg});
           }
           else {
-             res.status(201).json({success : true, message : user.fullName + "has been created"});
-          }
+            ////////////////////////////////////////////////////////////////////
+            // Create a verification token for this user
+            var token = new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
+     
+            // Save the verification token
+            token.save(function (err) {
+                if (err) { return res.status(500).send({ msg: err.message }); }
+     
+                // Send the email
+                var transporter = nodemailer.createTransport({ service: 'Sendgrid', auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD } });
+                var mailOptions = { from: 'no-reply@whatanutcase.com', to: user.email, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttps:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n' };
+                transporter.sendMail(mailOptions, function (err) {
+                    if (err) { return res.status(500).send({ msg: err.message }); }
+                    res.status(200).send('A verification email has been sent to ' + user.email + '.');
+                });
+            });
+            ////////////////////////////////////////////////////////////////////
+            //res.status(201).json({success : true, message : user.fullName + "has been created"});
+            }
         });
       }
    });
