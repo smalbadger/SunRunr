@@ -23,6 +23,7 @@ var activities = {
 
 // TODO: Create endpoint to change activity email (in case the user email changes)
 
+
 // GET request return one or "all" activities of one User
 router.get('/all', function(req, res, next) {
 	let responseJson = { activities: [] };
@@ -79,37 +80,10 @@ router.get('/allAct', function(req, res, next) {
     let responseJson = { activities: [] };
 
 
-    let email = "";
-
-    // // If authToken provided, use email in authToken
-    // if (req.headers["x-auth"]) {
-    //     try {
-    //         let decodedToken = jwt.decode(req.headers["x-auth"], secret);
-    //         email = decodedToken.email;
-    //     }
-    //     catch (ex) {
-    //         responseJson.message = "Invalid authorization token.";
-    //         return res.status(400).json(responseJson);
-    //     }
-    // }
-    // else {
-    //     // Ensure the request includes the email parameter
-    //     if( !req.body.hasOwnProperty("email")) {
-    //         responseJson.message = "Invalid authorization token or missing email address.";
-    //         return res.status(400).json(responseJson);
-    //     }
-    //     email = req.body.email;
-    // }
-
-    //var query = {
     lon = req.query.lng; //user lon
     lat = req.query.lat; //user lat
     radius = req.query.rad * (360/24901); //radius around the user
-    console.log(req.query);
-
-
-    //}
-
+    //console.log(req.query);
 
     // go through users and find all activities within the radius within past seven days
     Activity.find({}, function(err, allActivities) {
@@ -127,16 +101,16 @@ router.get('/allAct', function(req, res, next) {
                 var days7 = 604800;
 
 
-                console.log(Date.parse(current));
-                console.log(Date.parse(activity.date.toISOString()));
+                // console.log(Date.parse(current));
+                // console.log(Date.parse(activity.date.toISOString()));
 
-
+                // FIXME: dont forget to change this back to 7 days
                 if( (Date.parse(activity.date.toISOString()) + days30) >=  Date.parse(current) ) {
 
-                    console.log(activity.GPS[0]);
-                    console.log(activity.GPS[0].lat);
-                    console.log(activity.GPS[0].lon);
-                    console.log ( Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2)) );
+                    // console.log(activity.GPS[0]);
+                    // console.log(activity.GPS[0].lat);
+                    // console.log(activity.GPS[0].lon);
+                    // console.log ( Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2)) );
                     if( Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2)) <= radius) {
                         responseJson.activities.push({ activity});
                     }
@@ -147,15 +121,11 @@ router.get('/allAct', function(req, res, next) {
         res.status(200).json(responseJson);
     });
 
-    console.log(lat);
-    console.log(lon);
-    console.log(radius);
+    // console.log(lat);
+    // console.log(lon);
+    // console.log(radius);
 
 });
 
  
 module.exports = router;
-
-console.log('activity routes');
-
-
