@@ -5,9 +5,8 @@ function getForecast(day){
 function getFiveDayForecast(pos){
 
   $.ajax({
-    url: '/weather/forecast',
+    url: '/weather/forecast?lat='+pos.coords.latitude+"&lon="+pos.coords.longitude,
     type: 'GET',
-    data: {'lat':pos.coords.latitude, 'lon':pos.coords.longitude},
     dataType: 'json',
     success: function(data) {
       console.log('Received data:', data) // For testing
