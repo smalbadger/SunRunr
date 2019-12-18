@@ -105,6 +105,10 @@ router.get('/allAct', function(req, res, next) {
         lon = req.body.lng; //user lon
         lat = req.body.lat; //user lat
         radius = req.body.rad * (360/24901); //radius around the user
+        console.log(lat);
+        console.log(lon);
+        console.log(radius);
+
     //}
 
 
@@ -129,7 +133,10 @@ router.get('/allAct', function(req, res, next) {
 
 
                 if( (Date.parse(activity.date.toISOString()) + days30) >=  Date.parse(current) ) {
+
                     console.log(activity.GPS[0]);
+                    console.log(activity.GPS[0].lat);
+                    console.log(activity.GPS[0].lon);
                     console.log ( Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2)) );
                     if( Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2)) <= radius) {
                         responseJson.activities.push({ activity});
