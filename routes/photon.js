@@ -1,7 +1,8 @@
 // this is for the photon particle
 // this part grabs the info from the photon and check if its valid
 const request = require('request');
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+
 var express = require('express');
 var router = express.Router();
 
@@ -9,25 +10,17 @@ var User = require("../models/user");
 var Device = require("../models/device");
 var Activity = require("../models/activity");
 
-var resp;
-function getCurrentWeather(long, lati){
+async function getUserAsync(long, lati) 
+{
   var key = "152d954ed997be2bb0784df77bdd7781";
-  
-  var url = `https://api.openweathermap.org/data/2.5/weather?appid=${key}&lat=${lati[0].toFixed(2)}&lon=${long[0].toFixed(2)}`;
-  var xhr = new XMLHttpRequest();
-   xhr.addEventListener("load", responseReceivedHandler);
-   xhr.responseType = "json";
-   xhr.open("GET", url);
-   xhr.send();
-}
+  var lat = req.params.lat.toFixed(2);
+  var lon = req.params.lon.toFixed(2);
+  var url = `https://api.openweathermap.org/data/2.5/weather?appid=${key}&lat=${lati[0]}&lon=${lon[0]}`;
+  let response = await fetch(url);
+  let data = await response.json();
 
-function responseReceivedHandler() {
-    if (this.status === 200) {
-       resp = this.response.main;
-    } else {
-       console.log("Weather data unavailable.");
-    }
- }
+  return data;
+}
 
 function activityT(speed, duration){
     var avg = 0.0;
@@ -136,12 +129,12 @@ router.post('/hit', function(req, res, next) {
         humidity: 0,
         };
 
-    getCurrentWeather(lon, lat);
+    let body = getCurrentWeather(lon, lat);
+    console.log(body);
     
-    console.log(resp);
-    if(resp.hasOwnProperty(humidity)){
-        weat.humidity = resp.humidity;
-        weat.temp = resp.temp;
+    if(body.hasOwnProperty(humidity)){
+        weat.humidity = body.humidity;
+        weat.temp = body.temp;
 
     }
     console.log(weather);
