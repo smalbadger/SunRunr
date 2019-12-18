@@ -15,7 +15,10 @@ function pin_point_users(embedID, numDays, numMiles, lat, lng) {
         document.getElementById(embedID), {zoom: 4, center: center});
 
     console.log(data)
-    var marker = new google.maps.Marker({position: center, map: map});
+    for(activity of data.activities){
+      var loc = {lat:activity.GPS[0].lat, lng:activity.GPS[0].lon}
+      var marker = new google.maps.Marker({position: loc, map: map});
+    }
   })
   .fail(function (jqXHR, textStatus, errorThrown) {
     console.log("Error: "+testStatus.message)
