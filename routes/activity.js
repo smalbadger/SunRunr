@@ -81,7 +81,7 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
 
     lon = req.params.lon; //user lon
     lat = req.params.lat; //user lat
-    radius = req.params.rad * (360/24901); //radius around the user
+    radius = req.params.rad;
 
     // go through users and find all activities within the radius within past seven days
     Activity.find({}, function(err, allActivities) {
