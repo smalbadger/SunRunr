@@ -23,7 +23,7 @@ function summarizeUser(activityData){
 
 function summarizeAllUsers(lat, lng, radius){
   $.ajax({
-    url: '/activity/allAct/'+lat+'/'+lng+'/'+numMiles,
+    url: '/activity/allAct/'+lat+'/'+lng+'/'+radius,
     type: 'GET',
     dataType: 'json'
   })
