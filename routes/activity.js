@@ -144,4 +144,49 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
 });
 
 
+// Update the activity type
+router.get('/updateType', function(req, res, next) {
+    let responseJson = { activities: [] };
+
+    actid = req.body._id; //activity id
+    aType= req.body.aType; //new activity
+
+
+    let email = "";
+
+    // If authToken provided, use email in authToken
+    if (req.headers["x-auth"]) {
+        try {
+            let decodedToken = jwt.decode(req.headers["x-auth"], secret);
+            email = decodedToken.email;
+        }
+        catch (ex) {
+            responseJson.message = "Invalid authorization token.";
+            return res.status(400).json(responseJson);
+        }
+    }
+    else {
+        // Ensure the request includes the email parameter
+        if( !req.body.hasOwnProperty("email")) {
+            responseJson.message = "Invalid authorization token or missing email address.";
+            return res.status(400).json(responseJson);
+        }
+        email = req.body.email;
+    }
+
+    Activity.findByIdAndUpdate( actid, {$set:{aType: req.body.aType }} , function(err, activity) {
+        if (err) {
+            return res.status(400).json(err);
+        }
+        else if (activity) {
+            return res.status(200).json({success: true, message: "Activity " + req.body.aType + " was updated."});
+
+        }
+        else
+        {
+            return res.status(400).json({success: false, message: "Activity " + req.body._id + " was not found."});
+        }
+    });
+});
+
 module.exports = router;
