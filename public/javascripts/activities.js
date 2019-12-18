@@ -182,7 +182,7 @@ function addActivityListing(activity){
   uvTag.text(uv.toString() + " mW/cm<sup>2</sup>")
 
   if (activity.temperature != undefined){
-    temp = activity.temperature;
+    temp = activity.temperature * (9/5) - 459.67;
   }
   else {
     temp = 0;
@@ -201,7 +201,7 @@ function addActivityListing(activity){
   humidTag.attr("id", activity._id+"-humidity");
   humidTag.text(humidity.toString() + "%")
 
-  calories = activity.calories;
+  calories = activity.calories.toFixed(0);
   calTag = newActivity.find("#temp-calories");
   calTag.attr("id", activity._id+"-calories");
   calTag.text(calories.toString() + " cals burned");
