@@ -15,9 +15,8 @@ async function getCurrentWeather(long, lati)
   var key = "152d954ed997be2bb0784df77bdd7781";
   
   var url = `https://api.openweathermap.org/data/2.5/weather?appid=152d954ed997be2bb0784df77bdd7781&lat=${lati}&lon=${long}`;
-  let response = await fetch(url).then(function(data){
-      return data;
-  });
+  let response = await fetch(url);
+  let data = await response.json();
   
   console.log(data);
   return data;
@@ -148,52 +147,52 @@ router.post('/hit', function(req, res, next) {
             console.log(data);
         
         // Find the device and verify the apikey
-            Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
-                if (device !== null) {
-                    if (device.apikey != req.body.apikey) {
-                        responseJson.status = "ERROR";
-                        responseJson.message = "Invalid apikey for device ID " + req.body.deviceId + ".";
-                        return res.status(201).send(JSON.stringify(responseJson));
-                    }
-                    else {
-                        var UVstr = "Max Uv:" + device.uv;
-                        
-                        // Create a new hw data with user email time stamp
-                        var newActivity = new Activity ({
-                            userEmail: device.userEmail,
-                            deviceid: req.body.deviceId,
-                            GPS: gps,
-                            date: req.body.date,
-                            duration: req.body.duration,
-                            calories: ActType.cal,
-                            temperature: weather.temp,
-                            humidity: weather.humidity,
-                            aType: ActType.type
-
-                        });
-                        console.log(newActivity);
-                        // Save device. If successful, return success. If not, return error message.
-                        newActivity.save(function(err, newActivity) {
-                            if (err) {
-                                responseJson.status = "ERROR";
-                                responseJson.message = "Error saving data in db.";
-                                return res.status(201).send(JSON.stringify(responseJson));
-                            }
-                            else {
-                                responseJson.status = "OK";
-                                responseJson.message = "ID:" + newActivity._id + "," + UVstr;
-
-                                return res.status(201).send(JSON.stringify(responseJson));
-                            }
-                        });
-                    }
-                }
-                else {
+        Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
+            if (device !== null) {
+                if (device.apikey != req.body.apikey) {
                     responseJson.status = "ERROR";
-                    responseJson.message = "Device ID " + req.body.deviceId + " not registered.";
+                    responseJson.message = "Invalid apikey for device ID " + req.body.deviceId + ".";
                     return res.status(201).send(JSON.stringify(responseJson));
                 }
-            });
+                else {
+                    var UVstr = "Max Uv:" + device.uv;
+                    
+                    // Create a new hw data with user email time stamp
+                    var newActivity = new Activity ({
+                        userEmail: device.userEmail,
+                        deviceid: req.body.deviceId,
+                        GPS: gps,
+                        date: req.body.date,
+                        duration: req.body.duration,
+                        calories: ActType.cal,
+                        temperature: weather.temp,
+                        humidity: weather.humidity,
+                        aType: ActType.type
+
+                    });
+                    console.log(newActivity);
+                    // Save device. If successful, return success. If not, return error message.
+                    newActivity.save(function(err, newActivity) {
+                        if (err) {
+                            responseJson.status = "ERROR";
+                            responseJson.message = "Error saving data in db.";
+                            return res.status(201).send(JSON.stringify(responseJson));
+                        }
+                        else {
+                            responseJson.status = "OK";
+                            responseJson.message = "ID:" + newActivity._id + "," + UVstr;
+
+                            return res.status(201).send(JSON.stringify(responseJson));
+                        }
+                    });
+                }
+            }
+            else {
+                responseJson.status = "ERROR";
+                responseJson.message = "Device ID " + req.body.deviceId + " not registered.";
+                return res.status(201).send(JSON.stringify(responseJson));
+            }
+        });
         }).catch(function(error) {
         // If there is any error you will catch them here
         console.log("error in getting weather data");
