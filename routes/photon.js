@@ -13,24 +13,13 @@ function getCurrentWeather(long, lati){
   var key = "152d954ed997be2bb0784df77bdd7781";
   
   var url = `https://api.openweathermap.org/data/2.5/weather?appid=${key}&lat=${lati[0].toFixed(2)}&lon=${long[0].toFixed(2)}`;
-  
-  var weat = {
-    temp: 0,
-    humidity: 0,
-    status: ""
-    };
-  
+
   var body =  request(url, { json: true }, (err, res, body) => {
     console.log(body);
     //let json = body;
     
   });
-  if(json.hasOwnProperty(main)){
-    weat.temp= main.temp,
-    weat.humidity= main.humidity
-    }
-    console.log(weat);
-    return weat;
+  
 }
 
 function activityT(speed, duration){
@@ -135,10 +124,22 @@ router.post('/hit', function(req, res, next) {
         }
     
     var ActType = activityT(speed, req.body.duration);
+
+    var weather = {
+        temp: 0,
+        humidity: 0,
+        };
+
     var weath = getCurrentWeather(lon, lat);
-    console.log("returned");
+    
     console.log(weath);
-    //console.log(req.body);
+    if(weath.hasOwnProperty(main)){
+        weat.humidity = weath.main.humidity;
+        weat.temp = weat.main.temp;
+
+    }
+    console.log(weather);
+    
     if(req.body.cont == ''){ //not a continuation of a Activity
         
         // Find the device and verify the apikey
@@ -160,8 +161,8 @@ router.post('/hit', function(req, res, next) {
                         date: req.body.date,
                         duration: req.body.duration,
                         calories: ActType.cal,
-                        temperature: weath.temp,
-                        humidity: weath.humidity,
+                        temperature: weather.temp,
+                        humidity: weather.humidity,
                         aType: ActType.type
 
                     });
