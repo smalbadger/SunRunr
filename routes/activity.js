@@ -73,6 +73,10 @@ router.get('/all', function(req, res, next) {
     });
 });
 
+function parseISOString(s) {
+  var b = s.split(/\D+/);
+  return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
+}
 
 
 // GET request return all activities within certain radius within past 7 days
@@ -125,7 +129,7 @@ router.get('/allAct', function(req, res, next) {
                 var days7 = 604800;
 
                 console.log(Date.parse(current));
-                console.log(Date.parse(activities.date));
+                console.log(parseISOString(activities.date));
 
 
                 if((activity.date + +30) <=  current){
@@ -140,7 +144,7 @@ router.get('/allAct', function(req, res, next) {
 
 });
 
-
+ 
 module.exports = router;
 
 console.log('activity routes');
