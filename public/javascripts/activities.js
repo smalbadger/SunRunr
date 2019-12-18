@@ -174,12 +174,22 @@ function addActivityListing(activity){
   uvTag.attr("id", activity._id+"-uv");
   uvTag.text(uv.toString())
 
-  temp = activity.temperature;
+  if (activity.temperature != undefined){
+    temp = activity.temperature;
+  }
+  else {
+    temp = 0;
+  }
   tempTag = newActivity.find("#temp-temp");
   tempTag.attr("id", activity._id+"-temp");
   tempTag.html("<span>" + temp.toString() + "&#176; F</span>")
 
-  humidity = activity.humidity;
+  if (activity.humidity != undefined){
+    humidity = activity.humidity;
+  }
+  else {
+    humidity = 0;
+  }
   humidTag = newActivity.find("#temp-humidity");
   humidTag.attr("id", activity._id+"-humidity");
   humidTag.text(humidity.toString() + "%")
