@@ -92,20 +92,21 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
             res.status(400).json(errorMsg);
         }
         else {
-            //console.log(allActivities);
+						Date.prototype.addDays = function(days) {
+						    var date = new Date(this.valueOf());
+						    date.setDate(date.getDate() + days);
+						    return date;
+						}
+
 
             for(let activity of allActivities) {
                 var current = new Date();
-
-                var days30 = 2592000;
-                var days7 = 604800;
-
+								current.addDays(7);
 
                 // console.log(Date.parse(current));
                 // console.log(Date.parse(activity.date.toISOString()));
 
-                // FIXME: dont forget to change this back to 7 days
-                if( (Date.parse(activity.date.toISOString()) + days30) >=  Date.parse(current) ) {
+                if( Date.parse(activity.date.toISOString()) >=  Date.parse(current) ) {
 
                     // console.log(activity.GPS[0]);
                     // console.log(activity.GPS[0].lat);
