@@ -15,6 +15,7 @@ let jwt = require("jwt-simple");
 
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
+let Token = require("../models/token");
 
 ///////////////////////////////
 
