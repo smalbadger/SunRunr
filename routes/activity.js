@@ -118,19 +118,17 @@ router.get('/allAct', function(req, res, next) {
         else {
 
             for(let activity of allActivities) {
-
-                if( Math.acos(Math.sin(activity.lat * 0.0175) * Math.sin(lat * 0.0175) + Math.cos(activity.lat * 0.0175) * Math.cos(lat * 0.0175) * Math.cos((lon * 0.0175) - (activity.lon * 0.0175))) * 3959 <= radius) 
-                {
-                    var current = new Date();
-                    if((activity.date + +30) <=  cuurent){
-                         responseJson.activities.push({ activity});
-                    }
+                var current = new Date();
+                if((activity.date + +30) <=  current){
+                     if( Math.acos(Math.sin(activity.lat * 0.0175) * Math.sin(lat * 0.0175) + Math.cos(activity.lat * 0.0175) * Math.cos(lat * 0.0175) * Math.cos((lon * 0.0175) - (activity.lon * 0.0175))) * 3959 <= radius) {
+                    responseJson.activities.push({ activity});
                 }
             }
-
         }
-        res.status(200).json(responseJson);
-    });
+    }
+    res.status(200).json(responseJson);
+});
+
 });
 
 
