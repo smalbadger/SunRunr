@@ -121,13 +121,13 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
 										var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 										var dist = R * c / metersPerMile;
 
-										console.log("CURRENT LAT: " + lat);
-                    console.log("CURRENT LON: " + lon);
-                    console.log("ACTIVITY LAT: " + activity.GPS[0].lat);
-                    console.log("ACTIVITY LON: " + activity.GPS[0].lon);
-                    console.log("DIST: " + dist);
-										console.log("RADIUS: " + radius);
-										console.log("");
+										// console.log("CURRENT LAT: " + lat);
+                    // console.log("CURRENT LON: " + lon);
+                    // console.log("ACTIVITY LAT: " + activity.GPS[0].lat);
+                    // console.log("ACTIVITY LON: " + activity.GPS[0].lon);
+                    // console.log("DIST: " + dist);
+										// console.log("RADIUS: " + radius);
+										// console.log("");
                     if(dist <= radius) {
                         responseJson.activities.push(activity);
                     }
