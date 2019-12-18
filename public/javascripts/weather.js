@@ -3,6 +3,22 @@ function getForecast(day){
 }
 
 function getFiveDayForecast(pos){
+
+  $.ajax({
+    url: '/users/account',
+    type: 'GET',
+    data: {'lat':pos.coords.latitude, 'lon':pos.coords.longitude},
+    dataType: 'json',
+    success: function(data) {
+      console.log('Received data:', data) // For testing
+      $("#weather").prepend("<div class='card-title white-text center-align'>" + data.city.name + " Weather Forecast</div>")
+      $.each(data.list, function(index, val) {
+        createWeatherCard(val, data.city.timezone)
+      });
+    }
+  });
+
+/*
   var key = "152d954ed997be2bb0784df77bdd7781";
   var lat = pos.coords.latitude;
   var lon = pos.coords.longitude;
@@ -26,6 +42,7 @@ function getFiveDayForecast(pos){
       });
     }
   });
+  */
 }
 
 function prettyDateTime(uglyTime, timezoneAdjustment){
