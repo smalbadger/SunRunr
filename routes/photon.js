@@ -15,7 +15,7 @@ async function getCurrentWeather(long, lati)
   var key = "152d954ed997be2bb0784df77bdd7781";
   var lat = lati[0].toFixed(2);
   var lon = long[0].toFixed(2);
-  var url = `https://api.openweathermap.org/data/2.5/weather?appid=${key}&lat=${lat}&lon=${lon}`;
+  var url = `https://api.openweathermap.org/data/2.5/weather?appid=152d954ed997be2bb0784df77bdd7781&lat=${lat}&lon=${lon}`;
   let response = await fetch(url);
   let data = await response.json();
   console.log(data);
@@ -113,7 +113,7 @@ router.post('/hit', function(req, res, next) {
         var lat = JSON.parse(req.body.lat);
         var speed = JSON.parse(req.body.speed);
         var uv = JSON.parse(req.body.uv);
-        let body = getCurrentWeather(lon, lat);
+        
         for(var i = 0; i < lon.length; i++){
             gps.push({
                 lon: lon[i].toFixed(2),
@@ -130,7 +130,16 @@ router.post('/hit', function(req, res, next) {
         humidity: 0,
         };
 
-    //let body = getCurrentWeather(lon, lat);
+     fetch(`https://api.openweathermap.org/data/2.5/weather?appid=152d954ed997be2bb0784df77bdd7781&lat=${lat[0]}&lon=${lon[0]}`)
+        .then(function(data) {
+            weather.humidity = data.main.humidity;
+            weather.temp = data.main.temp;
+        })
+      })
+      .catch(function(error) {
+        // If there is any error you will catch them here
+        console.log("error in getting weather data");
+      });
     console.log(body);
     
     if(body.hasOwnProperty(main)){
