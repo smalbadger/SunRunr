@@ -14,7 +14,7 @@ function getCurrentWeather(long, lati){
   
   var url = `https://api.openweathermap.org/data/2.5/weather?appid=${key}&lat=${lati[0].toFixed(2)}&lon=${long[0].toFixed(2)}`;
   
-  var weather = {
+  var weat = {
     temp: 0,
     humidity: 0,
     status: ""
@@ -26,11 +26,11 @@ function getCurrentWeather(long, lati){
     
   });
   if(json.hasOwnProperty(main)){
-    weather.temp= body.main.temp,
-    weather.humidity= body.main.humidity
+    weat.temp= json.main.temp,
+    weat.humidity= json.main.humidity
     }
-    console.log(weather);
-    return weather;
+    console.log(weat);
+    return weat;
 }
 
 function activityT(speed, duration){
