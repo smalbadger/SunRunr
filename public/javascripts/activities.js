@@ -208,7 +208,7 @@ function addActivityListing(activity){
   $('.modal').modal();
   $('.dropdown-trigger').dropdown();
 
-  $(".activity-type-select").click(function(){
+  newActivity.find(".activity-type-select").click(function(){
     console.log("UPDATE ACTIVITY");
     updateActivityType($(this));
   })
