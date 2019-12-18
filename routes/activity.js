@@ -111,6 +111,8 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
                 if(actDate.addDays(7) >= current) {
 										responseJson.activities.push(activity);
 
+										var metersPerMile = 1609.34;
+
 										var R = 6371e3; // metres
 										var phi1 = lat * Math.PI/180
 										var phi2 = alat * Math.PI/180
@@ -121,7 +123,7 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
 										        Math.cos(phi1) * Math.cos(phi2) *
 										        Math.sin(deltalambda/2) * Math.sin(deltalambda/2);
 										var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-										var dist = R * c
+										var dist = R * c / metersPerMile;
 
 										console.log("CURRENT LAT: " + lat);
                     console.log("CURRENT LON: " + lon);
