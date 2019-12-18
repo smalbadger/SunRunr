@@ -173,10 +173,13 @@ function addActivityListing(activity){
   newActivity.find("#temp-uv-graph").attr("id", activity._id+"-uv-graph");
   newActivity.find("#temp-btn-box").attr("id", activity._id+"-btn-box");
 
-  uv = 0; //TODO: get total uv exposure
+  uv = 0;
+  for (var i=0; i<activity.GPS.length; i++){
+    uv += activity.GPS[i].uv;
+  }
   uvTag = newActivity.find("#temp-uv")
   uvTag.attr("id", activity._id+"-uv");
-  uvTag.text(uv.toString())
+  uvTag.text(uv.toString() + " mW/cm<sup>2</sup>")
 
   if (activity.temperature != undefined){
     temp = activity.temperature;
@@ -204,7 +207,6 @@ function addActivityListing(activity){
   calTag.text(calories.toString() + " cals burned");
 
   $("#activities").append(newActivity);
-
   $('.modal').modal();
   $('.dropdown-trigger').dropdown();
 
