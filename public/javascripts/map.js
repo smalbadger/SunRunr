@@ -1,19 +1,26 @@
 
 // Initialize and add a map that shows all the users within a certain radius
 //
-function pin_point_users(embedID, numDays, numMiles) {
+function pin_point_users(embedID, numDays, numMiles, lat, lng) {
 
   //TODO: Get all activity locations within the past numDays and within the numMiles radius.
+  $.ajax({
+    url: '/activity/allAct/'+lat+'/'+lng+'/'+numMiles,
+    type: 'GET',
+    dataType: 'json'
+  })
+  .done(function (data, textSatus, jqXHR) {
+    var center = {lat: lat, lng: lng}; //This is a placeholder
 
-  //TODO: Calculate center of all activities
-  var center = {lat: 32.222607, lng: -110.974709}; //This is a placeholder
+    var map = new google.maps.Map(
+        document.getElementById(embedID), {zoom: 4, center: center});
 
-  var map = new google.maps.Map(
-      document.getElementById(embedID), {zoom: 4, center: center});
-
-  //TODO: Make a marker for each activity
-  var marker = new google.maps.Marker({position: center, map: map});
-
+    console.log(data)
+    var marker = new google.maps.Marker({position: center, map: map});
+  })
+  .fail(function (jqXHR, textStatus, errorThrown) {
+    console.log("Error: "+testStatus.message)
+  });
 }
 
 function map_out_path(embedID, coordinates){

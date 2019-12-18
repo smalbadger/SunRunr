@@ -76,13 +76,13 @@ router.get('/all', function(req, res, next) {
 
 
 // GET request return all activities within certain radius within past 7 days
-router.get('/allAct', function(req, res, next) {
+router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
     let responseJson = { activities: [] };
 
 
-    lon = req.query.lng; //user lon
-    lat = req.query.lat; //user lat
-    radius = req.query.rad * (360/24901); //radius around the user
+    lon = req.params.lng; //user lon
+    lat = req.params.lat; //user lat
+    radius = req.params.rad * (360/24901); //radius around the user
     //console.log(req.query);
 
     // go through users and find all activities within the radius within past seven days
@@ -117,7 +117,7 @@ router.get('/allAct', function(req, res, next) {
                 }
             }
         }
-        
+
         res.status(200).json(responseJson);
     });
 
@@ -127,5 +127,5 @@ router.get('/allAct', function(req, res, next) {
 
 });
 
- 
+
 module.exports = router;

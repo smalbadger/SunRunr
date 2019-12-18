@@ -95,7 +95,15 @@
     $('.dropdown-trigger').dropdown();
 
     function initMap() {
-      pin_point_users("map", 7, 25);
+      navigator.geolocation.getCurrentPosition(
+        function (pos) {
+          pin_point_users("map", 7, 25, pos.coords.latitude, pos.coords.longitude)
+        },
+        function (err) {
+          console.warn(`ERROR(${err.code}): ${err.message}`);
+        },
+        {enableHighAccuracy: true, timeout: 5000, maximumAge: 0}
+      );
     }
   </script>
 
