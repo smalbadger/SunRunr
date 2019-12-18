@@ -1,6 +1,7 @@
 // this is for the photon particle
 // this part grabs the info from the photon and check if its valid
 const request = require('request');
+
 var express = require('express');
 var router = express.Router();
 
@@ -12,7 +13,7 @@ function getCurrentWeather(long, lati){
   var key = "152d954ed997be2bb0784df77bdd7781";
   var url = `https://api.openweathermap.org/data/2.5/forecast?appid=${key}&lat=${lati}&lon={$long}&units=Imperial`;
   var weather = {
-      temperature: 0,
+      temp: 0,
       humidity: 0
   };
   request(url, { json: true }, (err, res, body) => {
