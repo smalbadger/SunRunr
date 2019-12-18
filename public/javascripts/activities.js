@@ -120,6 +120,7 @@ function addActivityListing(activity){
   typeTag = newActivity.find("#temp-activity-type-selection")
   typeTag.attr("id", activity._id + "-activity-type-selection")
   typeTag.text(activity.aType)
+  console.log(activity._id + "-activity-type-selection")
   console.log(typeTag.attr("id"))
   console.log(activity.aType)
 
