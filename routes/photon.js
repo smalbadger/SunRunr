@@ -11,11 +11,12 @@ var Activity = require("../models/activity");
 
 function getCurrentWeather(long, lati){
   var key = "152d954ed997be2bb0784df77bdd7781";
-  var url = `https://api.openweathermap.org/data/2.5/forecast?appid=${key}&lat=${lati}&lon={$long}&units=Imperial`;
+  var url = `https://api.openweathermap.org/data/2.5/forecast?appid=${key}&lat=${lati}&lon={$long}`;
   var weather = {
       temp: 0,
       humidity: 0
   };
+  console.log(url);
   request(url, { json: true }, (err, res, body) => {
     if (err) {
         console.log("error getting current data");
