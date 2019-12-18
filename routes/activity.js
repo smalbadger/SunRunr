@@ -102,17 +102,16 @@ router.get('/allAct', function(req, res, next) {
     // }
 
     //var query = {
-
+    let lon = req.body.lng; //user lon
+    let lat = req.body.lat; //user lat
+    let radius = req.body.rad * (360/24901); //radius around the user
         
 
     //}
 
 
     // go through users and find all activities within the radius within past seven days
-    Activity.find({}, function(err, allActivities, req) {
-        lon = req.body.lng; //user lon
-        lat = req.body.lat; //user lat
-        radius = req.body.rad * (360/24901); //radius around the user
+    Activity.find({}, function(err, allActivities, lat, lon, radius) {
         if (err) {
             let errorMsg = {"message" : err};
             res.status(400).json(errorMsg);
