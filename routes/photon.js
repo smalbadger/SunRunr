@@ -1,7 +1,7 @@
 // this is for the photon particle
 // this part grabs the info from the photon and check if its valid
 const request = require('request');
-
+const fetch = require("node-fetch");
 
 var express = require('express');
 var router = express.Router();
@@ -13,9 +13,9 @@ var Activity = require("../models/activity");
 async function getCurrentWeather(long, lati) 
 {
   var key = "152d954ed997be2bb0784df77bdd7781";
-  var lat = req.params.lat.toFixed(2);
-  var lon = req.params.lon.toFixed(2);
-  var url = `https://api.openweathermap.org/data/2.5/weather?appid=${key}&lat=${lati[0]}&lon=${lon[0]}`;
+  var lat = lati[0].toFixed(2);
+  var lon = long[0].toFixed(2);
+  var url = `https://api.openweathermap.org/data/2.5/weather?appid=${key}&lat=${lat}&lon=${lon}`;
   let response = await fetch(url);
   let data = await response.json();
 
