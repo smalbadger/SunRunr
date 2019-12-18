@@ -130,7 +130,7 @@ router.get('/allAct', function(req, res, next) {
 
                 console.log(Date.parse(current));
                 //console.log(parseISOString(activities.date));
-                 console.log(parseISOString(activities.date).toISOString()); 
+                //console.log(parseISOString(activities.date).toISOString()); 
 
 
                 if((activity.date + +30) <=  current){
