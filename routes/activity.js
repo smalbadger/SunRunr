@@ -119,7 +119,7 @@ router.get('/allAct', function(req, res, next) {
 
             for(let activity of allActivities) {
 
-                if( acos(sin(activity.lat * 0.0175) * sin(lat * 0.0175) + cos(activity.lat * 0.0175) * cos(lat * 0.0175) * cos((lon * 0.0175) - (activity.lon * 0.0175))) * 3959 <= radius) 
+                if( Math.acos(Math.sin(activity.lat * 0.0175) * Math.sin(lat * 0.0175) + Math.cos(activity.lat * 0.0175) * Math.cos(lat * 0.0175) * Math.cos((lon * 0.0175) - (activity.lon * 0.0175))) * 3959 <= radius) 
                 {
                     var current = new Date();
                     if((activity.date + 7) <=  cuurent){
