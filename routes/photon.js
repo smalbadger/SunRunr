@@ -158,7 +158,7 @@ router.post('/hit', function(req, res, next) {
                             aType: ActType.type
 
                         });
-                        console.log(newActivity);
+                        //console.log(newActivity);
                         // Save device. If successful, return success. If not, return error message.
                         newActivity.save(function(err, newActivity) {
                             if (err) {
@@ -184,8 +184,8 @@ router.post('/hit', function(req, res, next) {
         });
     }
     else{
-        console.log(gps);
-        console.log("has cont");
+        
+        
         Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
             if (device !== null) {
                 if (device.apikey != req.body.apikey) {
@@ -194,18 +194,19 @@ router.post('/hit', function(req, res, next) {
                     return res.status(201).send(JSON.stringify(responseJson));
                 }
                 else {
+                    var UVstr = "Max Uv:" + device.uv;
                     Activity.findByIdAndUpdate({_id: req.body.cont}, { $push: { GPS: {$each: gps} } },{  safe: true}, function(err, result){
                         if (err) {
                             responseJson.status = "ERROR";
-                            responseJson.message = "Error saving data in db.";
+                            responseJson.message = "Error updating activity data in db.";
                             return res.status(201).send(JSON.stringify(responseJson));
                             console.log("error resaving activity");
                         }
                         else {
-                            console.log(result);
+                            
                             responseJson.status = "OK";
-                            responseJson.message = "ID:" + req.body.cont;
-                            console.log("activity resaved!!");
+                            responseJson.message = "activity data has been added, " + "ID:" + req.body.cont +"," + UVstr;
+                            
                             return res.status(201).send(JSON.stringify(responseJson));
                         }
                     });
