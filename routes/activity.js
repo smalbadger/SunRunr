@@ -119,8 +119,6 @@ router.get('/allAct', function(req, res, next) {
             console.log(allActivities);
 
             for(let activity of allActivities) {
-                responseJson.activities.push({ activity});
-
                 var current = new Date();
                 if((activity.date + +30) <=  current){
                     if( Math.acos(Math.sin(activity.lat * 0.0175) * Math.sin(lat * 0.0175) + Math.cos(activity.lat * 0.0175) * Math.cos(lat * 0.0175) * Math.cos((lon * 0.0175) - (activity.lon * 0.0175))) * 3959 <= radius) {
