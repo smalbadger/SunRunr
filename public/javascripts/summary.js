@@ -4,6 +4,9 @@ function summarize(activityData){
   totalCalories = 0;
   totalUV = 0;
   for(let i=0; i<activityData.length; i++){
+
+    //TODO: filter activities from the past 7 days
+
     totalDuration += activityData[i].duration;
     totalCalories += activityData[i].calories;
     for(let j=0; j<activityData[i].GPS.length; j++){
@@ -14,6 +17,6 @@ function summarize(activityData){
   }
 
   $("#total-duration").html(prettyTime(totalDuration));
-  $("#total-calories").html(totalCalories + " Calories");
+  $("#total-calories").html(totalCalories.toFixed(0) + " Calories");
   $("#total-uv").html(totalUV);
 }
