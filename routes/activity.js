@@ -109,11 +109,9 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
                 // console.log(Date.parse(activity.date.toISOString()));
 
                 if(actDate.addDays(7) >= current) {
-										responseJson.activities.push(activity);
+										const metersPerMile = 1609.34;
 
-										var metersPerMile = 1609.34;
-
-										var R = 6371e3; // metres
+										const R = 6371e3; // metres
 										var phi1 = lat * Math.PI/180
 										var phi2 = alat * Math.PI/180
 										var deltaphi = (alat-lat) * Math.PI/180
@@ -131,7 +129,7 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
                     console.log("ACTIVITY LON: " + activity.GPS[0].lon);
                     console.log ("DIST: " + dist);
                     if(dist <= radius) {
-                        //responseJson.activities.push(activity);
+                        responseJson.activities.push(activity);
                     }
                 }
             }
