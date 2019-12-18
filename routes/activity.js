@@ -124,7 +124,7 @@ router.get('/allAct', function(req, res, next) {
                 var days30 = 2592000;
                 var days7 = 604800;
 
-                console.log(Date.parse(current);
+                console.log(Date.parse(current));
                 console.log(Date.parse(activities.date));
 
 
