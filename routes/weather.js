@@ -1,4 +1,6 @@
 const request = require('request');
+let express = require('express');
+let router = express.Router();
 
 router.get("/forecast" , function(req, response) {
   var key = "152d954ed997be2bb0784df77bdd7781";
