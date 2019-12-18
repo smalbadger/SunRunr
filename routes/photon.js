@@ -129,7 +129,7 @@ router.post('/hit', function(req, res, next) {
         humidity: 0,
         };
 
-        await getCurrentWeather(lon[0], lat[0]).then(function(data) {
+        getCurrentWeather(lon[0], lat[0]).then(function(data) {
             weather.humidity = data.main.humidity;
             weather.temp = data.main.temp;
             console.log(data);
