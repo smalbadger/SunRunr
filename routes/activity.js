@@ -105,10 +105,8 @@ router.get('/allAct', function(req, res, next) {
     lon = req.body.lng; //user lon
     lat = req.body.lat; //user lat
     radius = req.body.rad * (360/24901); //radius around the user
-    console.log(lat);
-    console.log(lon);
-    console.log(radius);
-    console.log(req.body);
+    console.log(req);
+
 
     //}
 
