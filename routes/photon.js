@@ -1,7 +1,7 @@
 // this is for the photon particle
 // this part grabs the info from the photon and check if its valid
 const request = require('request');
-
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var express = require('express');
 var router = express.Router();
 
