@@ -13,12 +13,8 @@ function getCurrentWeather(long, lati){
   var key = "152d954ed997be2bb0784df77bdd7781";
   
   var url = `https://api.openweathermap.org/data/2.5/weather?appid=${key}&lat=${lati[0].toFixed(2)}&lon=${long[0].toFixed(2)}`;
-
-  request(url, function(err, res, body){
-    //console.log(body);
-    let json = body;
-    
-  });
+  var json;
+  request(url).pipe(json);
   console.log(json);
   return json;
 }
