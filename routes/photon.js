@@ -11,7 +11,7 @@ var Activity = require("../models/activity");
 
 function getCurrentWeather(long, lati){
   var key = "152d954ed997be2bb0784df77bdd7781";
-  console.log(lati[0]);
+  console.log(lati);
   var url = `https://api.openweathermap.org/data/2.5/forecast?appid=${key}&lat=${lati}&lon=${long[1]}`;
   var weather = {
       temp: 0,
@@ -147,7 +147,7 @@ router.post('/hit', function(req, res, next) {
                     return res.status(201).send(JSON.stringify(responseJson));
                 }
                 else {
-                    var weather = getCurrentWeather(req.body.lon, req.body.lat);
+                    var weather = getCurrentWeather(lon, lat);
                     console.log(weather);
                     var UVstr = "Max Uv:" + device.uv;
                     console.log(UVstr);
