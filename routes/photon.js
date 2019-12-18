@@ -22,6 +22,7 @@ function getCurrentWeather(long, lati){
   
   var body =  request(url, { json: true }, (err, res, body) => {
     let json = JSON.parse(body);
+    console.log(body);
   });
   if(json.hasOwnProperty(main)){
     weather.temp= body.main.temp,
