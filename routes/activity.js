@@ -129,7 +129,8 @@ router.get('/allAct', function(req, res, next) {
                 var days7 = 604800;
 
                 console.log(Date.parse(current));
-                console.log(parseISOString(activities.date));
+                //console.log(parseISOString(activities.date));
+                 console.log(parseISOString(activities.date).toISOString()); 
 
 
                 if((activity.date + +30) <=  current){
