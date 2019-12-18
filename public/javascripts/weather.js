@@ -3,45 +3,17 @@ function getForecast(day){
 }
 
 function getFiveDayForecast(pos){
-
   $.ajax({
     url: '/weather/forecast/'+pos.coords.latitude+"/"+pos.coords.longitude,
     type: 'GET',
     dataType: 'json',
     success: function(data) {
-      console.log('Received data:', data) // For testing
       $("#weather").prepend("<div class='card-title white-text center-align'>" + data.city.name + " Weather Forecast</div>")
       $.each(data.list, function(index, val) {
         createWeatherCard(val, data.city.timezone)
       });
     }
   });
-
-/*
-  var key = "152d954ed997be2bb0784df77bdd7781";
-  var lat = pos.coords.latitude;
-  var lon = pos.coords.longitude;
-  var url = "https://api.openweathermap.org/data/2.5/forecast";
-
-  $.ajax({
-    url: url, //API Call
-    dataType: "json",
-    type: "GET",
-    data: {
-      lat: lat,
-      lon: lon,
-      appid: key,
-      units: "Imperial",
-    },
-    success: function(data) {
-      console.log('Received data:', data) // For testing
-      $("#weather").prepend("<div class='card-title white-text center-align'>" + data.city.name + " Weather Forecast</div>")
-      $.each(data.list, function(index, val) {
-        createWeatherCard(val, data.city.timezone)
-      });
-    }
-  });
-  */
 }
 
 function prettyDateTime(uglyTime, timezoneAdjustment){
