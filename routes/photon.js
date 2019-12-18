@@ -10,7 +10,7 @@ var User = require("../models/user");
 var Device = require("../models/device");
 var Activity = require("../models/activity");
 
-async function getUserAsync(long, lati) 
+async function getCurrentWeather(long, lati) 
 {
   var key = "152d954ed997be2bb0784df77bdd7781";
   var lat = req.params.lat.toFixed(2);
