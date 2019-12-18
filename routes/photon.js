@@ -8,6 +8,54 @@ var User = require("../models/user");
 var Device = require("../models/device");
 var Activity = require("../models/activity");
 
+function getCurrentWeather(long, lati){
+  var key = "152d954ed997be2bb0784df77bdd7781";
+  var url = `https://api.openweathermap.org/data/2.5/forecast?appid=${key}&lat=${lati}&lon={$long}&units=Imperial`;
+  var weather = {
+      temperature: 0,
+      humidity: 0
+  };
+  request(url, { json: true }, (err, res, body) => {
+    if (err) {
+        console.log("error getting current data");
+        
+    } else {
+        console.log("got the weather");
+        weather.temp = body.main.temp;
+        weather.humidity = body.main.humidity;
+    }
+  });
+    return weather;
+}
+
+function activityT(speed, duration){
+    var avg = 0.0;
+    var acti = {
+        Typ: "",
+        cal: 0
+    };
+    var tim = duration/(1000.0*60.0);
+    for(var i = 0; i < speed.length; i++){
+            avg += speed[i];
+        }
+    avg = avg/speed.length;
+    if(avg < 4.0){
+        acti.type = "walk"; //79pmin
+        acti.cal = 79.0*tim;
+    }
+    else if(avg < 6.0){
+        acti.type = "run";//36 pmin
+        acti.cal = 36.0*tim;
+    }
+    else{
+        acti.type = "bike";//51 pmin
+       acti.cal = 51.0*tim;
+    }
+    
+    return acti;
+}
+
+
 /* POST: Register new device. */
 router.post('/hit', function(req, res, next) {
     var responseJson = {
@@ -81,6 +129,8 @@ router.post('/hit', function(req, res, next) {
             });
         }
     
+    var ActType = activityT(speed, req.body.duration);
+    
     //console.log(req.body);
     if(req.body.cont == ''){ //not a continuation of a Activity
         
@@ -93,7 +143,8 @@ router.post('/hit', function(req, res, next) {
                     return res.status(201).send(JSON.stringify(responseJson));
                 }
                 else {
-
+                    var weather = getCurrentWeather(req.body.lon, req.body.lat);
+                    console.log(weather);
                     var UVstr = "Max Uv:" + device.uv;
                     console.log(UVstr);
                     // Create a new hw data with user email time stamp
@@ -103,9 +154,10 @@ router.post('/hit', function(req, res, next) {
                         GPS: gps,
                         date: req.body.date,
                         duration: req.body.duration,
-                        calories: 0,
-                        temperature: 0,
-                        humidity: 0
+                        calories: ActType.cal,
+                        temperature: weather.temp,
+                        humidity: weather.humidity,
+                        aType: ActType.type
 
                     });
 
