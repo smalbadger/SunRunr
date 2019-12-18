@@ -5,7 +5,7 @@ var path = require('path');
 
 
 const { google } = require('googleapis');
-const OAuth2Data = require('./google_key.json');
+const OAuth2Data = require('../google_key.json');
 
 
 const CLIENT_ID = OAuth2Data.client.id;
