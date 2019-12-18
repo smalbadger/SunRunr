@@ -9,15 +9,25 @@ var User = require("../models/user");
 var Device = require("../models/device");
 var Activity = require("../models/activity");
 
+var resp;
 function getCurrentWeather(long, lati){
   var key = "152d954ed997be2bb0784df77bdd7781";
   
   var url = `https://api.openweathermap.org/data/2.5/weather?appid=${key}&lat=${lati[0].toFixed(2)}&lon=${long[0].toFixed(2)}`;
-  var json
-  request(url);
-  console.log(body);
-  return body;
+  var xhr = new XMLHttpRequest();
+   xhr.addEventListener("load", responseReceivedHandler);
+   xhr.responseType = "json";
+   xhr.open("GET", url);
+   xhr.send();
 }
+
+function responseReceivedHandler() {
+    if (this.status === 200) {
+       resp = this.response.main;
+    } else {
+       console.log("Weather data unavailable.");
+    }
+ }
 
 function activityT(speed, duration){
     var avg = 0.0;
@@ -59,7 +69,6 @@ router.post('/hit', function(req, res, next) {
         responseJson.message = "Request missing deviceId parameter.";
         return res.status(201).send(JSON.stringify(responseJson));
     }
-    
 
     if( !req.body.hasOwnProperty("apikey") ) {
         responseJson.status = "ERROR";
@@ -127,12 +136,12 @@ router.post('/hit', function(req, res, next) {
         humidity: 0,
         };
 
-    var weath = getCurrentWeather(lon, lat);
+    getCurrentWeather(lon, lat);
     
-    console.log(weath);
-    if(weath.hasOwnProperty(main)){
-        weat.humidity = weath.main.humidity;
-        weat.temp = weat.main.temp;
+    console.log(resp);
+    if(resp.hasOwnProperty(humidity)){
+        weat.humidity = resp.humidity;
+        weat.temp = resp.temp;
 
     }
     console.log(weather);
