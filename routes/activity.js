@@ -98,15 +98,14 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
 						    return date;
 						}
 
-
             for(let activity of allActivities) {
+								var actDate = new Date(activity.date)
                 var current = new Date();
-								current.addDays(7);
 
                 // console.log(Date.parse(current));
                 // console.log(Date.parse(activity.date.toISOString()));
 
-                if( Date.parse(activity.date.toISOString()) >=  Date.parse(current) ) {
+                if(actDate.addDays(7) >= current) {
 									responseJson.activities.push({ activity});
 
                     // console.log(activity.GPS[0]);
