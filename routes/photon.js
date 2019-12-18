@@ -13,9 +13,8 @@ var Activity = require("../models/activity");
 async function getCurrentWeather(long, lati) 
 {
   var key = "152d954ed997be2bb0784df77bdd7781";
-  var lat = lati[0].toFixed(2);
-  var lon = long[0].toFixed(2);
-  var url = `https://api.openweathermap.org/data/2.5/weather?appid=152d954ed997be2bb0784df77bdd7781&lat=${lat}&lon=${lon}`;
+  
+  var url = `https://api.openweathermap.org/data/2.5/weather?appid=152d954ed997be2bb0784df77bdd7781&lat=${lati}&lon=${long}`;
   let response = await fetch(url);
   let data = await response.json();
   console.log(data);
@@ -130,13 +129,11 @@ router.post('/hit', function(req, res, next) {
         humidity: 0,
         };
 
-     fetch(`https://api.openweathermap.org/data/2.5/weather?appid=152d954ed997be2bb0784df77bdd7781&lat=${lat[0]}&lon=${lon[0]}`)
-        .then(function(data) {
+        getCurrentWeather(lon[0], lat[0]).then(function(data) {
             weather.humidity = data.main.humidity;
             weather.temp = data.main.temp;
             console.log(data);
-        })
-      .catch(function(error) {
+        }).catch(function(error) {
         // If there is any error you will catch them here
         console.log("error in getting weather data");
       });
