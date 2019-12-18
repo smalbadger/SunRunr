@@ -102,10 +102,10 @@ router.get('/allAct', function(req, res, next) {
     // }
 
     //var query = {
-    lon = req.body.lng; //user lon
-    lat = req.body.lat; //user lat
-    radius = req.body.rad * (360/24901); //radius around the user
-    console.log(req);
+    lon = req.query.lng; //user lon
+    lat = req.query.lat; //user lat
+    radius = req.query.rad * (360/24901); //radius around the user
+    console.log(req.query);
 
 
     //}
@@ -150,7 +150,6 @@ router.get('/allAct', function(req, res, next) {
     console.log(lat);
     console.log(lon);
     console.log(radius);
-    console.log(req.body);
 
 });
 
