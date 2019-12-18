@@ -22,12 +22,12 @@ function getCurrentWeather(long, lati){
   
   var body =  request(url, { json: true }, (err, res, body) => {
     console.log(body);
-    let json = body;
+    //let json = body;
     
   });
   if(json.hasOwnProperty(main)){
-    weat.temp= json.main.temp,
-    weat.humidity= json.main.humidity
+    weat.temp= main.temp,
+    weat.humidity= main.humidity
     }
     console.log(weat);
     return weat;
