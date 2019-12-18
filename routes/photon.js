@@ -17,8 +17,6 @@ async function getCurrentWeather(long, lati)
   var url = `https://api.openweathermap.org/data/2.5/weather?appid=152d954ed997be2bb0784df77bdd7781&lat=${lati}&lon=${long}`;
   let response = await fetch(url);
   let data = await response.json();
-  
-  console.log(data);
   return data;
 }
 
@@ -116,10 +114,10 @@ router.post('/hit', function(req, res, next) {
         
         for(var i = 0; i < lon.length; i++){
             gps.push({
-                lon: lon[i].toFixed(2),
-                lat: lat[i].toFixed(2),
-                speed: speed[i].toFixed(2),
-                uv: uv[i].toFixed(2)
+                lon: lon[i].toFixed(3),
+                lat: lat[i].toFixed(3),
+                speed: speed[i].toFixed(3),
+                uv: uv[i].toFixed(3)
             });
         }
 
@@ -137,6 +135,57 @@ router.post('/hit', function(req, res, next) {
             
         
         // Find the device and verify the apikey
+            Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
+                if (device !== null) {
+                    if (device.apikey != req.body.apikey) {
+                        responseJson.status = "ERROR";
+                        responseJson.message = "Invalid apikey for device ID " + req.body.deviceId + ".";
+                        return res.status(201).send(JSON.stringify(responseJson));
+                    }
+                    else {
+                        var UVstr = "Max Uv:" + device.uv;
+                        
+                        // Create a new hw data with user email time stamp
+                        var newActivity = new Activity ({
+                            userEmail: device.userEmail,
+                            deviceid: req.body.deviceId,
+                            GPS: gps,
+                            date: req.body.date,
+                            duration: req.body.duration,
+                            calories: ActType.cal,
+                            temperature: weather.temp,
+                            humidity: weather.humidity,
+                            aType: ActType.type
+
+                        });
+                        console.log(newActivity);
+                        // Save device. If successful, return success. If not, return error message.
+                        newActivity.save(function(err, newActivity) {
+                            if (err) {
+                                responseJson.status = "ERROR";
+                                responseJson.message = "Error saving data in db.";
+                                return res.status(201).send(JSON.stringify(responseJson));
+                            }
+                            else {
+                                responseJson.status = "OK";
+                                responseJson.message = "ID:" + newActivity._id + "," + UVstr;
+
+                                return res.status(201).send(JSON.stringify(responseJson));
+                            }
+                        });
+                    }
+                }
+                else {
+                    responseJson.status = "ERROR";
+                    responseJson.message = "Device ID " + req.body.deviceId + " not registered.";
+                    return res.status(201).send(JSON.stringify(responseJson));
+                }
+            });
+        });
+    }
+    else{
+        console.log(gps);
+        console.log("has cont");
         Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
             if (device !== null) {
                 if (device.apikey != req.body.apikey) {
@@ -145,33 +194,18 @@ router.post('/hit', function(req, res, next) {
                     return res.status(201).send(JSON.stringify(responseJson));
                 }
                 else {
-                    var UVstr = "Max Uv:" + device.uv;
-                    
-                    // Create a new hw data with user email time stamp
-                    var newActivity = new Activity ({
-                        userEmail: device.userEmail,
-                        deviceid: req.body.deviceId,
-                        GPS: gps,
-                        date: req.body.date,
-                        duration: req.body.duration,
-                        calories: ActType.cal,
-                        temperature: weather.temp,
-                        humidity: weather.humidity,
-                        aType: ActType.type
-
-                    });
-                    console.log(newActivity);
-                    // Save device. If successful, return success. If not, return error message.
-                    newActivity.save(function(err, newActivity) {
+                    Activity.findByIdAndUpdate({_id: req.body.cont}, { $push: { GPS: {$each: gps} } },{  safe: true}, function(err, result){
                         if (err) {
                             responseJson.status = "ERROR";
                             responseJson.message = "Error saving data in db.";
                             return res.status(201).send(JSON.stringify(responseJson));
+                            console.log("error resaving activity");
                         }
                         else {
+                            console.log(result);
                             responseJson.status = "OK";
-                            responseJson.message = "ID:" + newActivity._id + "," + UVstr;
-
+                            responseJson.message = "ID:" + req.body.cont;
+                            console.log("activity resaved!!");
                             return res.status(201).send(JSON.stringify(responseJson));
                         }
                     });
@@ -183,26 +217,7 @@ router.post('/hit', function(req, res, next) {
                 return res.status(201).send(JSON.stringify(responseJson));
             }
         });
-        });
-    }
-    else{
-        console.log(gps);
-        console.log("has cont");
-        Activity.findByIdAndUpdate({_id: req.body.cont}, { $push: { GPS: {$each: gps} } },{  safe: true}, function(err, result){
-            if (err) {
-                responseJson.status = "ERROR";
-                responseJson.message = "Error saving data in db.";
-                return res.status(201).send(JSON.stringify(responseJson));
-                console.log("error resaving activity");
-            }
-            else {
-                console.log(result);
-                responseJson.status = "OK";
-                responseJson.message = "ID:" + req.body.cont;
-                console.log("activity resaved!!");
-                return res.status(201).send(JSON.stringify(responseJson));
-            }
-        });       
+               
     }
 });
 
