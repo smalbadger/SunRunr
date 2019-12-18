@@ -24,11 +24,12 @@ function getCurrentWeather(long, lati){
     if (err) {
         
         console.log("error getting current data");
+        return weather;
         
     } else {
         weather.temp= body.main.temp,
         weather.humidity= body.main.humidity
-        
+        return weather;
     }
   });
     console.log(weather);
