@@ -13,11 +13,11 @@ var Activity = require("../models/activity");
 async function getCurrentWeather(long, lati) 
 {
   var key = "152d954ed997be2bb0784df77bdd7781";
-  var lat = lati[0].toFixed(2);
-  var lon = long[0].toFixed(2);
-  var url = `https://api.openweathermap.org/data/2.5/weather?appid=152d954ed997be2bb0784df77bdd7781&lat=${lat}&lon=${lon}`;
+  
+  var url = `https://api.openweathermap.org/data/2.5/weather?appid=152d954ed997be2bb0784df77bdd7781&lat=${lati}&lon=${long}`;
   let response = await fetch(url);
   let data = await response.json();
+  
   console.log(data);
   return data;
 }
@@ -122,34 +122,19 @@ router.post('/hit', function(req, res, next) {
                 uv: uv[i].toFixed(2)
             });
         }
-    
-    var ActType = activityT(speed, req.body.duration);
+
+    if(req.body.cont == ''){ //not a continuation of a Activity
+        var ActType = activityT(speed, req.body.duration);
 
     var weather = {
         temp: 0,
         humidity: 0,
         };
 
-     fetch(`https://api.openweathermap.org/data/2.5/weather?appid=152d954ed997be2bb0784df77bdd7781&lat=${lat[0]}&lon=${lon[0]}`)
-        .then(function(data) {
+        getCurrentWeather(lon[0], lat[0]).then(function(data) {
             weather.humidity = data.main.humidity;
             weather.temp = data.main.temp;
-        })
-      })
-      .catch(function(error) {
-        // If there is any error you will catch them here
-        console.log("error in getting weather data");
-      });
-    console.log(body);
-    
-    if(body.hasOwnProperty(main)){
-        weat.humidity = body.main.humidity;
-        weat.temp = body.main.temp;
-
-    }
-    console.log(weather);
-    
-    if(req.body.cont == ''){ //not a continuation of a Activity
+            
         
         // Find the device and verify the apikey
         Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
@@ -197,6 +182,7 @@ router.post('/hit', function(req, res, next) {
                 responseJson.message = "Device ID " + req.body.deviceId + " not registered.";
                 return res.status(201).send(JSON.stringify(responseJson));
             }
+        });
         });
     }
     else{
