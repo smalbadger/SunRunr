@@ -17,16 +17,16 @@ function getCurrentWeather(long, lati){
       temp: 0,
       humidity: 0
   };
-  console.log(url);
+  //console.log(url);
   request(url, { json: true }, (err, res, body) => {
     if (err) {
         console.log("error getting current data");
         
     } else {
-        console.log(body);
+        //console.log(body);
         weather.temp = body.main.temp;
         weather.humidity = body.main.humidity;
-        console.log(weather);
+        
     }
   });
     return weather;
@@ -134,8 +134,9 @@ router.post('/hit', function(req, res, next) {
         }
     
     var ActType = activityT(speed, req.body.duration);
-    var weather = getCurrentWeather(lon, lat);
-    
+    var weath = getCurrentWeather(lon, lat);
+    console.log("returned");
+    console.log(weath);
     //console.log(req.body);
     if(req.body.cont == ''){ //not a continuation of a Activity
         
@@ -158,8 +159,8 @@ router.post('/hit', function(req, res, next) {
                         date: req.body.date,
                         duration: req.body.duration,
                         calories: ActType.cal,
-                        temperature: weather.temp,
-                        humidity: weather.humidity,
+                        temperature: weath.temp,
+                        humidity: weath.humidity,
                         aType: ActType.type
 
                     });
