@@ -4,12 +4,12 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-//var weatherRouter = require('./routes/weather');
 var indexRouter = require('./routes/index');
 var photonRouter = require('./routes/photon');
 var usersRouter = require('./routes/users');
 var devicesRouter = require('./routes/devices');
 var activityRouter = require('./routes/activity');
+var weatherRouter = require('./routes/weather');
 
 var app = express();
 
@@ -57,7 +57,7 @@ app.use('/users', usersRouter);
 app.use('/devices', devicesRouter);
 app.use('/photon', photonRouter);
 app.use('/activity', activityRouter);
-//app.use('/weather', weatherRouter);
+app.use('/weather', weatherRouter);
 
 //console.log('point 4');
 
