@@ -179,7 +179,7 @@ function addActivityListing(activity){
   }
   uvTag = newActivity.find("#temp-uv")
   uvTag.attr("id", activity._id+"-uv");
-  uvTag.text(uv.toString() + " mW/cm<sup>2</sup>")
+  uvTag.text("<span>" + uv.toString() + " mW/cm<sup>2</sup></span>")
 
   if (activity.temperature != undefined){
     temp = activity.temperature * (9/5) - 459.67;
@@ -189,7 +189,7 @@ function addActivityListing(activity){
   }
   tempTag = newActivity.find("#temp-temp");
   tempTag.attr("id", activity._id+"-temp");
-  tempTag.html("<span>" + temp.toString() + "&#176; F</span>")
+  tempTag.html("<span>" + temp.toFixed(1) + "&#176; F</span>")
 
   if (activity.humidity != undefined){
     humidity = activity.humidity;
@@ -199,12 +199,12 @@ function addActivityListing(activity){
   }
   humidTag = newActivity.find("#temp-humidity");
   humidTag.attr("id", activity._id+"-humidity");
-  humidTag.text(humidity.toString() + "%")
+  humidTag.text("<span>" + humidity.toString() + "%</span>")
 
   calories = activity.calories.toFixed(0);
   calTag = newActivity.find("#temp-calories");
   calTag.attr("id", activity._id+"-calories");
-  calTag.text(calories.toString() + " cals burned");
+  calTag.text("<span>" + calories.toString() + " cals burned</span>");
 
   $("#activities").append(newActivity);
   $('.modal').modal();
