@@ -5,7 +5,7 @@ function getForecast(day){
 function getFiveDayForecast(pos){
 
   $.ajax({
-    url: '/weather/forecast?lat='+pos.coords.latitude+"&lon="+pos.coords.longitude,
+    url: '/weather/forecast/'+pos.coords.latitude+"/"+pos.coords.longitude,
     type: 'GET',
     dataType: 'json',
     success: function(data) {
