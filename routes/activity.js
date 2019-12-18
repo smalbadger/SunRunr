@@ -129,6 +129,7 @@ router.get('/allAct', function(req, res, next) {
 
 
                 if( (Date.parse(activity.date.toISOString()) + days30) >=  Date.parse(current) ) {
+                    console.log ( Math.sqrt( Math.pow( (lon - activity.lng) ,2) + Math.pow( (lat - activity.lat) ,2)));
                     if( Math.sqrt( Math.pow( (lon - activity.lng) ,2) + Math.pow( (lat - activity.lat) ,2)) <= radius) {
                         responseJson.activities.push({ activity});
                 }
