@@ -129,10 +129,9 @@ router.get('/allAct', function(req, res, next) {
 
 
                 if( (Date.parse(activity.date.toISOString()) + days30) >=  Date.parse(current) ) {
-                    console.log(activity.GPS);
                     console.log(activity.GPS[0]);
-                    console.log ( Math.sqrt( Math.pow( (lon - activity.GPS.lon) ,2) + Math.pow( (lat - activity.GPS.lat) ,2)) );
-                    if( Math.sqrt( Math.pow( (lon - activity.lon) ,2) + Math.pow( (lat - activity.lat) ,2)) <= radius) {
+                    console.log ( Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2)) );
+                    if( Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2)) <= radius) {
                         responseJson.activities.push({ activity});
                 }
             }
