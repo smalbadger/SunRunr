@@ -34,7 +34,7 @@ function summarizeAllUsers(lat, lng, radius){
     // organize activities into users
     users = {}
     for(activity of data.activities){
-      if (!users.includes(activity.userEmail)){
+      if (!users.hasOwnProperty(activity.userEmail)){
         users[activity.userEmail] = [];
       }
       users[activity.userEmail].push(activity);
