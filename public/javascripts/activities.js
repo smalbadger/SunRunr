@@ -119,7 +119,7 @@ function addActivityListing(activity){
 
   typeTag = newActivity.find("#temp-activity-type")
   typeTag.attr("id", activity._id + "-activity-type")
-  // TODO: set activity type
+  typeTag.text(activity.aType)
 
   activityContent = newActivity.find("#temp-activity-content");
   activityContent.attr("id", activity._id+"-activity-content");
@@ -140,7 +140,7 @@ function addActivityListing(activity){
     getByCurrId("activity-content").slideDown();
     showMap();
 
-    //TODO: All other activities are collapsed
+    //All other activities are collapsed
     $("#"+currActivityID).siblings().each(function (index, value) {
       collapseActivity($(this).attr('id'));
     });
@@ -215,12 +215,26 @@ function addActivityListing(activity){
 }
 
 function updateActivityType(selection){
-  console.log(selection)
-  console.log(selection.parent().parent())
-  console.log(selection.parent().parent().attr('id'))
   var selectedActivityID = selection.parent().parent().attr('id').split('-')[0]
   var type = selection.clone().children().remove().end().text();
   console.log(`Changing activity ${selectedActivityID} to type ${type}`)
+  $.ajax({
+    url: '/activity/updateType',
+    type: 'PUT',
+    headers: { 'x-auth': window.localStorage.getItem("authToken") },
+    contentType: 'application/json',
+    data: JSON.stringify({_id:selectedActivityID, aType:type}),
+    dataType: 'json'
+  })
+  .done(function (data, textStatus, jqXHR) {
+    window.location.reload(false)
+  })
+  .fail(function (jqXHR, textStatus, errorThrown) {
+    console.log("Update Failed")
+    console.log(jqXHR)
+    console.log(textStatus)
+    console.log(errorThrown)
+  });
 }
 
 function showMap(){

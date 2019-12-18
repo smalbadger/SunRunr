@@ -145,12 +145,10 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
 
 
 // Update the activity type
-router.get('/updateType', function(req, res, next) {
-    let responseJson = { activities: [] };
-
+router.put('/updateType', function(req, res, next) {
+		responseJson = {}
     actid = req.body._id; //activity id
     aType= req.body.aType; //new activity
-
 
     let email = "";
 
@@ -165,22 +163,17 @@ router.get('/updateType', function(req, res, next) {
             return res.status(400).json(responseJson);
         }
     }
-    else {
-        // Ensure the request includes the email parameter
-        if( !req.body.hasOwnProperty("email")) {
-            responseJson.message = "Invalid authorization token or missing email address.";
-            return res.status(400).json(responseJson);
-        }
-        email = req.body.email;
-    }
+		else{
+			responseJson.message = "No authorization token given"
+			return res.status(400).json(responseJson);
+		}
 
-    Activity.findByIdAndUpdate( actid, {$set:{aType: req.body.aType }} , function(err, activity) {
+    Activity.findByIdAndUpdate(actid, {$set:{aType: req.body.aType }} , function(err, activity) {
         if (err) {
             return res.status(400).json(err);
         }
         else if (activity) {
-            return res.status(200).json({success: true, message: "Activity " + req.body.aType + " was updated."});
-
+            return res.status(200).json({success: true, message: "Activity " + req.body._id + " was updated."});
         }
         else
         {
