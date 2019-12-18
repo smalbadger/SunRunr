@@ -28,8 +28,6 @@ function pin_point_users(embedID, numDays, numMiles, lat, lng) {
   });
 }
 
-
-
 function map_out_path(embedID, coordinates){
   center = {lat:0, lng:0}
   for(let i=0; i<coordinates.length; i++){
