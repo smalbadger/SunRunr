@@ -142,7 +142,6 @@ function addActivityListing(activity){
 
     //TODO: All other activities are collapsed
     $("#"+currActivityID).siblings().each(function (index, value) {
-      console.log("Collapsing: " + $(this).attr('id'));
       collapseActivity($(this).attr('id'));
     });
   });
@@ -204,14 +203,14 @@ function addActivityListing(activity){
   calTag.attr("id", activity._id+"-calories");
   calTag.text(calories.toString() + " cals burned");
 
-  // console.log(newActivity.html());
   $("#activities").append(newActivity);
 
   $('.modal').modal();
   $('.dropdown-trigger').dropdown();
 
   $(".activity-type-select").click(function(){
-    updateActivityType($(this))
+    console.log("UPDATE ACTIVITY");
+    updateActivityType($(this));
   })
 }
 
@@ -247,8 +246,6 @@ function showMap(){
 }
 
 function showSpeedGraph(){
-  console.log("Showing speed graph for activity " + currActivityID);
-
   getByCurrId("activity-map").slideUp()
   getByCurrId("speed-graph").slideDown()
   getByCurrId("uv-graph").slideUp()
@@ -263,8 +260,6 @@ function showSpeedGraph(){
 }
 
 function showUVGraph(){
-  console.log("Showing UV graph for activity " + currActivityID);
-
   getByCurrId("activity-map").slideUp()
   getByCurrId("speed-graph").slideUp()
   getByCurrId("uv-graph").slideDown()
