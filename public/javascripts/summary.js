@@ -18,7 +18,7 @@ function summarizeUser(activityData){
 
   $("#total-duration").html(prettyTime(totalDuration));
   $("#total-calories").html(totalCalories.toFixed(0) + " Calories");
-  $("#total-uv").html(totalUV + " mW/cm<sup>2</sup>");
+  $("#total-uv").html("<span>" + totalUV + " mW/cm<sup>2</sup></span>");
 }
 
 function summarizeAllUsers(lat, lng, radius){
@@ -72,7 +72,7 @@ function summarizeAllUsers(lat, lng, radius){
 
     $("#average-total-distance").text(avgTotDist.toFixed(2) + " miles");
     $("#average-total-calories").text(avgTotCals.toFixed(0) + " calories burned")
-    $("#average-uv").text(avgUV + " mW/cm<sup>2</sup>")
+    $("#average-uv").html("<span>" + avgUV + " mW/cm<sup>2</sup></span>")
 
   })
   .fail(function (jqXHR, textStatus, errorThrown) {
