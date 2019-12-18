@@ -183,11 +183,7 @@ router.post('/hit', function(req, res, next) {
                 return res.status(201).send(JSON.stringify(responseJson));
             }
         });
-        }).catch(function(error) {
-        // If there is any error you will catch them here
-        console.log("error in getting weather data");
-        console.log(error);
-      });
+        });
     }
     else{
         console.log(gps);
