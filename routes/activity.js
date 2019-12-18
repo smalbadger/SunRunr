@@ -112,10 +112,10 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
 										responseJson.activities.push(activity);
 
 										var R = 6371e3; // metres
-										var phi1 = lat.toRadians();
-										var phi2 = alat.toRadians();
-										var deltaphi = (alat-lat).toRadians();
-										var deltalambda = (alon-lon).toRadians();
+										var phi1 = lat * Math.PI/180
+										var phi2 = alat * Math.PI/180
+										var deltaphi = (alat-lat) * Math.PI/180
+										var deltalambda = (alon-lon) * Math.PI/180
 
 										var a = Math.sin(deltaphi/2) * Math.sin(deltaphi/2) +
 										        Math.cos(phi1) * Math.cos(phi2) *
