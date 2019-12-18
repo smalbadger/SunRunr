@@ -3,6 +3,10 @@
 //
 function pin_point_users(embedID, numDays, numMiles, lat, lng) {
 
+  //TODO: Remove these temporary coordinates:
+  lng = 32.2
+  lat = 111
+
   //TODO: Get all activity locations within the past numDays and within the numMiles radius.
   $.ajax({
     url: '/activity/allAct/'+lat+'/'+lng+'/'+numMiles,
