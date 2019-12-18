@@ -144,14 +144,15 @@ router.put("/updateuser" , function(req, res) {
                 User.findOneAndUpdate({ email: decodedToken.email }, {$set:{email: req.body.email, fullName: req.body.fullName, uv_threshold:req.body.uv_threshold}} , function(err, user) {
                     if (err) {
                         return res.status(400).json(err);
-                    } 
+                    }
                     else if (user) {
+
+                        Device.update({ userEmail : decodedToken.email }, {$set:{uv: req.body.uv_threshold}} ,{ multi: true }, function(err, status) {
+                          console.log("Devices UV threshold set");
+                        });
 
                         if (decodedToken.email != req.body.email)
                         {
-                          // TODO: change email on all associated activities
-                          // TODO: change email on all associated devices
-
                           // Find all activities based on decoded token and change it to the new email
                           Activity.update({ userEmail : decodedToken.email }, {$set:{userEmail: req.body.email}} ,{ multi: true }, function(err, status) {
                             console.log("Activities' email updated");
@@ -166,8 +167,8 @@ router.put("/updateuser" , function(req, res) {
                         var authToken = jwt.encode({email: req.body.email}, secret);
                         return res.status(200).json({success: true, message: "User " + req.body.email + " was updated.", authToken: authToken});
 
-                    } 
-                    else 
+                    }
+                    else
                     {
                         return res.status(400).json({success: false, message: "User " + req.body.email + " was not found."});
                     }
@@ -183,4 +184,3 @@ router.put("/updateuser" , function(req, res) {
 
 
 module.exports = router;
-
