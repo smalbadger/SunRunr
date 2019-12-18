@@ -129,13 +129,14 @@ router.post('/hit', function(req, res, next) {
         humidity: 0,
         };
 
-        getCurrentWeather(lon[0], lat[0]).then(function(data) {
+        await getCurrentWeather(lon[0], lat[0]).then(function(data) {
             weather.humidity = data.main.humidity;
             weather.temp = data.main.temp;
             console.log(data);
         }).catch(function(error) {
         // If there is any error you will catch them here
         console.log("error in getting weather data");
+        console.log(error);
       });
    // console.log(body);
     /*
