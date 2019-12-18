@@ -17,7 +17,7 @@ function getCurrentWeather(long, lati){
   var weather = {
     temp: 0,
     humidity: 0,
-    status: err
+    status: ""
     };
   
   request(url, { json: true }, (err, res, body) => {
