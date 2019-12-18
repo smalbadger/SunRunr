@@ -12,7 +12,7 @@ var Activity = require("../models/activity");
 function getCurrentWeather(long, lati){
   var key = "152d954ed997be2bb0784df77bdd7781";
   console.log(lati[0]);
-  var url = `https://api.openweathermap.org/data/2.5/forecast?appid=${key}&lat=${lati[0].toFixed(2)}&lon=${long[0].toFixed(2)}`;
+  var url = `https://api.openweathermap.org/data/2.5/weather?appid=${key}&lat=${lati[0].toFixed(2)}&lon=${long[0].toFixed(2)}`;
   var weather = {
       temp: 0,
       humidity: 0
