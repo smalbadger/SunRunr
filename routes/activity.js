@@ -102,12 +102,26 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
 								var actDate = new Date(activity.date)
                 var current = new Date();
 
+								var alat = activity.GPS[0].lat
+								var alon = activity.GPS[0].lon
+
                 // console.log(Date.parse(current));
                 // console.log(Date.parse(activity.date.toISOString()));
 
                 if(actDate.addDays(7) >= current) {
 										responseJson.activities.push(activity);
-										var dist = Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2))
+
+										var R = 6371e3; // metres
+										var phi1 = lat.toRadians();
+										var phi2 = alat.toRadians();
+										var deltaphi = (alat-lat).toRadians();
+										var deltalambda = (alon-lon).toRadians();
+
+										var a = Math.sin(deltaphi/2) * Math.sin(deltaphi/2) +
+										        Math.cos(phi1) * Math.cos(phi2) *
+										        Math.sin(deltalambda/2) * Math.sin(deltalambda/2);
+										var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+										var dist = R * c
 
 										console.log("CURRENT LAT: " + lat);
                     console.log("CURRENT LON: " + lon);
