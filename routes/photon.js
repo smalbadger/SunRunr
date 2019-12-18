@@ -113,6 +113,7 @@ router.post('/hit', function(req, res, next) {
         var lat = JSON.parse(req.body.lat);
         var speed = JSON.parse(req.body.speed);
         var uv = JSON.parse(req.body.uv);
+        let body = getCurrentWeather(lon, lat);
         for(var i = 0; i < lon.length; i++){
             gps.push({
                 lon: lon[i].toFixed(2),
@@ -129,7 +130,7 @@ router.post('/hit', function(req, res, next) {
         humidity: 0,
         };
 
-    let body = getCurrentWeather(lon, lat);
+    //let body = getCurrentWeather(lon, lat);
     console.log(body);
     
     if(body.hasOwnProperty(main)){
