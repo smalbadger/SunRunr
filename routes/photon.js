@@ -21,15 +21,15 @@ function getCurrentWeather(long, lati){
   request(url, { json: true }, (err, res, body) => {
     if (err) {
         console.log("error getting current data");
-        
+        return weather;
     } else {
         //console.log(body);
         weather.temp = body.main.temp;
         weather.humidity = body.main.humidity;
-        
+        return weather;
     }
   });
-    return weather;
+    
 }
 
 function activityT(speed, duration){
