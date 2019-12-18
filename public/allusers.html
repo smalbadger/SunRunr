@@ -15,8 +15,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <link href="stylesheets/sunrunr.css" rel="stylesheet">
- 	 <script type="text/javascript" src="javascripts/map.js"></script>
- 	 <script type="text/javascript" src="javascripts/signout.js"></script>
+    <script type="text/javascript" src="javascripts/summary.js"></script>
+ 	  <script type="text/javascript" src="javascripts/map.js"></script>
+ 	  <script type="text/javascript" src="javascripts/signout.js"></script>
 
 	 <!-- Let browser know website is optimized for mobile -->
 	 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -103,7 +104,9 @@
     function initMap() {
       navigator.geolocation.getCurrentPosition(
         function (pos) {
-          pin_point_users("map", 7, 1000000, pos.coords.latitude, pos.coords.longitude)
+          var radius = 1000000
+          pin_point_users("map", 7, radius, pos.coords.latitude, pos.coords.longitude)
+          summarizeAllUsers(pos.coords.latitude, pos.coords.longitude, radius)
         },
         function (err) {
           console.warn(`ERROR(${err.code}): ${err.message}`);
