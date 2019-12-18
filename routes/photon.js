@@ -20,18 +20,19 @@ function getCurrentWeather(long, lati){
     status: ""
     };
   
-  request(url, { json: true }, (err, res, body) => {
+  var body =  request(url, { json: true }, (err, res, body) => {
     if (err) {
-        
         console.log("error getting current data");
         return weather;
         
     } else {
-        weather.temp= body.main.temp,
-        weather.humidity= body.main.humidity
-        return weather;
+        
+        return body;
     }
   });
+  
+  weather.temp= body.main.temp,
+  weather.humidity= body.main.humidity
     console.log(weather);
     return weather;
 }
