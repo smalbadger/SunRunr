@@ -14,9 +14,13 @@ function pin_point_users(embedID, numDays, numMiles, lat, lng) {
     var map = new google.maps.Map(
         document.getElementById(embedID), {zoom: 4, center: center});
 
+    users = []
     for(activity of data.activities){
-      var loc = {lat:activity.GPS[0].lat, lng:activity.GPS[0].lon}
-      var marker = new google.maps.Marker({position: loc, map: map});
+      if (!users.includes(activity.userEmail)){
+        var loc = {lat:activity.GPS[0].lat, lng:activity.GPS[0].lon}
+        var marker = new google.maps.Marker({position: loc, map: map});
+        users.push(activity.userEmail);
+      }
     }
   })
   .fail(function (jqXHR, textStatus, errorThrown) {

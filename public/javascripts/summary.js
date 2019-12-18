@@ -20,3 +20,7 @@ function summarizeUser(activityData){
   $("#total-calories").html(totalCalories.toFixed(0) + " Calories");
   $("#total-uv").html(totalUV);
 }
+
+function summarizeAllUsers(lat, lon, radius){
+  
+}
