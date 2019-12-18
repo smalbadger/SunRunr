@@ -8,6 +8,7 @@ router.get("/forecast" , function(req, response) {
   var lon = req.params.lon;
   var url = `https://api.openweathermap.org/data/2.5/forecast?appid=${key}&lat=${lat}&lon={$lon}&units=Imperial`;
 
+  console.log(url);
   request(url, { json: true }, (err, res, body) => {
     if (err) {
       response.status(400).send(err);
