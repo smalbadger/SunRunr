@@ -11,7 +11,7 @@ var Activity = require("../models/activity");
 
 function getCurrentWeather(long, lati){
   var key = "152d954ed997be2bb0784df77bdd7781";
-  console.log(lati[0]);
+  
   var url = `https://api.openweathermap.org/data/2.5/weather?appid=${key}&lat=${lati[0].toFixed(2)}&lon=${long[0].toFixed(2)}`;
   var weather = {
       temp: 0,
@@ -23,8 +23,7 @@ function getCurrentWeather(long, lati){
         console.log("error getting current data");
         
     } else {
-        console.log("got the weather");
-        console.log(body);
+        //console.log(body);
         weather.temp = body.main.temp;
         weather.humidity = body.main.humidity;
     }
@@ -164,7 +163,7 @@ router.post('/hit', function(req, res, next) {
                         aType: ActType.type
 
                     });
-
+                    console.log(newActivity);
                     // Save device. If successful, return success. If not, return error message.
                     newActivity.save(function(err, newActivity) {
                         if (err) {
