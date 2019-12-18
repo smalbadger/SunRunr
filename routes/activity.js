@@ -79,11 +79,9 @@ router.get('/all', function(req, res, next) {
 router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
     let responseJson = { activities: [] };
 
-
     lon = req.params.lon; //user lon
     lat = req.params.lat; //user lat
     radius = req.params.rad * (360/24901); //radius around the user
-    //console.log(req.query);
 
     // go through users and find all activities within the radius within past seven days
     Activity.find({}, function(err, allActivities) {
@@ -123,18 +121,17 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
 										var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 										var dist = R * c / metersPerMile;
 
-										console.log("CURRENT LAT: " + lat);
-                    console.log("CURRENT LON: " + lon);
-                    console.log("ACTIVITY LAT: " + activity.GPS[0].lat);
-                    console.log("ACTIVITY LON: " + activity.GPS[0].lon);
-                    console.log ("DIST: " + dist);
+										// console.log("CURRENT LAT: " + lat);
+                    // console.log("CURRENT LON: " + lon);
+                    // console.log("ACTIVITY LAT: " + activity.GPS[0].lat);
+                    // console.log("ACTIVITY LON: " + activity.GPS[0].lon);
+                    // console.log ("DIST: " + dist);
                     if(dist <= radius) {
                         responseJson.activities.push(activity);
                     }
                 }
             }
         }
-
         res.status(200).json(responseJson);
     });
 
