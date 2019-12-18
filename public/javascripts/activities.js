@@ -216,9 +216,9 @@ function addActivityListing(activity){
 
 function updateActivityType(selection){
   console.log(selection)
-  console.log(selection.parent())
-  console.log(selection.parent().attr('id'))
-  var selectedActivityID = selection.parent().attr('id').split('-')[0]
+  console.log(selection.parent().parent())
+  console.log(selection.parent().parent().attr('id'))
+  var selectedActivityID = selection.parent().parent().attr('id').split('-')[0]
   var type = selection.clone().children().remove().end().text();
   console.log(`Changing activity ${selectedActivityID} to type ${type}`)
 }
