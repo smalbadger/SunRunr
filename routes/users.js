@@ -10,7 +10,7 @@ let jwt = require("jwt-simple");
 
 
 ////////////////////////////////
-router.post('/confirmation', userController.confirmationPost);
+//router.post('/confirmation', userController.confirmationPost);
 //router.post('/resend', userController.resendTokenPost);
 
 var crypto = require('crypto');
