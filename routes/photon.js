@@ -18,7 +18,7 @@ async function getCurrentWeather(long, lati)
   var url = `https://api.openweathermap.org/data/2.5/weather?appid=${key}&lat=${lat}&lon=${lon}`;
   let response = await fetch(url);
   let data = await response.json();
-
+  console.log(data);
   return data;
 }
 
