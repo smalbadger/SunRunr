@@ -19,17 +19,18 @@ function getCurrentWeather(long, lati){
     if (err) {
         var weather = {
             temp: 0,
-            humidity: 0
+            humidity: 0,
+            status: err
         };
         console.log("error getting current data");
-        return weather;
+        response.status(400).send(weather);
     } else {
         var weather = {
             temp: body.main.temp,
             humidity: body.main.humidity
         };
         
-        return weather;
+        response.status(200).send(weather);
     }
   });
     
