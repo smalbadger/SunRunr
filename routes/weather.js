@@ -4,7 +4,7 @@ let router = express.Router();
 
 router.get("/forecast" , function(req, response) {
 
-  console.log(req)
+  console.log(req.params)
 
   var key = "152d954ed997be2bb0784df77bdd7781";
   var lat = req.params.lat;
