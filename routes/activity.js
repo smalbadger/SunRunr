@@ -116,6 +116,7 @@ router.get('/allAct', function(req, res, next) {
             res.status(400).json(errorMsg);
         }
         else {
+            console.log(allActivities);
 
             for(let activity of allActivities) {
                 responseJson.activities.push({ activity});
