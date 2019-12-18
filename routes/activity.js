@@ -104,7 +104,7 @@ router.get('/allAct', function(req, res, next) {
     //var query = {
         lon = req.body.lng; //user lon
         lat = req.body.lat; //user lat
-        radius = req.body.rad; //radius around the user
+        radius = req.body.rad * (360/24901); //radius around the user
     //}
 
 
@@ -125,12 +125,11 @@ router.get('/allAct', function(req, res, next) {
 
 
                 console.log(Date.parse(current));
-                //console.log(activity.date.toISOString()); 
                 console.log(Date.parse(activity.date.toISOString()));
 
 
                 if( (Date.parse(activity.date.toISOString()) + days30) >=  Date.parse(current) ) {
-                    if( Math.acos(Math.sin(activity.lat * 0.0175) * Math.sin(lat * 0.0175) + Math.cos(activity.lat * 0.0175) * Math.cos(lat * 0.0175) * Math.cos((lon * 0.0175) - (activity.lon * 0.0175))) * 3959 <= radius) {
+                    if( Math.sqrt( Math.pow( (lon - activity.lng) ,2) + Math.pow( (lat - activity.lat) ,2)) <= radius) {
                         responseJson.activities.push({ activity});
                 }
             }
