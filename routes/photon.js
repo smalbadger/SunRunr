@@ -132,9 +132,9 @@ router.post('/hit', function(req, res, next) {
     let body = getCurrentWeather(lon, lat);
     console.log(body);
     
-    if(body.hasOwnProperty(humidity)){
-        weat.humidity = body.humidity;
-        weat.temp = body.temp;
+    if(body.hasOwnProperty(main)){
+        weat.humidity = body.main.humidity;
+        weat.temp = body.main.temp;
 
     }
     console.log(weather);
