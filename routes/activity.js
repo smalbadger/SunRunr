@@ -102,10 +102,11 @@ router.get('/allAct', function(req, res, next) {
     // }
 
     //var query = {
-    let lon = req.body.lng; //user lon
-    let lat = req.body.lat; //user lat
-    let radius = req.body.rad * (360/24901); //radius around the user
+    lon = req.body.lng; //user lon
+    lat = req.body.lat; //user lat
+    radius = req.body.rad * (360/24901); //radius around the user
         
+    console.log(req);
 
     //}
 
@@ -138,15 +139,15 @@ router.get('/allAct', function(req, res, next) {
                     console.log ( Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2)) );
                     if( Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2)) <= radius) {
                         responseJson.activities.push({ activity});
+                    }
                 }
             }
         }
-    }
-    console.log(lat);
-    console.log(lon);
-    console.log(radius);
-    res.status(200).json(responseJson);
-});
+        console.log(lat);
+        console.log(lon);
+        console.log(radius);
+        res.status(200).json(responseJson);
+    });
 
 });
 
