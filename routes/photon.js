@@ -13,7 +13,7 @@ function getCurrentWeather(long, lati){
   var url = `https://api.openweathermap.org/data/2.5/forecast?appid=${key}&lat=${lati}&lon={$long}&units=Imperial`;
   var weather = {
       temperature: 0,
-      humidity: 0;
+      humidity: 0
   };
   request(url, { json: true }, (err, res, body) => {
     if (err) {
