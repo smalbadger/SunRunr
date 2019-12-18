@@ -106,14 +106,14 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
                 // console.log(Date.parse(activity.date.toISOString()));
 
                 if(actDate.addDays(7) >= current) {
-									responseJson.activities.push({ activity});
+										var dist = Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2))
 
                     // console.log(activity.GPS[0]);
                     // console.log(activity.GPS[0].lat);
                     // console.log(activity.GPS[0].lon);
-                    // console.log ( Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2)) );
-                    if( Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2)) <= radius) {
-                        //responseJson.activities.push({ activity});
+                    // console.log (dist);
+                    if(dist <= radius) {
+                        responseJson.activities.push({ activity});
                     }
                 }
             }
