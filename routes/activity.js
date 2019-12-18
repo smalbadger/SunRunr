@@ -73,11 +73,6 @@ router.get('/all', function(req, res, next) {
     });
 });
 
-function parseISOString(s) {
-  var b = s.split('/\D+/');
-  return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
-}
-
 
 // GET request return all activities within certain radius within past 7 days
 router.get('/allAct', function(req, res, next) {
@@ -130,12 +125,12 @@ router.get('/allAct', function(req, res, next) {
 
 
                 console.log(Date.parse(current));
-                //console.log(parseISOString(activities.date));
-                console.log(activity.date.toISOString()); 
+                //console.log(activity.date.toISOString()); 
                 console.log(Date.parse(activity.date.toISOString()));
 
 
-                if((activity.date + +30) <=  current){
+                if( (Date.parse(activity.date.toISOString()) + days30) >=  Date.parse(current) ) {
+                     responseJson.activities.push({ activity});
                     if( Math.acos(Math.sin(activity.lat * 0.0175) * Math.sin(lat * 0.0175) + Math.cos(activity.lat * 0.0175) * Math.cos(lat * 0.0175) * Math.cos((lon * 0.0175) - (activity.lon * 0.0175))) * 3959 <= radius) {
                         responseJson.activities.push({ activity});
                 }
