@@ -1,3 +1,4 @@
+const request = require('request');
 let express = require('express');
 let router = express.Router();
 let Device = require("../models/device");
@@ -270,4 +271,3 @@ router.post('/ping', function(req, res, next) {
 
 
 module.exports = router;
-
