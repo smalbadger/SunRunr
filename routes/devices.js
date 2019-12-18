@@ -258,7 +258,7 @@ router.post('/ping', function(req, res, next) {
        method: "POST",
        uri: "https://api.particle.io/v1/devices/" + req.body.deviceId + "/pingDevice",
        form: {
-           access_token : particleAccessToken,
+           access_token : "UsA9Zexqta2Vhx0ccWEfQFIckX9AgWaP",
            args: "" + (Math.floor(Math.random() * 11) + 1)
         }
     });
