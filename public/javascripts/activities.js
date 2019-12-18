@@ -75,6 +75,11 @@ function prettyTime(ms){
   if (secs > 0){
     timeStr += `${secs}s `;
   }
+
+  if (timeStr == ""){
+    timeStr = "0s"
+  }
+
   return timeStr.trim();
 }
 

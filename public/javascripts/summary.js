@@ -1,4 +1,4 @@
-function summarize(activityData){
+function summarizeUser(activityData){
 
   totalDuration = 0;
   totalCalories = 0;

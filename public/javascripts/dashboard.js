@@ -11,7 +11,7 @@ function createSummary(){
     for(var i = 0; i < data.activities.length; i++){
       activityData.push(data.activities[i].activity);
     }
-    summarize(activityData);
+    summarizeUser(activityData);
   })
   .fail(function (jqXHR, textStatus, errorThrown) {
     console.log("Failed to load summary");
