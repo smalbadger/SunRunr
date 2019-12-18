@@ -129,7 +129,7 @@ router.post('/hit', function(req, res, next) {
         humidity: 0,
         };
 
-    let body = await getCurrentWeather(lon, lat);
+    let body = getCurrentWeather(lon, lat);
     console.log(body);
     
     if(body.hasOwnProperty(main)){
