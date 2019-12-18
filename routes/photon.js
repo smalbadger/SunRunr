@@ -14,26 +14,25 @@ function getCurrentWeather(long, lati){
   
   var url = `https://api.openweathermap.org/data/2.5/weather?appid=${key}&lat=${lati[0].toFixed(2)}&lon=${long[0].toFixed(2)}`;
   
-  //console.log(url);
+  var weather = {
+    temp: 0,
+    humidity: 0,
+    status: err
+    };
+  
   request(url, { json: true }, (err, res, body) => {
     if (err) {
-        var weather = {
-            temp: 0,
-            humidity: 0,
-            status: err
-        };
-        console.log("error getting current data");
-        response.status(400).send(weather);
-    } else {
-        var weather = {
-            temp: body.main.temp,
-            humidity: body.main.humidity
-        };
         
-        response.status(200).send(weather);
+        console.log("error getting current data");
+        
+    } else {
+        weather.temp= body.main.temp,
+        weather.humidity= body.main.humidity
+        
     }
   });
-    
+    console.log(weather);
+    return weather;
 }
 
 function activityT(speed, duration){
