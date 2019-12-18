@@ -21,6 +21,34 @@ function summarizeUser(activityData){
   $("#total-uv").html(totalUV);
 }
 
-function summarizeAllUsers(lat, lon, radius){
-  
+function summarizeAllUsers(lat, lng, radius){
+  $.ajax({
+    url: '/activity/allAct/'+lat+'/'+lng+'/'+numMiles,
+    type: 'GET',
+    dataType: 'json'
+  })
+  .done(function (data, textSatus, jqXHR) {
+
+    $("#num-activities").text(data.activities.length.toString())
+
+    // organize activities into users
+    users = {}
+    for(activity of data.activities){
+      if (!users.includes(activity.userEmail)){
+        users[activity.userEmail] = [];
+      }
+      users[activity.userEmail].push(activity);
+    }
+
+    // calculate statistics
+    for (var key in users){
+      for (var activity of users[key]){
+
+      }
+    }
+
+  })
+  .fail(function (jqXHR, textStatus, errorThrown) {
+    console.log("Error: "+testStatus.message)
+  });
 }

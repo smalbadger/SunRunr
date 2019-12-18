@@ -9,7 +9,7 @@ function pin_point_users(embedID, numDays, numMiles, lat, lng) {
     dataType: 'json'
   })
   .done(function (data, textSatus, jqXHR) {
-    var center = {lat: lat, lng: lng}; //This is a placeholder
+    var center = {lat: lat, lng: lng};
 
     var map = new google.maps.Map(
         document.getElementById(embedID), {zoom: 4, center: center});
