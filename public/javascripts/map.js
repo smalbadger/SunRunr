@@ -12,7 +12,7 @@ function pin_point_users(embedID, numDays, numMiles, lat, lng) {
     var center = {lat: lat, lng: lng};
 
     var map = new google.maps.Map(
-        document.getElementById(embedID), {zoom: 4, center: center});
+        document.getElementById(embedID), {zoom: 10, center: center});
 
     users = []
     for(activity of data.activities){
