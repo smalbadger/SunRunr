@@ -23,18 +23,6 @@
 
 	 <!-- Let browser know website is optimized for mobile -->
 	 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-   <!-- Initialize dropdown menu in materialize -->
-   <script>
-     $('.dropdown-trigger').dropdown();
-     $(document).ready(function(){
-       $('.sidenav').sidenav({
-         menuWidth: 200,
-         closeOnClick: true,
-         edge: 'right',
-       });
-     });
-   </script>
   </head>
 
   <body>
@@ -113,6 +101,19 @@
       <div class="col s0 m1 l2"></div>
   	</div>
   </body>
+
+  <!-- Initialize dropdown menu in materialize -->
+  <script>
+    $('.dropdown-trigger').dropdown();
+    $(document).ready(function(){
+      $('.sidenav').sidenav({
+        menuWidth: 200,
+        closeOnClick: true,
+        edge: 'right',
+      });
+    });
+  </script>
+
   <script>
     $(function() {
       // If there's no authToken stored, redirect user to
