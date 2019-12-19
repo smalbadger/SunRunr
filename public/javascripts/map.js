@@ -16,7 +16,7 @@ function pin_point_users(embedID, numDays, numMiles, lat, lng, zoom) {
 
     users = {}
     for(activity of data.activities){
-        users[acitivy.userEmail] = {lat:activity.GPS[0].lat, lng:activity.GPS[0].lon}
+        users[activity.userEmail] = {lat:activity.GPS[0].lat, lng:activity.GPS[0].lon}
     }
 
     for (var user in users){
