@@ -154,7 +154,7 @@ router.post('/register', function(req, res, next) {
                 //     console.log('Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n');
                 // });
 
-                url =  'http://' + req.headers.host + '/confirmation/' + token.token;
+                var url =  'http://' + req.headers.host + '/confirmation/' + token.token;
                 console.log(url);
 
                 var transporter = nodemailer.createTransport(smtpTransport({
@@ -171,7 +171,7 @@ router.post('/register', function(req, res, next) {
                     to: user.email, // list of receivers
                     subject: 'Account Verification Token', // Subject line
                     text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n', // plaintext body
-                    html: "<b>Hello,</b><br><br><p>Please verify your account by clicking the link: <a href=url>This link</a>.<br></p>" // html body
+                    html: "<b>Hello,</b><br><br><p>Please verify your account by clicking the link: <a href='url'>This link</a>.<br></p>" // html body
                 };
 
                 transporter.sendMail(mailOptions, function(error, response){
