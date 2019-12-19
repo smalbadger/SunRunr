@@ -274,7 +274,7 @@ router.get("/confirmation/:token" , function(req, res) {
                 user.verified = true;
                 user.save(function (err) {
                     if (err) { return res.status(500).send({ msg: err.message }); }
-                    res.status(200).send("The account has been verified. Please log in.");
+                    res.status(200).send("The account has been verified. Please click here to signin https://whatanutcase.com/userLogin.html");
                 });
             });
         });
