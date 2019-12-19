@@ -118,7 +118,7 @@ router.post('/register', function(req, res, next) {
                         pass: "ECE-sunrunner513"
                     }
                 }));
-                var url =  'http://' + req.headers.host + '/users/confirmation/token=' + token.token;
+                var url =  'http://' + req.headers.host + '/users/confirmation/' + token.token;
                 var mailOptions = {
                     from: 'whatanutcaseece@gmail.com', // sender address
                     to: user.email, // list of receivers
