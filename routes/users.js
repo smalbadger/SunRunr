@@ -41,15 +41,15 @@ router.post('/signin', function(req, res, next) {
 
                     //////////////////////////////////////////////////////////////
                     // Make sure the user has been verified
-                    //if (!user.verified) return res.status(401).send({ type: 'not-verified', msg: 'Your account has not been verified.' });
+                    if (!user.verified) return res.status(401).send({ type: 'not-verified', msg: 'Your account has not been verified.' });
 
                     // Login successful, write token, and send back user
-                    //res.status(201).send({ token: generateToken(user), user: user.toJSON() });
+                    res.status(201).send({ token: generateToken(user), user: user.toJSON() });
                     //var authToken = jwt.encode({email: req.body.email}, secret);
                     //res.status(201).json({success:true,token: generateToken(user), authToken: authToken});
                     ///////////////////////////////////////////////////////////////
 
-                    User.update({email: req.body.email}, {lastAccess:Date.now()}, function(err, user) {
+                    User.update({email: req.body.email}, {$set:{lastAccess:Date.now()}}, function(err, user) {
                       if (err){
                         res.status(400).json(err)
                       } else if (user){
