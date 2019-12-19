@@ -10,9 +10,6 @@ let jwt = require("jwt-simple");
 
 
 ////////////////////////////////
-//router.post('/confirmation', userController.confirmationPost);
-//router.post('/resend', userController.resendTokenPost);
-
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 let Token = require("../models/token");
@@ -41,12 +38,8 @@ router.post('/signin', function(req, res, next) {
 
                     //////////////////////////////////////////////////////////////
                     // Make sure the user has been verified
-                    if (!user.verified) return res.status(401).send({ type: 'not-verified', msg: 'Your account has not been verified.' });
+                    if (!user.verified) return res.status(401).send({success : false, message : 'Your account has not been verified. Please verify your account' });
 
-                    // Login successful, write token, and send back user
-                    res.status(201).send({ token: generateToken(user), user: user.toJSON() });
-                    //var authToken = jwt.encode({email: req.body.email}, secret);
-                    //res.status(201).json({success:true,token: generateToken(user), authToken: authToken});
                     ///////////////////////////////////////////////////////////////
 
                     User.update({email: req.body.email}, {$set:{lastAccess:Date.now()}}, function(err, user) {
