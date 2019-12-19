@@ -1,7 +1,7 @@
 
 // Initialize and add a map that shows all the users within a certain radius
 //
-function pin_point_users(embedID, numDays, numMiles, lat, lng) {
+function pin_point_users(embedID, numDays, numMiles, lat, lng, zoom) {
 
   $.ajax({
     url: '/activity/allAct/'+lat+'/'+lng+'/'+numMiles,
@@ -12,7 +12,7 @@ function pin_point_users(embedID, numDays, numMiles, lat, lng) {
     var center = {lat: lat, lng: lng};
 
     var map = new google.maps.Map(
-        document.getElementById(embedID), {zoom: 10, center: center});
+        document.getElementById(embedID), {zoom: zoom, center: center});
 
     users = []
     for(activity of data.activities){

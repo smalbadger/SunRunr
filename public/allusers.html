@@ -105,7 +105,7 @@
       navigator.geolocation.getCurrentPosition(
         function (pos) {
           var radius = 1000000
-          pin_point_users("map", 7, radius, pos.coords.latitude, pos.coords.longitude)
+          pin_point_users("map", 7, radius, pos.coords.latitude, pos.coords.longitude, 4)
           summarizeAllUsers(pos.coords.latitude, pos.coords.longitude, radius)
         },
         function (err) {
