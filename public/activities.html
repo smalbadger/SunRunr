@@ -152,6 +152,12 @@
         getActivities();
       }
     });
+
+    function onLoad(){
+      gapi.load('auth2', function(){gapi.auth2.init()})
+    }
   </script>
+
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 </html>

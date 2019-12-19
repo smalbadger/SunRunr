@@ -136,10 +136,15 @@
         {enableHighAccuracy: true, timeout: 5000, maximumAge: 0}
       );
     }
+
+    function onLoad(){
+      gapi.load('auth2', function(){gapi.auth2.init()})
+    }
   </script>
 
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTguMstpVrOCikPMA2DSWFw4wFE-8NtM0&callback=initMap">
   </script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 </html>
