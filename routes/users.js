@@ -154,8 +154,7 @@ router.post('/register', function(req, res, next) {
                 //     console.log('Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n');
                 // });
 
-                var url =  'http://' + req.headers.host + '/confirmation/' + token.token;
-                console.log(url);
+                
 
                 var transporter = nodemailer.createTransport(smtpTransport({
                     service: "Gmail",
@@ -165,7 +164,7 @@ router.post('/register', function(req, res, next) {
                         pass: "ECE-sunrunner513"
                     }
                 }));
-
+                var url =  'http://' + req.headers.host + '/confirmation/' + token.token;
                 var mailOptions = {
                     from: 'whatanutcaseece@gmail.com', // sender address
                     to: user.email, // list of receivers
