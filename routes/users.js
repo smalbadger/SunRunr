@@ -38,7 +38,7 @@ router.post('/signin', function(req, res, next) {
 
                     //////////////////////////////////////////////////////////////
                     // Make sure the user has been verified
-                    if (!user.verified) return res.status(401).send({ type: 'not-verified', msg: 'Your account has not been verified.' });
+                    if (!user.verified) return res.status(401).send({success : false, message : 'Your account has not been verified. Please verify your account' });
 
                     ///////////////////////////////////////////////////////////////
 
