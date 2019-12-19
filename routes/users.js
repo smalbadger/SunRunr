@@ -255,7 +255,7 @@ router.put("/updateuser" , function(req, res) {
 
 
 // confirmation
-router.put("/confirmation/:token" , function(req, res) {
+router.get("/confirmation/:token" , function(req, res) {
     try {
         var userStatus = {};
 
