@@ -16,6 +16,7 @@ let jwt = require("jwt-simple");
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 let Token = require("../models/token");
+var smtpTransport = require('nodemailer-smtp-transport');
 
 ///////////////////////////////
 
@@ -144,15 +145,16 @@ router.post('/register', function(req, res, next) {
                 //     console.log('Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n');
                 // });
 
-                var smtpTransport = nodemailer.createTransport("SMTP",{
+                var transporter = nodemailer.createTransport(smtpTransport({
                     service: "Gmail",
+                    host: 'smtp.gmail.com',
                     auth: {
                         user: "whatanutcaseece@gmail.com",
                         pass: "ECE-sunrunner513"
                     }
                 });
                 var mailOptions = {
-                    from: 'no-reply@whatanutcase.com', // sender address
+                    from: 'whatanutcaseece@gmail.com', // sender address
                     to: user.email, // list of receivers
                     subject: 'Account Verification Token', // Subject line
                     text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n', // plaintext body
