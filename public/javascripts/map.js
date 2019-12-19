@@ -17,6 +17,7 @@ function pin_point_users(embedID, numDays, numMiles, lat, lng, zoom) {
     users = []
     for(activity of data.activities){
       if (!users.includes(activity.userEmail)){
+        console.log(activity.userEmail)
         var loc = {lat:activity.GPS[0].lat, lng:activity.GPS[0].lon}
         var marker = new google.maps.Marker({position: loc, map: map});
         users.push(activity.userEmail);
