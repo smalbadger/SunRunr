@@ -59,7 +59,7 @@ router.post('/signin', function(req, res, next) {
                       else {
                         res.status(400).json({success : false, message : "Couln't set lastAccess."})
                       }
-                    }
+                    })
                 }
                 else { // user was found but not valid password
                     res.status(401).json({success : false, message : "Email or password invalid."});
