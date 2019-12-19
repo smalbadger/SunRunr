@@ -43,11 +43,13 @@ router.post('/signin', function(req, res, next) {
                     if (!user.verified) return res.status(401).send({ type: 'not-verified', msg: 'Your account has not been verified.' });
                     
                     // Login successful, write token, and send back user
-                    res.status(201).send({ token: generateToken(user), user: user.toJSON() }); 
+                    //res.status(201).send({ token: generateToken(user), user: user.toJSON() }); 
+                    var authToken = jwt.encode({email: req.body.email}, secret);
+                    res.status(201).json({success:true,token: generateToken(user), authToken: authToken});
                     ///////////////////////////////////////////////////////////////
 
-                    // var authToken = jwt.encode({email: req.body.email}, secret);
-                    // res.status(201).json({success:true, authToken: authToken});
+                    //var authToken = jwt.encode({email: req.body.email}, secret);
+                    //res.status(201).json({success:true, authToken: authToken});
                 }
                 else { // user was found but not valid password
                     res.status(401).json({success : false, message : "Email or password invalid."});
@@ -93,15 +95,61 @@ router.post('/register', function(req, res, next) {
      
             // Save the verification token
             token.save(function (err) {
-                if (err) { return res.status(500).send({ msg: err.message+"cant save token" }); }
-     
-                // Send the email
-                var transporter = nodemailer.createTransport({ service: 'Sendgrid', auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD } });
-                var mailOptions = { from: 'no-reply@whatanutcase.com', to: user.email, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttps:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n' };
-                transporter.sendMail(mailOptions, function (err) {
-                    if (err) { return res.status(500).send({ msg: err.message+ "cant send verification email" }); }
-                    res.status(200).send('A verification email has been sent to ' + user.email + '.');
+                if (err) { 
+                    console.log("cant save token" );
+                    return res.status(500).send({ msg: err.message}); 
+                }
+                /////////////////////////////////////
+                // Generate test SMTP service account from ethereal.email
+                nodemailer.createTestAccount((err, account) => {
+                    // create reusable transporter object using the default SMTP transport
+                    let transporter = nodemailer.createTransport({
+                        host: 'smtp.ethereal.email',
+                        port: 587,
+                        secure: false, // true for 465, false for other ports
+                        auth: {
+                            user: account.user, // generated ethereal user
+                            pass: account.pass  // generated ethereal password
+                        }
+                    });
+                                   // setup e-mail data with unicode symbols
+                    var mailOptions = {
+                        from: 'no-reply@whatanutcase.com', // sender address
+                        to: user.email, // list of receivers
+                        subject: 'Account Verification Token', // Subject line
+                        text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n', // plaintext body
+                        html: "<b>Hello world </b>" // html body
+                    }
+
+                    // send mail with defined transport object
+                    transporter.sendMail(mailOptions, function(error, response){
+                        if(error){
+                            console.log("cant send verification email");
+                            console.log(error);
+                            return res.status(500).send({ msg: err.message }); 
+                        }else{
+                            console.log("Message sent: " + response.message);
+                            res.status(201).json({success : true, message : user.fullName + "has been created"});
+                        }
+
+                        // if you don't want to use this transport object anymore, uncomment following line
+                        //smtpTransport.close(); // shut down the connection pool, no more messages
+                    });
                 });
+
+ 
+
+                ////////////////////////////////////
+                // Send the email
+                // var transporter = nodemailer.createTransport({ service: 'Sendgrid', auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD } });
+                // var mailOptions = { from: 'no-reply@whatanutcase.com', to: user.email, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n' };
+                // transporter.sendMail(mailOptions, function (err) {
+                //     if (err) { 
+                //         console.log("cant send verification email");
+                //         return res.status(500).send({ msg: err.message }); 
+                //     }
+                //     res.status(201).json({success : true, message : user.fullName + "has been created"});
+                // });
             });
             ////////////////////////////////////////////////////////////////////
             //res.status(201).json({success : true, message : user.fullName + "has been created"});
