@@ -256,10 +256,9 @@ router.put("/updateuser" , function(req, res) {
 
 // confirmation
 router.get("/confirmation/:token" , function(req, res) {
+    console.log(token);
     try {
         var userStatus = {};
-
-        console.log(token);
 
         // Find a matching token
         Token.findOne({ token: req.params.token }, function (err, token) {

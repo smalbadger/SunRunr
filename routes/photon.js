@@ -58,52 +58,52 @@ router.post('/hit', function(req, res, next) {
     if( !req.body.hasOwnProperty("deviceId") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing deviceId parameter.";
-        return res.status(201).send(JSON.stringify(responseJson));
+        return res.status(400).send(JSON.stringify(responseJson));
     }
 
     if( !req.body.hasOwnProperty("apikey") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing apikey parameter.";
-        return res.status(201).send(JSON.stringify(responseJson));
+        return res.status(400).send(JSON.stringify(responseJson));
     }
 
     if( !req.body.hasOwnProperty("date") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing date parameter.";
-        return res.status(201).send(JSON.stringify(responseJson));
+        return res.status(400).send(JSON.stringify(responseJson));
     }
     if(!req.body.hasOwnProperty("cont")){
         responseJson.status = "ERROR";
         responseJson.message = "Request missing cont parameter.";
-        return res.status(201).send(JSON.stringify(responseJson));
+        return res.status(400).send(JSON.stringify(responseJson));
     }
 
     if( !req.body.hasOwnProperty("duration") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing GPS parameter.";
-        return res.status(201).send(JSON.stringify(responseJson));
+        return res.status(400).send(JSON.stringify(responseJson));
     }
     if( !req.body.hasOwnProperty("lon") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing latitude parameter.";
-        return res.status(201).send(JSON.stringify(responseJson));
+        return res.status(400).send(JSON.stringify(responseJson));
     }
 
     if( !req.body.hasOwnProperty("lat") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing latitude parameter.";
-        return res.status(201).send(JSON.stringify(responseJson));
+        return res.status(400).send(JSON.stringify(responseJson));
     }
 
     if( !req.body.hasOwnProperty("speed") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing gps speed parameter.";
-        return res.status(201).send(JSON.stringify(responseJson));
+        return res.status(400).send(JSON.stringify(responseJson));
     }
      if( !req.body.hasOwnProperty("uv") ) {
         responseJson.status = "ERROR";
         responseJson.message = "Request missing uv parameter.";
-        return res.status(201).send(JSON.stringify(responseJson));
+        return res.status(400).send(JSON.stringify(responseJson));
     }
 
     var gps = [];
@@ -140,7 +140,7 @@ router.post('/hit', function(req, res, next) {
                     if (device.apikey != req.body.apikey) {
                         responseJson.status = "ERROR";
                         responseJson.message = "Invalid apikey for device ID " + req.body.deviceId + ".";
-                        return res.status(201).send(JSON.stringify(responseJson));
+                        return res.status(400).send(JSON.stringify(responseJson));
                     }
                     else {
                         var UVstr = "Max Uv:" + device.uv;
@@ -164,7 +164,7 @@ router.post('/hit', function(req, res, next) {
                             if (err) {
                                 responseJson.status = "ERROR";
                                 responseJson.message = "Error saving data in db.";
-                                return res.status(201).send(JSON.stringify(responseJson));
+                                return res.status(400).send(JSON.stringify(responseJson));
                             }
                             else {
                                 responseJson.status = "OK";
@@ -178,10 +178,15 @@ router.post('/hit', function(req, res, next) {
                 else {
                     responseJson.status = "ERROR";
                     responseJson.message = "Device ID " + req.body.deviceId + " not registered.";
-                    return res.status(201).send(JSON.stringify(responseJson));
+                    return res.status(400).send(JSON.stringify(responseJson));
                 }
             });
-        });
+        }).catch((error) => {
+            console.log(error)
+            responseJson.status = "ERROR";
+            responseJson.message = "Error in weather api return. Error message is: " + error;
+            return res.status(400).send(JSON.stringify(responseJson));
+          });
     }
     else{
 
@@ -191,7 +196,7 @@ router.post('/hit', function(req, res, next) {
                 if (device.apikey != req.body.apikey) {
                     responseJson.status = "ERROR";
                     responseJson.message = "Invalid apikey for device ID " + req.body.deviceId + ".";
-                    return res.status(201).send(JSON.stringify(responseJson));
+                    return res.status(400).send(JSON.stringify(responseJson));
                 }
                 else {
                     var UVstr = "Max Uv:" + device.uv;
@@ -199,7 +204,7 @@ router.post('/hit', function(req, res, next) {
                         if (err) {
                             responseJson.status = "ERROR";
                             responseJson.message = "Error updating activity data in db.";
-                            return res.status(201).send(JSON.stringify(responseJson));
+                            return res.status(400).send(JSON.stringify(responseJson));
                             console.log("error resaving activity");
                         }
                         else {
@@ -215,7 +220,7 @@ router.post('/hit', function(req, res, next) {
             else {
                 responseJson.status = "ERROR";
                 responseJson.message = "Device ID " + req.body.deviceId + " not registered.";
-                return res.status(201).send(JSON.stringify(responseJson));
+                return res.status(400).send(JSON.stringify(responseJson));
             }
         });
 
