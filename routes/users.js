@@ -168,7 +168,7 @@ router.post('/register', function(req, res, next) {
                     to: user.email, // list of receivers
                     subject: 'Account Verification Token', // Subject line
                     text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n', // plaintext body
-                    html: "<b>Hello world </b>" // html body
+                    //html: "<b>Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n </b>" // html body
                 };
 
                 transporter.sendMail(mailOptions, function(error, response){
