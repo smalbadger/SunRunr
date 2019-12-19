@@ -11,6 +11,8 @@ let jwt = require("jwt-simple");
 
 var secret = fs.readFileSync(__dirname + '/../../jwtkey').toString();
 
+const CALORIES = {"Walking":79, "Running":36, "Biking":51}
+
 // GET request return one or "all" activities of one User
 router.get('/all', function(req, res, next) {
 	let responseJson = { activities: [] };
@@ -154,13 +156,25 @@ router.put('/updateType', function(req, res, next) {
 			return res.status(400).json(responseJson);
 		}
 
-		cals = calories[req.body.aType];
-    Activity.findByIdAndUpdate(actid, {$set:{aType: req.body.aType, calories:cals}} , function(err, activity) {
+
+    Activity.findByIdAndUpdate(actid, {$set:{aType: req.body.aType}} , function(err, activity) {
         if (err) {
             return res.status(400).json(err);
         }
         else if (activity) {
-            return res.status(200).json({success: true, message: "Activity " + req.body._id + " was updated."});
+						var calspertime = CALORIES[req.body.aType];
+						var time = activity.duration/(1000.0*60.0);
+						Activity.findByIdAndUpdate(actid, {$set:{calories:calspertime*time}} , function(err, activity) {
+								if (err){
+										return res.status(400).json(err);
+								}
+								else if (activity){
+										return res.status(200).json({success: true, message: "Activity " + req.body._id + " was updated."});
+								}
+								else {
+										return res.status(400).josn({success: false, message: "Type updated, but calories didn't"});
+								}
+						})
         }
         else
         {
