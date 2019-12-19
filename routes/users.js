@@ -140,6 +140,7 @@ router.post('/register', function(req, res, next) {
                         //smtpTransport.close(); // shut down the connection pool, no more messages
                     });
                     console.log(user.email);
+                    console.log('Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n');
                 });
 
  
