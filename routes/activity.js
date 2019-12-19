@@ -11,23 +11,9 @@ let jwt = require("jwt-simple");
 
 var secret = fs.readFileSync(__dirname + '/../../jwtkey').toString();
 
-// Data for testing. These values will be changed for testing.
-var activities = {
-	"Running": "Soon to be determined",
-	"Jogging": "Soon to be determined",
-
-};
-
-// TODO: Create endpoint to change activity type. This should also recalculate
-//       calories burned and update it in the activity.
-
-// TODO: Create endpoint to change activity email (in case the user email changes)
-
-
 // GET request return one or "all" activities of one User
 router.get('/all', function(req, res, next) {
 	let responseJson = { activities: [] };
-
 
     let email = "";
 
@@ -168,7 +154,8 @@ router.put('/updateType', function(req, res, next) {
 			return res.status(400).json(responseJson);
 		}
 
-    Activity.findByIdAndUpdate(actid, {$set:{aType: req.body.aType }} , function(err, activity) {
+		cals = calories[req.body.aType];
+    Activity.findByIdAndUpdate(actid, {$set:{aType: req.body.aType, calories:cals}} , function(err, activity) {
         if (err) {
             return res.status(400).json(err);
         }
