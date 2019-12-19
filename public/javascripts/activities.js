@@ -204,7 +204,7 @@ function addActivityListing(activity){
   calories = activity.calories.toFixed(0);
   calTag = newActivity.find("#temp-calories");
   calTag.attr("id", activity._id+"-calories");
-  calTag.html("<span>" + calories.toString() + " cals burned</span>");
+  calTag.html("<span>" + calories.toString() + " cals</span>");
 
   $("#activities").append(newActivity);
   $('.modal').modal();
