@@ -115,6 +115,14 @@
       });
     });
 
+    function signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        window.location = "userLogin.html"
+        $('.signout').click(signOut);
+      });
+    }
+
     function onLoad(){
       gapi.load('auth2', function(){gapi.auth2.init()})
     }
