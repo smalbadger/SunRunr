@@ -38,7 +38,7 @@ function map_out_path(embedID, coordinates){
   center['lng'] /= coordinates.length
 
   var map = new google.maps.Map(document.getElementById(embedID), {
-    zoom: 18,
+    zoom:16,
     center: center,
     mapTypeId: 'terrain'
   });
