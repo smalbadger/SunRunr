@@ -126,7 +126,7 @@
       navigator.geolocation.getCurrentPosition(
         function (pos) {
           var radius = 25 //miles
-          pin_point_users("map", 7, radius, pos.coords.latitude, pos.coords.longitude, 12);
+          pin_point_users("map", 7, radius, pos.coords.latitude, pos.coords.longitude, 10);
           summarizeAllUsers(pos.coords.latitude, pos.coords.longitude, radius);
         },
         function (err) {
