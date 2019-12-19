@@ -6,6 +6,6 @@ var tokenSchema = new db.Schema({
     createdAt:  { type: Date, required: true, default: Date.now, expires: 3600}
 });
 
-var Token = db.model("Tokenr", tokenSchema);
+var Token = db.model("Token", tokenSchema);
 
 module.exports = Token;
