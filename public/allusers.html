@@ -14,10 +14,10 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-    <link href="stylesheets/sunrunr.css" rel="stylesheet">
-    <script type="text/javascript" src="javascripts/summary.js"></script>
- 	  <script type="text/javascript" src="javascripts/map.js"></script>
- 	  <script type="text/javascript" src="javascripts/signout.js"></script>
+	 <link href="stylesheets/sunrunr.css" rel="stylesheet">
+   <script type="text/javascript" src="javascripts/summary.js"></script>
+	 <script type="text/javascript" src="javascripts/map.js"></script>
+	 <script type="text/javascript" src="javascripts/signout.js"></script>
 
 	 <!-- Let browser know website is optimized for mobile -->
 	 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -106,6 +106,7 @@
     </div>
     <div class="col s0 m1 l2"></div>
   </div>
+
   </body>
 
   <!-- Initialize dropdown menu in materialize -->
@@ -124,9 +125,9 @@
     function initMap() {
       navigator.geolocation.getCurrentPosition(
         function (pos) {
-          var radius = 1000000
-          pin_point_users("map", 7, radius, pos.coords.latitude, pos.coords.longitude, 2)
-          summarizeAllUsers(pos.coords.latitude, pos.coords.longitude, radius)
+          var radius = 1000000 //miles
+          pin_point_users("map", 7, radius, pos.coords.latitude, pos.coords.longitude, 2);
+          summarizeAllUsers(pos.coords.latitude, pos.coords.longitude, radius);
         },
         function (err) {
           console.warn(`ERROR(${err.code}): ${err.message}`);
@@ -135,4 +136,9 @@
       );
     }
   </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTguMstpVrOCikPMA2DSWFw4wFE-8NtM0&callback=initMap">
+  </script>
+
 </html>
