@@ -11,6 +11,8 @@ var devicesRouter = require('./routes/devices');
 var activityRouter = require('./routes/activity');
 var weatherRouter = require('./routes/weather');
 
+
+
 var app = express();
 
 app.set('public', path.join(__dirname, 'public'));
@@ -18,6 +20,11 @@ app.set('public', path.join(__dirname, 'public'));
 app.set('view engine','ejs');
 // Set HTML engine**
 app.engine('html', require('ejs').renderFile);
+
+
+
+
+
 
 
 // This is to enable cross-origin access
