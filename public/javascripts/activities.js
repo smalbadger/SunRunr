@@ -199,7 +199,7 @@ function addActivityListing(activity){
   }
   humidTag = newActivity.find("#temp-humidity");
   humidTag.attr("id", activity._id+"-humidity");
-  humidTag.html("<span>" + humidity.toString() + "%</span>")
+  humidTag.html("<span>" + humidity.toString() + "% humidity</span>")
 
   calories = activity.calories.toFixed(0);
   calTag = newActivity.find("#temp-calories");
