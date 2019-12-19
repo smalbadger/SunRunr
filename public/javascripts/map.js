@@ -1,7 +1,7 @@
 
 // Initialize and add a map that shows all the users within a certain radius
 //
-function pin_point_users(embedID, numDays, numMiles, lat, lng) {
+function pin_point_users(embedID, numDays, numMiles, lat, lng, zoom) {
 
   $.ajax({
     url: '/activity/allAct/'+lat+'/'+lng+'/'+numMiles,
@@ -9,20 +9,24 @@ function pin_point_users(embedID, numDays, numMiles, lat, lng) {
     dataType: 'json'
   })
   .done(function (data, textSatus, jqXHR) {
-    var center = {lat: lat, lng: lng}; //This is a placeholder
+    var center = {lat: lat, lng: lng};
 
     var map = new google.maps.Map(
-        document.getElementById(embedID), {zoom: 4, center: center});
+        document.getElementById(embedID), {zoom: zoom, center: center});
 
-    console.log(data)
-    var marker = new google.maps.Marker({position: center, map: map});
+    users = []
+    for(activity of data.activities){
+      if (!users.includes(activity.userEmail)){
+        var loc = {lat:activity.GPS[0].lat, lng:activity.GPS[0].lon}
+        var marker = new google.maps.Marker({position: loc, map: map});
+        users.push(activity.userEmail);
+      }
+    }
   })
   .fail(function (jqXHR, textStatus, errorThrown) {
     console.log("Error: "+testStatus.message)
   });
 }
-
-
 
 function map_out_path(embedID, coordinates){
   center = {lat:0, lng:0}
@@ -34,7 +38,7 @@ function map_out_path(embedID, coordinates){
   center['lng'] /= coordinates.length
 
   var map = new google.maps.Map(document.getElementById(embedID), {
-    zoom: 3,
+    zoom:16,
     center: center,
     mapTypeId: 'terrain'
   });

@@ -23,6 +23,7 @@
 
 	 <!-- Let browser know website is optimized for mobile -->
 	 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <meta name="google-signin-client_id" content="646617972867-oh2rbgpqn26uhgr1mrb37mebo6infork.apps.googleusercontent.com">
   </head>
 
   <body>
@@ -30,7 +31,7 @@
     <ul id='dropdown1' class='dropdown-content'>
   		<li><a href="account.html">Account</a></li>
   		<li class="divider"></li>
-  		<li><a href="#!" id="signout">Sign out</a></li>
+  		<li><a href="#!" class="signout">Sign out</a></li>
   	</ul>
 
   	<nav>
@@ -39,7 +40,8 @@
           <img id="logo" src="images/logo.png">
           <span id="name">SunRunr</span>
         </a>
-  			<ul class="right ">
+        <a href="#" data-target="mobile-nav" class="sidenav-trigger right hide-on-large-only"><i class="material-icons">menu</i></a>
+  			<ul class="right hide-on-med-and-down">
           <li class="active"><a href="dashboard.html">Dashboard</a></li>
           <li><a href="activities.html">Activities</a></li>
           <li><a href="nearbyusers.html">Nearby Users</a></li>
@@ -53,6 +55,16 @@
   			</ul>
   		</div>
   	</nav>
+
+    <ul class="right sidenav blue-grey darken-2 hide-on-large-only" id="mobile-nav">
+      <li class="active"><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="activities.html">Activities</a></li>
+      <li><a href="nearbyusers.html">Nearby Users</a></li>
+      <li><a href="allusers.html">All Users</a></li>
+      <li><a href="account.html">Account</a></li>
+  		<li class="divider"></li>
+  		<li><a href="#!" class="signout">Sign out</a></li>
+    </ul>
 
   	<div class="row" id="main_">
       <div class="col s0 m1 l2"></div>
@@ -94,6 +106,13 @@
   <!-- Initialize dropdown menu in materialize -->
   <script>
     $('.dropdown-trigger').dropdown();
+    $(document).ready(function(){
+      $('.sidenav').sidenav({
+        menuWidth: 200,
+        closeOnClick: true,
+        edge: 'right',
+      });
+    });
   </script>
 
   <script>

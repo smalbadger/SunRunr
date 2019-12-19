@@ -8,6 +8,18 @@ let fs = require('fs');
 let bcrypt = require("bcryptjs");
 let jwt = require("jwt-simple");
 
+
+////////////////////////////////
+//router.post('/confirmation', userController.confirmationPost);
+//router.post('/resend', userController.resendTokenPost);
+
+var crypto = require('crypto');
+var nodemailer = require('nodemailer');
+let Token = require("../models/token");
+var smtpTransport = require('nodemailer-smtp-transport');
+
+///////////////////////////////
+
 /* Authenticate user */
 // check if the user already exists
 var secret = fs.readFileSync(__dirname + '/../../jwtkey').toString();
@@ -26,8 +38,28 @@ router.post('/signin', function(req, res, next) {
                     res.status(512).json({success : false, message : "Error authenticating. Contact support."});
                 }
                 else if(valid) { // user was authenticated
-                    var authToken = jwt.encode({email: req.body.email}, secret);
-                    res.status(201).json({success:true, authToken: authToken});
+
+                    //////////////////////////////////////////////////////////////
+                    // Make sure the user has been verified
+                    //if (!user.verified) return res.status(401).send({ type: 'not-verified', msg: 'Your account has not been verified.' });
+
+                    // Login successful, write token, and send back user
+                    //res.status(201).send({ token: generateToken(user), user: user.toJSON() });
+                    //var authToken = jwt.encode({email: req.body.email}, secret);
+                    //res.status(201).json({success:true,token: generateToken(user), authToken: authToken});
+                    ///////////////////////////////////////////////////////////////
+
+                    User.update({email: req.body.email}, {lastAccess:Date.now()}, function(err, user) {
+                      if (err){
+                        res.status(400).json(err)
+                      } else if (user){
+                        var authToken = jwt.encode({email: req.body.email}, secret);
+                        res.status(201).json({success:true, authToken: authToken});
+                      }
+                      else {
+                        res.status(400).json({success : false, message : "Couln't set lastAccess."})
+                      }
+                    })
                 }
                 else { // user was found but not valid password
                     res.status(401).json({success : false, message : "Email or password invalid."});
@@ -67,8 +99,47 @@ router.post('/register', function(req, res, next) {
              res.status(400).json({success : false, message : err.errmsg});
           }
           else {
-             res.status(201).json({success : true, message : user.fullName + "has been created"});
-          }
+            ////////////////////////////////////////////////////////////////////
+            // Create a verification token for this user
+            var token = new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
+
+            // Save the verification token
+            token.save(function (err) {
+                if (err) {
+                    console.log("cant save token" );
+                    return res.status(500).send({ msg: err.message});
+                }                
+
+                var transporter = nodemailer.createTransport(smtpTransport({
+                    service: "Gmail",
+                    host: 'smtp.gmail.com',
+                    auth: {
+                        user: "whatanutcaseece@gmail.com",
+                        pass: "ECE-sunrunner513"
+                    }
+                }));
+                var url =  'http://' + req.headers.host + '/users/confirmation/token=' + token.token;
+                var mailOptions = {
+                    from: 'whatanutcaseece@gmail.com', // sender address
+                    to: user.email, // list of receivers
+                    subject: 'Account Verification Token', // Subject line
+                    text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/users\/'+ '\/confirmation\/' + token.token + '.\n', // plaintext body
+                    html: "<b>Hello,</b><br><br><p>Please verify your account by clicking the link: " +  url  +" this link.</p>" // html body
+                };
+
+                transporter.sendMail(mailOptions, function(error, response){
+                    if(error){
+                        console.log(error);
+                    }
+                    else{
+                        //res.redirect('/');
+                        res.status(201).json({success : true, message : user.fullName + "has been created"});
+                    }
+                });
+            });
+            ////////////////////////////////////////////////////////////////////
+            //res.status(201).json({success : true, message : user.fullName + "has been created"});
+            }
         });
       }
    });
@@ -182,6 +253,37 @@ router.put("/updateuser" , function(req, res) {
     }
 });
 
+
+// confirmation
+router.get("/confirmation/:token" , function(req, res) {
+    try {
+        var userStatus = {};
+
+        console.log(token);
+
+        // Find a matching token
+        Token.findOne({ token: req.params.token }, function (err, token) {
+            if (!token) return res.status(400).send({ type: 'not-verified', msg: 'We were unable to find a valid token. Your token my have expired.' });
+
+
+            // If we found a token, find a matching user
+            User.findOneAndUpdate({ _id: token._userId }, {$set:{verified: true }},function (err, user) {
+                if (!user) return res.status(400).send({ msg: 'We were unable to find a user for this token.' });
+                if (user.isVerified) return res.status(400).send({ type: 'already-verified', msg: 'This user has already been verified.' });
+
+                // Verify and save the user
+                user.verified = true;
+                user.save(function (err) {
+                    if (err) { return res.status(500).send({ msg: err.message }); }
+                    res.status(200).send("The account has been verified. Please log in.");
+                });
+            });
+        });
+    }
+    catch (ex) {
+        return res.status(401).json({success: false, message: "Invalid authentication token."});
+    }
+});
 
 
 module.exports = router;

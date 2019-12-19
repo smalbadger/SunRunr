@@ -13,6 +13,50 @@ function sendSigninRequest() {
   .fail(signinError);
 }
 
+function signInWithGoogle(email, name, id) {
+
+  // attempt to sign in
+  $.ajax({
+    url: '/users/signin',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({ email : email, password : id }),
+    dataType: 'json'
+  })
+  // redirect to dashboard if signin was successful
+  .done(signinSuccess)
+  // register if not in database
+  .fail(function (jqXHR, textStatus, errorThrown) {
+    $.ajax({
+     url: '/users/register',
+     type: 'POST',
+     contentType: 'application/json',
+     data: JSON.stringify({email:email, fullName:name, password:id}),
+     dataType: 'json'
+    })
+    // sign in if registration worked
+    .done(
+      $.ajax({
+        url: '/users/signin',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ email : email, password : id }),
+        dataType: 'json'
+      })
+      //redirect to dashboard if signin was successful
+      .done(signinSuccess)
+      //show error if sign in failed
+      .fail(function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus)
+      })
+    )
+    //show error if registration failed
+    .fail(function (jqXHR, textStatus, errorThrown) {
+      console.log(textStatus)
+    })
+  });
+}
+
 function signinSuccess(data, textStatus, jqXHR) {
   window.localStorage.setItem('authToken', data.authToken);
   window.location = "dashboard.html";

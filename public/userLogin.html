@@ -18,6 +18,7 @@
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="google-signin-client_id" content="646617972867-oh2rbgpqn26uhgr1mrb37mebo6infork.apps.googleusercontent.com">
   </head>
 
   <body class="blue-grey lighten-2">
@@ -50,6 +51,38 @@
           </div>
           <div class="card-panel blue-text" id="ServerResponse" style="display: none"></div>
         </div>
+
+        <div class="card blue-grey center-align hoverable">
+          <div class="card-content white-text">
+            <span class="card-title">Or Sign-in With Google</span>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+          </div>
+        </div>
       </div>
   </body>
+
+  <!-- Google signin -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+  <script>
+    function onSignIn(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      var id = profile.getId()
+      var name = profile.getName()
+      var email = profile.getEmail()
+
+      console.log("ID: " + id)
+      console.log("Name: " + name)
+      console.log("Email: " + email)
+
+      signInWithGoogle(email, name, id);
+    }
+
+    function onLoad(){
+      console.log("LOADING")
+      gapi.load('auth2', funciton(){
+        gapi.auth2.init();
+      })
+    }
+  </script>
 </html>

@@ -75,6 +75,11 @@ function prettyTime(ms){
   if (secs > 0){
     timeStr += `${secs}s `;
   }
+
+  if (timeStr == ""){
+    timeStr = "0s"
+  }
+
   return timeStr.trim();
 }
 
@@ -112,9 +117,9 @@ function addActivityListing(activity){
   typeDropDown = newActivity.find('#temp-activity-type-dropdown')
   typeDropDown.attr("id", activity._id + "-activity-type-dropdown")
 
-  typeTag = newActivity.find("#temp-activity-type")
-  typeTag.attr("id", activity._id + "-activity-type")
-  // TODO: set activity type
+  typeTag = newActivity.find(".dropdown-trigger")
+  typeTag.attr("id", activity._id + "-activity-type-selection")
+  typeTag.text(activity.aType)
 
   activityContent = newActivity.find("#temp-activity-content");
   activityContent.attr("id", activity._id+"-activity-content");
@@ -135,9 +140,8 @@ function addActivityListing(activity){
     getByCurrId("activity-content").slideDown();
     showMap();
 
-    //TODO: All other activities are collapsed
+    //All other activities are collapsed
     $("#"+currActivityID).siblings().each(function (index, value) {
-      console.log("Collapsing: " + $(this).attr('id'));
       collapseActivity($(this).attr('id'));
     });
   });
@@ -169,20 +173,23 @@ function addActivityListing(activity){
   newActivity.find("#temp-uv-graph").attr("id", activity._id+"-uv-graph");
   newActivity.find("#temp-btn-box").attr("id", activity._id+"-btn-box");
 
-  uv = 0; //TODO: get total uv exposure
+  uv = 0;
+  for (var i=0; i<activity.GPS.length; i++){
+    uv += activity.GPS[i].uv;
+  }
   uvTag = newActivity.find("#temp-uv")
   uvTag.attr("id", activity._id+"-uv");
-  uvTag.text(uv.toString())
+  uvTag.html("<span>" + uv.toString() + " mW/cm<sup>2</sup></span>")
 
   if (activity.temperature != undefined){
-    temp = activity.temperature;
+    temp = activity.temperature * (9/5) - 459.67;
   }
   else {
     temp = 0;
   }
   tempTag = newActivity.find("#temp-temp");
   tempTag.attr("id", activity._id+"-temp");
-  tempTag.html("<span>" + temp.toString() + "&#176; F</span>")
+  tempTag.html("<span>" + temp.toFixed(1) + "&#176; F</span>")
 
   if (activity.humidity != undefined){
     humidity = activity.humidity;
@@ -192,18 +199,44 @@ function addActivityListing(activity){
   }
   humidTag = newActivity.find("#temp-humidity");
   humidTag.attr("id", activity._id+"-humidity");
-  humidTag.text(humidity.toString() + "%")
+  humidTag.html("<span>" + humidity.toString() + "% humidity</span>")
 
-  calories = activity.calories;
+  calories = activity.calories.toFixed(0);
   calTag = newActivity.find("#temp-calories");
   calTag.attr("id", activity._id+"-calories");
-  calTag.text(calories.toString() + " cals burned");
+  calTag.html("<span>" + calories.toString() + " cals</span>");
 
-  // console.log(newActivity.html());
   $("#activities").append(newActivity);
-
   $('.modal').modal();
   $('.dropdown-trigger').dropdown();
+
+  newActivity.find(".activity-type-select").click(function(){
+    console.log("UPDATE ACTIVITY");
+    updateActivityType($(this));
+  })
+}
+
+function updateActivityType(selection){
+  var selectedActivityID = selection.parent().parent().attr('id').split('-')[0]
+  var type = selection.clone().children().remove().end().text();
+  console.log(`Changing activity ${selectedActivityID} to type ${type}`)
+  $.ajax({
+    url: '/activity/updateType',
+    type: 'PUT',
+    headers: { 'x-auth': window.localStorage.getItem("authToken") },
+    contentType: 'application/json',
+    data: JSON.stringify({_id:selectedActivityID, aType:type}),
+    dataType: 'json'
+  })
+  .done(function (data, textStatus, jqXHR) {
+    window.location.reload(false)
+  })
+  .fail(function (jqXHR, textStatus, errorThrown) {
+    console.log("Update Failed")
+    console.log(jqXHR)
+    console.log(textStatus)
+    console.log(errorThrown)
+  });
 }
 
 function showMap(){
@@ -222,7 +255,7 @@ function showMap(){
 
   // remove any google maps API script tags
   googleMapsAPI = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDTguMstpVrOCikPMA2DSWFw4wFE-8NtM0&callback=gMapsCallback"
-  $('script[src="' + googleMapsAPI + '"]').remove();
+  //$('script[src="' + googleMapsAPI + '"]').remove();
 
   // Create the script element that links to the google maps API
   var script_tag = document.createElement('script');
@@ -232,8 +265,6 @@ function showMap(){
 }
 
 function showSpeedGraph(){
-  console.log("Showing speed graph for activity " + currActivityID);
-
   getByCurrId("activity-map").slideUp()
   getByCurrId("speed-graph").slideDown()
   getByCurrId("uv-graph").slideUp()
@@ -248,8 +279,6 @@ function showSpeedGraph(){
 }
 
 function showUVGraph(){
-  console.log("Showing UV graph for activity " + currActivityID);
-
   getByCurrId("activity-map").slideUp()
   getByCurrId("speed-graph").slideUp()
   getByCurrId("uv-graph").slideDown()

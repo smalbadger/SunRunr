@@ -11,11 +11,9 @@ var devicesRouter = require('./routes/devices');
 var activityRouter = require('./routes/activity');
 var weatherRouter = require('./routes/weather');
 
-var app = express();
 
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'pug');
-//app.set('view engine','html');
+
+var app = express();
 
 app.set('public', path.join(__dirname, 'public'));
 // Set EJS View Engine**
@@ -23,7 +21,11 @@ app.set('view engine','ejs');
 // Set HTML engine**
 app.engine('html', require('ejs').renderFile);
 
-//console.log('point 1');
+
+
+
+
+
 
 // This is to enable cross-origin access
 app.use(function (req, res, next) {
@@ -40,7 +42,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-//console.log('point 2');
 
 app.use(logger('dev'))
 app.use(express.json());
@@ -50,7 +51,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}));
 
-//console.log('point 3');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -58,12 +58,6 @@ app.use('/devices', devicesRouter);
 app.use('/photon', photonRouter);
 app.use('/activity', activityRouter);
 app.use('/weather', weatherRouter);
-
-//console.log('point 4');
-
-//indexRouter.get('/', function(req, res) {
-//  res.sendFile(__dirname + '../public/userLogin.html');
-//});
 
 
 // error handler
@@ -75,7 +69,5 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
 
 });
-
-//console.log('point 5');
 
 module.exports = app;

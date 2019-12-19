@@ -15,41 +15,54 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <link href="stylesheets/sunrunr.css" rel="stylesheet">
- 	 <script type="text/javascript" src="javascripts/map.js"></script>
- 	 <script type="text/javascript" src="javascripts/signout.js"></script>
+    <script type="text/javascript" src="javascripts/summary.js"></script>
+ 	  <script type="text/javascript" src="javascripts/map.js"></script>
+ 	  <script type="text/javascript" src="javascripts/signout.js"></script>
 
 	 <!-- Let browser know website is optimized for mobile -->
 	 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <meta name="google-signin-client_id" content="646617972867-oh2rbgpqn26uhgr1mrb37mebo6infork.apps.googleusercontent.com">
   </head>
 
 <body>
-	<!-- Dropdown Structure -->
-   <ul id='dropdown1' class='dropdown-content'>
-		<li><a href="account.html">Account</a></li>
-		<li class="divider"></li>
-		<li><a href="#!" id="signout">Sign out</a></li>
-	</ul>
+  <!-- Dropdown Structure -->
+  <ul id='dropdown1' class='dropdown-content'>
+    <li><a href="account.html">Account</a></li>
+    <li class="divider"></li>
+    <li><a href="#!" class="signout">Sign out</a></li>
+  </ul>
 
-	<nav>
-		<div class="nav-wrapper blue-grey darken-2">
+  <nav>
+    <div class="nav-wrapper blue-grey darken-2">
       <a href="dashboard.html" class="brand-logo left">
         <img id="logo" src="images/logo.png">
         <span id="name">SunRunr</span>
       </a>
-			<ul class="right ">
+      <a href="#" data-target="mobile-nav" class="sidenav-trigger right hide-on-large-only"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
         <li><a href="dashboard.html">Dashboard</a></li>
         <li><a href="activities.html">Activities</a></li>
         <li><a href="nearbyusers.html">Nearby Users</a></li>
         <li class="active"><a href="allusers.html">All Users</a></li>
-				<!-- Dropdown Trigger -->
+        <!-- Dropdown Trigger -->
         <li>
           <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>
             <i class="material-icons">more_vert</i>
           </a>
         </li>
-			</ul>
-		</div>
-	</nav>
+      </ul>
+    </div>
+  </nav>
+
+  <ul class="right sidenav blue-grey darken-2 hide-on-large-only" id="mobile-nav">
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="activities.html">Activities</a></li>
+    <li><a href="nearbyusers.html">Nearby Users</a></li>
+    <li class="active"><a href="allusers.html">All Users</a></li>
+    <li><a href="account.html">Account</a></li>
+    <li class="divider"></li>
+    <li><a href="#!" class="signout">Sign out</a></li>
+  </ul>
 
   <div class="row" id="main_">
     <div class="col s0 m1 l2"></div>
@@ -62,24 +75,31 @@
           </div>
         </div>
 
-        <div class="col s12 m4 summary">
+        <div class="col s12 m6 l3 summary">
           <div class="card lil-card blue-grey">
-            <div class="card-title white-text center-align"><b>Total Duration</b></div>
-            <div class="card-content center-align" id="total-duration">INSERT TOTAL DURATION</div>
+            <div class="card-title white-text center-align"><b>Number Of Activities</b></div>
+            <div class="card-content center-align" id="num-activities"></div>
           </div>
         </div>
 
-        <div class="col s12 m4 summary">
+        <div class="col s12 m6 l3 summary">
           <div class="card lil-card blue-grey">
-            <div class="card-title white-text center-align"><b>Total Calories</b></div>
-            <div class="card-content center-align" id="total-calories">INSERT TOTAL CALORIES</div>
+            <div class="card-title white-text center-align"><b>Avg. Total Distance</b></div>
+            <div class="card-content center-align" id="average-total-distance"></div>
           </div>
         </div>
 
-        <div class="col s12 m4 summary">
+        <div class="col s12 m6 l3 summary">
           <div class="card lil-card blue-grey">
-            <div class="card-title white-text center-align"><b>Total UV Exposure</b></div>
-            <div class="card-content center-align" id="total-uv">INSERT TOTAL UV EXPOSURE</div>
+            <div class="card-title white-text center-align"><b>Avg. Total Cals Burned</b></div>
+            <div class="card-content center-align" id="average-total-calories"></div>
+          </div>
+        </div>
+
+        <div class="col s12 m6 l3 summary">
+          <div class="card lil-card blue-grey">
+            <div class="card-title white-text center-align"><b>Avg. UV Exposure</b></div>
+            <div class="card-content center-align" id="average-uv"></div>
           </div>
         </div>
 
@@ -92,11 +112,22 @@
   <!-- Initialize dropdown menu in materialize -->
   <script>
     $('.dropdown-trigger').dropdown();
+    $(document).ready(function(){
+      $('.sidenav').sidenav({
+        menuWidth: 200,
+        closeOnClick: true,
+        edge: 'right',
+      });
+    });
+  </script>
 
+  <script>
     function initMap() {
       navigator.geolocation.getCurrentPosition(
         function (pos) {
-          pin_point_users("map", 7, 1000000, pos.coords.latitude, pos.coords.longitude)
+          var radius = 1000000
+          pin_point_users("map", 7, radius, pos.coords.latitude, pos.coords.longitude, 2)
+          summarizeAllUsers(pos.coords.latitude, pos.coords.longitude, radius)
         },
         function (err) {
           console.warn(`ERROR(${err.code}): ${err.message}`);
@@ -104,10 +135,6 @@
         {enableHighAccuracy: true, timeout: 5000, maximumAge: 0}
       );
     }
-  </script>
-
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTguMstpVrOCikPMA2DSWFw4wFE-8NtM0&callback=initMap">
   </script>
 
 </html>

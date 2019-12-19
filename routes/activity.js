@@ -11,23 +11,11 @@ let jwt = require("jwt-simple");
 
 var secret = fs.readFileSync(__dirname + '/../../jwtkey').toString();
 
-// Data for testing. These values will be changed for testing.
-var activities = {
-	"Running": "Soon to be determined",
-	"Jogging": "Soon to be determined",
-
-};
-
-// TODO: Create endpoint to change activity type. This should also recalculate
-//       calories burned and update it in the activity.
-
-// TODO: Create endpoint to change activity email (in case the user email changes)
-
+const CALORIES = {"Walking":79, "Running":36, "Biking":51}
 
 // GET request return one or "all" activities of one User
 router.get('/all', function(req, res, next) {
 	let responseJson = { activities: [] };
-
 
     let email = "";
 
@@ -79,11 +67,9 @@ router.get('/all', function(req, res, next) {
 router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
     let responseJson = { activities: [] };
 
-
-    lon = req.params.lng; //user lon
+    lon = req.params.lon; //user lon
     lat = req.params.lat; //user lat
-    radius = req.params.rad * (360/24901); //radius around the user
-    //console.log(req.query);
+    radius = req.params.rad;
 
     // go through users and find all activities within the radius within past seven days
     Activity.find({}, function(err, allActivities) {
@@ -98,27 +84,44 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
 						    return date;
 						}
 
-
             for(let activity of allActivities) {
+								var actDate = new Date(activity.date)
                 var current = new Date();
-								current.addDays(7);
+
+								var alat = activity.GPS[0].lat
+								var alon = activity.GPS[0].lon
 
                 // console.log(Date.parse(current));
                 // console.log(Date.parse(activity.date.toISOString()));
 
-                if( Date.parse(activity.date.toISOString()) >=  Date.parse(current) ) {
+                if(actDate.addDays(7) >= current) {
+										const metersPerMile = 1609.34;
 
-                    // console.log(activity.GPS[0]);
-                    // console.log(activity.GPS[0].lat);
-                    // console.log(activity.GPS[0].lon);
-                    // console.log ( Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2)) );
-                    if( Math.sqrt( Math.pow( (lon - activity.GPS[0].lon) ,2) + Math.pow( (lat - activity.GPS[0].lat) ,2)) <= radius) {
-                        responseJson.activities.push({ activity});
+										const R = 6371e3; // metres
+										var phi1 = lat * Math.PI/180
+										var phi2 = alat * Math.PI/180
+										var deltaphi = (alat-lat) * Math.PI/180
+										var deltalambda = (alon-lon) * Math.PI/180
+
+										var a = Math.sin(deltaphi/2) * Math.sin(deltaphi/2) +
+										        Math.cos(phi1) * Math.cos(phi2) *
+										        Math.sin(deltalambda/2) * Math.sin(deltalambda/2);
+										var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+										var dist = R * c / metersPerMile;
+
+										// console.log("CURRENT LAT: " + lat);
+                    // console.log("CURRENT LON: " + lon);
+                    // console.log("ACTIVITY LAT: " + activity.GPS[0].lat);
+                    // console.log("ACTIVITY LON: " + activity.GPS[0].lon);
+                    // console.log("DIST: " + dist);
+										// console.log("RADIUS: " + radius);
+										// console.log("");
+                    if(dist <= radius) {
+                        responseJson.activities.push(activity);
                     }
                 }
             }
         }
-
         res.status(200).json(responseJson);
     });
 
@@ -128,5 +131,56 @@ router.get('/allAct/:lat/:lon/:rad', function(req, res, next) {
 
 });
 
+
+// Update the activity type
+router.put('/updateType', function(req, res, next) {
+		responseJson = {}
+    actid = req.body._id; //activity id
+    aType= req.body.aType; //new activity
+
+    let email = "";
+
+    // If authToken provided, use email in authToken
+    if (req.headers["x-auth"]) {
+        try {
+            let decodedToken = jwt.decode(req.headers["x-auth"], secret);
+            email = decodedToken.email;
+        }
+        catch (ex) {
+            responseJson.message = "Invalid authorization token.";
+            return res.status(400).json(responseJson);
+        }
+    }
+		else{
+			responseJson.message = "No authorization token given"
+			return res.status(400).json(responseJson);
+		}
+
+
+    Activity.findByIdAndUpdate(actid, {$set:{aType: req.body.aType}} , function(err, activity) {
+        if (err) {
+            return res.status(400).json(err);
+        }
+        else if (activity) {
+						var calspertime = CALORIES[req.body.aType];
+						var time = activity.duration/(1000.0*60.0);
+						Activity.findByIdAndUpdate(actid, {$set:{calories:calspertime*time}} , function(err, activity) {
+								if (err){
+										return res.status(400).json(err);
+								}
+								else if (activity){
+										return res.status(200).json({success: true, message: "Activity " + req.body._id + " was updated."});
+								}
+								else {
+										return res.status(400).josn({success: false, message: "Type updated, but calories didn't"});
+								}
+						})
+        }
+        else
+        {
+            return res.status(400).json({success: false, message: "Activity " + req.body._id + " was not found."});
+        }
+    });
+});
 
 module.exports = router;
