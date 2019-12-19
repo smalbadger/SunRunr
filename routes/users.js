@@ -171,7 +171,7 @@ router.post('/register', function(req, res, next) {
                     html: "<b>Hello world </b>" // html body
                 };
 
-                smtpTransport.sendMail(mailOptions, function(error, response){
+                transporter.sendMail(mailOptions, function(error, response){
                     if(error){
                         console.log(error);
                     }
