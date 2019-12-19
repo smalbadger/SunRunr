@@ -52,12 +52,14 @@
           <div class="card-panel blue-text" id="ServerResponse" style="display: none"></div>
         </div>
 
+
         <div class="card blue-grey center-align hoverable">
           <div class="card-content white-text">
             <span class="card-title">Or Sign-in With Google</span>
             <div class="g-signin2" data-onsuccess="onSignIn"></div>
           </div>
         </div>
+
       </div>
   </body>
 
@@ -78,11 +80,19 @@
       signInWithGoogle(email, name, id);
     }
 
+    function signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        window.location = "userLogin.html"
+      });
+    }
+
     function onLoad(){
-      console.log("LOADING")
-      gapi.load('auth2', funciton(){
-        gapi.auth2.init();
-      })
+      gapi.load('auth2', function(){gapi.auth2.init()})
+      $('.signout').click(signOut);
     }
   </script>
+
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+
 </html>

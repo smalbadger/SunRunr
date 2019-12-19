@@ -10,9 +10,6 @@ let jwt = require("jwt-simple");
 
 
 ////////////////////////////////
-//router.post('/confirmation', userController.confirmationPost);
-//router.post('/resend', userController.resendTokenPost);
-
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 let Token = require("../models/token");
@@ -41,15 +38,11 @@ router.post('/signin', function(req, res, next) {
 
                     //////////////////////////////////////////////////////////////
                     // Make sure the user has been verified
-                    //if (!user.verified) return res.status(401).send({ type: 'not-verified', msg: 'Your account has not been verified.' });
+                    if (!user.verified) return res.status(401).send({success : false, message : 'Your account has not been verified. Please verify your account' });
 
-                    // Login successful, write token, and send back user
-                    //res.status(201).send({ token: generateToken(user), user: user.toJSON() });
-                    //var authToken = jwt.encode({email: req.body.email}, secret);
-                    //res.status(201).json({success:true,token: generateToken(user), authToken: authToken});
                     ///////////////////////////////////////////////////////////////
 
-                    User.update({email: req.body.email}, {lastAccess:Date.now()}, function(err, user) {
+                    User.update({email: req.body.email}, {$set:{lastAccess:Date.now()}}, function(err, user) {
                       if (err){
                         res.status(400).json(err)
                       } else if (user){
@@ -118,7 +111,7 @@ router.post('/register', function(req, res, next) {
                         pass: "ECE-sunrunner513"
                     }
                 }));
-                var url =  'http://' + req.headers.host + '/users/confirmation/token=' + token.token;
+                var url =  'http://' + req.headers.host + '/users/confirmation/' + token.token;
                 var mailOptions = {
                     from: 'whatanutcaseece@gmail.com', // sender address
                     to: user.email, // list of receivers
@@ -256,7 +249,7 @@ router.put("/updateuser" , function(req, res) {
 
 // confirmation
 router.get("/confirmation/:token" , function(req, res) {
-    console.log(token);
+    console.log(req.params.token);
     try {
         var userStatus = {};
 
@@ -274,7 +267,10 @@ router.get("/confirmation/:token" , function(req, res) {
                 user.verified = true;
                 user.save(function (err) {
                     if (err) { return res.status(500).send({ msg: err.message }); }
-                    res.status(200).send("The account has been verified. Please log in.");
+                    var ur = 'https://whatanutcase.com/userLogin.html';
+                    //res.status(200).send.format({ 'text/html': function () { res.send("<p>The account has been verified. Please click here to signin <a href="+ ur +"</a></p>") }})
+                    res.format ({ 'text/html': function() { res.status(200).send("<p>The account has been verified. Please click here to <a href="+ ur +"> Sign in</a></p>"); }, });
+                    //res.status(200).send("The account has been verified. Please click here to signin https://whatanutcase.com/userLogin.html.");
                 });
             });
         });
