@@ -40,16 +40,16 @@ router.post('/signin', function(req, res, next) {
 
                     //////////////////////////////////////////////////////////////
                     // Make sure the user has been verified
-                    if (!user.verified) return res.status(401).send({ type: 'not-verified', msg: 'Your account has not been verified.' });
+                    //if (!user.verified) return res.status(401).send({ type: 'not-verified', msg: 'Your account has not been verified.' });
                     
                     // Login successful, write token, and send back user
                     //res.status(201).send({ token: generateToken(user), user: user.toJSON() }); 
-                    var authToken = jwt.encode({email: req.body.email}, secret);
-                    res.status(201).json({success:true,token: generateToken(user), authToken: authToken});
+                    //var authToken = jwt.encode({email: req.body.email}, secret);
+                    //res.status(201).json({success:true,token: generateToken(user), authToken: authToken});
                     ///////////////////////////////////////////////////////////////
 
-                    //var authToken = jwt.encode({email: req.body.email}, secret);
-                    //res.status(201).json({success:true, authToken: authToken});
+                    var authToken = jwt.encode({email: req.body.email}, secret);
+                    res.status(201).json({success:true, authToken: authToken});
                 }
                 else { // user was found but not valid password
                     res.status(401).json({success : false, message : "Email or password invalid."});
@@ -102,16 +102,20 @@ router.post('/register', function(req, res, next) {
                 /////////////////////////////////////
                 // Generate test SMTP service account from ethereal.email
                 nodemailer.createTestAccount((err, account) => {
+                    if (err) {
+                        console.error('Failed to create a testing account. ' + err.message);
+                        return process.exit(1);
+                    }
+                    console.log('Credentials obtained, sending message...');
                     // create reusable transporter object using the default SMTP transport
-                    let transporter = nodemailer.createTransport({
-                        host: 'smtp.ethereal.email',
-                        port: 587,
-                        secure: false, // true for 465, false for other ports
-                        auth: {
-                            user: account.user, // generated ethereal user
-                            pass: account.pass  // generated ethereal password
-                        }
-                    });
+                        const transporter = nodemailer.createTransport({
+                            host: 'smtp.ethereal.email',
+                            port: 587,
+                            auth: {
+                                user: 'ferne.klein88@ethereal.email',
+                                pass: 'C6FeEPzVc9X23mac63'
+                            }
+                        });
                                    // setup e-mail data with unicode symbols
                     var mailOptions = {
                         from: 'no-reply@whatanutcase.com', // sender address
@@ -135,6 +139,8 @@ router.post('/register', function(req, res, next) {
                         // if you don't want to use this transport object anymore, uncomment following line
                         //smtpTransport.close(); // shut down the connection pool, no more messages
                     });
+                    console.log(user.email);
+                    console.log('Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n');
                 });
 
  
