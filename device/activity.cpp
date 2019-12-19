@@ -88,9 +88,9 @@ using namespace std;
             lengthi = 12;
         }
         for(int i = 0; i < lengthi; i++){
-            lon.concat(String::format("%.2f", this->locations.at(i).getLongitude()));
-            lat.concat(String::format("%.2f",  this->locations.at(i).getLatitude() ));
-            Speed.concat(String::format("%.2f", this->locations.at(i).getSpeed()));
+            lon.concat(String::format("%.4f", this->locations.at(i).getLongitude()));
+            lat.concat(String::format("%.4f",  this->locations.at(i).getLatitude() ));
+            Speed.concat(String::format("%.4f", this->locations.at(i).getSpeed()));
             uv.concat(String::format("%.2f",this->locations.at(i).getUV()));
             //data.concat(curr);
             if(i != lengthi - 1){
@@ -127,3 +127,6 @@ using namespace std;
         return this->date;
         
     }
+    
+    
+    
