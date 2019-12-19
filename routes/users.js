@@ -161,15 +161,17 @@ router.post('/register', function(req, res, next) {
                         user: "whatanutcaseece@gmail.com",
                         pass: "ECE-sunrunner513"
                     }
-                });
+                }));
+
                 var mailOptions = {
                     from: 'whatanutcaseece@gmail.com', // sender address
                     to: user.email, // list of receivers
                     subject: 'Account Verification Token', // Subject line
                     text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n', // plaintext body
-                    html: "<b>Hello world </b>" // html body
-                }
-                smtpTransport.sendMail(mailOptions, function(error, response){
+                    //html: "<b>Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n </b>" // html body
+                };
+
+                transporter.sendMail(mailOptions, function(error, response){
                     if(error){
                         console.log(error);
                     }
